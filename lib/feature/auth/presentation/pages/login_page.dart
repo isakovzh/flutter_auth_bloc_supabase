@@ -1,10 +1,9 @@
-import 'package:app/core/theme/app_pallet.dart';
-import 'package:app/feature/auth/presentation/bloc/auth_bloc.dart';
-import 'package:app/feature/auth/presentation/widgets/auth_textform_filled.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:app/feature/auth/presentation/pages/signup_page.dart';
+import 'package:app/core/theme/app_pallet.dart';
+import 'package:app/feature/auth/presentation/bloc/auth_bloc.dart';
+import 'package:app/feature/auth/presentation/widgets/auth_textform_filled.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -17,6 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
   final bool _obscurePassword = true;
 
   @override
@@ -26,14 +26,6 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  // void _submitLogin() {
-  //   if (_formKey.currentState!.validate()) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(content: Text("Login successful!")),
-  //     );
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: MediaQuery.of(context).size.height * 0.08),
+              const SizedBox(height: 30),
               SvgPicture.asset(
                 'assets/svg/auth_orn.svg',
                 width: MediaQuery.of(context).size.width,
@@ -59,115 +51,80 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 30),
               Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: BlocConsumer<AuthBloc, AuthState>(
-                    listener: (context, state) {
-                      if (state is AuthFailure) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(state.message)),
-                        );
-                      }
-                      if (state is AuthSuccess) {
-                        // TODO: Navigate to another page
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Login successful!")),
-                        );
-                      }
-                    },
-                    builder: (context, state) {
-                      return Form(
-                        key: _formKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AuthTextFormField(
-                              label: 'Email',
-                              hintText: 'Enter your email',
-                              icon: Icons.mail,
-                              controller: _emailController,
-                            ),
-                            const SizedBox(height: 20),
-                            AuthTextFormField(
-                              label: 'Password',
-                              hintText: 'Enter your password',
-                              icon: Icons.lock,
-                              obscureText: _obscurePassword,
-                              controller: _passwordController,
-                            ),
-                            const SizedBox(height: 30),
-                            SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF6B1D1D),
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 15),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                ),
-                                onPressed: state is AuthLoading
-                                    ? null
-                                    : () {
-                                        if (_formKey.currentState!.validate()) {
-                                          context.read<AuthBloc>().add(
-                                                AuthLoginRequested(
-                                                  email: _emailController.text
-                                                      .trim(),
-                                                  password: _passwordController
-                                                      .text
-                                                      .trim(),
-                                                ),
-                                              );
-                                        }
-                                      },
-                                child: state is AuthLoading
-                                    ? const CircularProgressIndicator(
-                                        color: Colors.white)
-                                    : const Text(
-                                        "Sign In",
-                                        style: TextStyle(
-                                            fontSize: 18, color: Colors.white),
-                                      ),
-                              ),
-                            ),
-                            Center(
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const SignUpPage(),
-                                    ),
-                                  );
-                                },
-                                child: RichText(
-                                  text: TextSpan(
-                                    text: "Don't have an account? ",
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
-                                    children: [
-                                      TextSpan(
-                                        text: 'Sign Up',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium
-                                            ?.copyWith(
-                                              color:
-                                                  AppPalette.inputFocusedBorder,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: BlocConsumer<AuthBloc, AuthState>(
+                  listener: (context, state) {
+                    if (state is AuthFailure) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(state.message)),
                       );
-                    },
-                  )),
+                    }
+                    if (state is AuthSuccess) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Login successful!")),
+                      );
+                      // TODO: Navigate to HomePage or main screen
+                    }
+                  },
+                  builder: (context, state) {
+                    return Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AuthTextFormField(
+                            label: 'Email',
+                            hintText: 'Enter your email',
+                            icon: Icons.mail,
+                            controller: _emailController,
+                          ),
+                          const SizedBox(height: 20),
+                          AuthTextFormField(
+                            label: 'Password',
+                            hintText: 'Enter your password',
+                            icon: Icons.lock,
+                            obscureText: _obscurePassword,
+                            controller: _passwordController,
+                          ),
+                          const SizedBox(height: 30),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF6B1D1D),
+                                padding: const EdgeInsets.symmetric(vertical: 15),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                              onPressed: state is AuthLoading
+                                  ? null
+                                  : () {
+                                      FocusScope.of(context).unfocus();
+                                      if (_formKey.currentState!.validate()) {
+                                        context.read<AuthBloc>().add(
+                                              AuthLoginRequested(
+                                                email: _emailController.text.trim(),
+                                                password: _passwordController.text.trim(),
+                                              ),
+                                            );
+                                      }
+                                    },
+                              child: state is AuthLoading
+                                  ? const CircularProgressIndicator(color: Colors.white)
+                                  : const Text(
+                                      "Sign In",
+                                      style: TextStyle(fontSize: 18, color: Colors.white),
+                                    ),
+                            ),
+                          ),
+                          const SizedBox(height: 40),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),

@@ -1,4 +1,3 @@
-
 import 'package:app/core/error/execption.dart';
 import 'package:app/feature/auth/data/models/user_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -54,8 +53,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }) async {
     try {
       final response = await supabaseClient.auth.signInWithPassword(
-        email: email,
-        password: password,
+        email: email.trim(),
+        password: password.trim(),
       );
 
       if (response.user == null) {
@@ -75,18 +74,30 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required String password,
   }) async {
     try {
+      // 🔍 Логируем входные данные
+      print("SIGNUP DEBUG → name: $name, email: $email, password: $password");
+
       final response = await supabaseClient.auth.signUp(
-        email: email,
-        password: password,
-        data: {'name': name},
+        email: email.trim(),
+        password: password.trim(),
+        data: {'name': name.trim()},
       );
 
-      if (response.user == null) {
-        throw const ServerException("Signup failed");
+      // 🔐 Проверяем, если включена email confirmation
+      if (response.user == null || response.session == null) {
+        throw const ServerException(
+          "Signup failed. Possibly email already in use or email confirmation required.",
+        );
       }
 
       return await getCurrentUserData();
     } catch (e) {
+      print('Signup Exception → $e');
+
+      if (e is AuthException) {
+        print('AuthException → ${e.message}');
+      }
+
       throw ServerException(e.toString());
     }
   }

@@ -160,29 +160,22 @@ class _SignUpPageState extends State<SignUpPage> {
                               child: GestureDetector(
                                 onTap: () {
                                   Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const LoginPage()));
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const LoginPage(),
+                                    ),
+                                  );
                                 },
                                 child: RichText(
                                   text: TextSpan(
-                                    text: "Already have an Account? ",
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
-                                    children: [
-                                      TextSpan(
-                                        text: 'Sign In',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium
-                                            ?.copyWith(
-                                              color:
-                                                  AppPalette.inputFocusedBorder,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                      ),
-                                    ],
+                                    text: "Already have an account? Sign In",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium
+                                        ?.copyWith(
+                                          color: AppPalette.inputFocusedBorder,
+                                          fontWeight: FontWeight.w600,
+                                        ),
                                   ),
                                 ),
                               ),

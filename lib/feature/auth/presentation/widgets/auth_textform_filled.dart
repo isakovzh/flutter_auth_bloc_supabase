@@ -24,6 +24,7 @@ class AuthTextFormField extends StatelessWidget {
         Text(label),
         const SizedBox(height: 8),
         TextFormField(
+          controller: controller,
           obscureText: obscureText,
           decoration: InputDecoration(
             hintText: hintText,
