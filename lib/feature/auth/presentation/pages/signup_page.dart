@@ -1,4 +1,5 @@
 import 'package:app/core/theme/app_pallet.dart';
+import 'package:app/feature/main_sreen/main_screen.dart';
 import 'package:app/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:app/feature/auth/presentation/widgets/auth_textform_filled.dart';
 import 'package:flutter/material.dart';
@@ -73,9 +74,9 @@ class _SignUpPageState extends State<SignUpPage> {
                         );
                       }
                       if (state is AuthSuccess) {
-                        // TODO: Navigate to another page
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Sign up successful!")),
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (_) => const MainScreen()),
                         );
                       }
                     },

@@ -31,11 +31,13 @@ Future<void> initDependencies() async {
   sl.registerLazySingleton(() => SignUpWithEmailPassword(sl()));
   sl.registerLazySingleton(() => LoginWithEmailPassword(sl()));
   sl.registerLazySingleton(() => CurrentUserData(sl()));
+  sl.registerLazySingleton(() => Logout(sl()));
 
   // Bloc
   sl.registerFactory(() => AuthBloc(
         signUp: sl(),
         login: sl(),
         currentUser: sl(),
+        logout: sl(),
       ));
 }

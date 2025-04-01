@@ -11,15 +11,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignUpWithEmailPassword signUp;
   final LoginWithEmailPassword login;
   final CurrentUserData currentUser;
+  final Logout logout;
 
   AuthBloc({
     required this.signUp,
     required this.login,
     required this.currentUser,
+    required this.logout,
   }) : super(const AuthInitial()) {
     on<AuthSignUpRequested>(_onSignUp);
     on<AuthLoginRequested>(_onLogin);
     on<AuthCheckStatusRequested>(_onCheck);
+    on<AuthLogoutRequested>(_onLogout);
   }
 
   Future<void> _onSignUp(
@@ -61,6 +64,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     result.match(
       (failure) => emit(AuthFailure(failure.message)),
       (user) => emit(AuthSuccess(user)),
+    );
+  }
+
+  Future<void> _onLogout(
+      AuthLogoutRequested event, Emitter<AuthState> emit) async {
+    emit(const AuthLoading());
+    final result = await logout(NoParams());
+
+    result.match(
+      (failure) => emit(AuthFailure(failure.message)),
+      (_) => emit(
+          const AuthInitial()), 
     );
   }
 }

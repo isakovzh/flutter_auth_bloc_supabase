@@ -38,3 +38,7 @@ class AuthLoginRequested extends AuthEvent {
 class AuthCheckStatusRequested extends AuthEvent {
   const AuthCheckStatusRequested();
 }
+
+class AuthLogoutRequested extends AuthEvent {
+  const AuthLogoutRequested(); // ← Без параметров
+}

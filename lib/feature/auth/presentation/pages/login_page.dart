@@ -1,3 +1,5 @@
+import 'package:app/feature/auth/presentation/pages/signup_page.dart';
+import 'package:app/feature/main_sreen/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -60,10 +62,10 @@ class _LoginPageState extends State<LoginPage> {
                       );
                     }
                     if (state is AuthSuccess) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("Login successful!")),
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (_) => const MainScreen()),
                       );
-                      // TODO: Navigate to HomePage or main screen
                     }
                   },
                   builder: (context, state) {
@@ -92,7 +94,8 @@ class _LoginPageState extends State<LoginPage> {
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFF6B1D1D),
-                                padding: const EdgeInsets.symmetric(vertical: 15),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 15),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30),
                                 ),
@@ -104,21 +107,50 @@ class _LoginPageState extends State<LoginPage> {
                                       if (_formKey.currentState!.validate()) {
                                         context.read<AuthBloc>().add(
                                               AuthLoginRequested(
-                                                email: _emailController.text.trim(),
-                                                password: _passwordController.text.trim(),
+                                                email: _emailController.text
+                                                    .trim(),
+                                                password: _passwordController
+                                                    .text
+                                                    .trim(),
                                               ),
                                             );
                                       }
                                     },
                               child: state is AuthLoading
-                                  ? const CircularProgressIndicator(color: Colors.white)
+                                  ? const CircularProgressIndicator(
+                                      color: Colors.white)
                                   : const Text(
                                       "Sign In",
-                                      style: TextStyle(fontSize: 18, color: Colors.white),
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.white),
                                     ),
                             ),
                           ),
                           const SizedBox(height: 40),
+                          Center(
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const SignUpPage(),
+                                  ),
+                                );
+                              },
+                              child: RichText(
+                                text: TextSpan(
+                                  text: "Already have an account? Sign In",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium
+                                      ?.copyWith(
+                                        color: AppPalette.inputFocusedBorder,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     );

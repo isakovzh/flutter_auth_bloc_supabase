@@ -1,6 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
+import 'package:app/feature/main_sreen/main_screen.dart';
+import 'package:app/feature/auth/presentation/pages/login_page.dart';
 import 'package:flutter/material.dart';
-import 'package:app/feature/auth/presentation/pages/signup_page.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -10,24 +14,32 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  bool showHomeScreen = false;
-
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), () {
-      setState(() {
-        showHomeScreen = true;
-      });
-    });
+    _navigateBasedOnSession();
+  }
+
+  Future<void> _navigateBasedOnSession() async {
+    await Future.delayed(const Duration(seconds: 2));
+
+    final session = Supabase.instance.client.auth.currentSession;
+
+    if (session != null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const MainScreen()),
+      );
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const LoginPage()),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return showHomeScreen ? const SignUpPage() : buildSplashScreen();
-  }
-
-  Widget buildSplashScreen() {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(

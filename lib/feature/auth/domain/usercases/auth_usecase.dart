@@ -65,3 +65,14 @@ class CurrentUserData implements Usecase<User, NoParams> {
     return repository.currentUserData();
   }
 }
+
+class Logout implements Usecase<Unit, NoParams> {
+  final AuthRepository repository;
+
+  Logout(this.repository);
+
+  @override
+  Future<Either<Failure, Unit>> call(NoParams params) async {
+    return repository.logout();
+  }
+}

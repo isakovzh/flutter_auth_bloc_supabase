@@ -1,4 +1,5 @@
 import 'package:app/core/common/entities/user.dart';
+import 'package:app/core/error/execption.dart';
 import 'package:app/core/error/failure.dart';
 import 'package:app/feature/auth/data/datasources/auth_remote_datasourece.dart';
 import 'package:app/feature/auth/domain/repository/auth_repository.dart';
@@ -50,6 +51,16 @@ class AuthRepositoryImpl implements AuthRepository {
       return right(user);
     } catch (e) {
       return left(Failure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> logout() async {
+    try {
+      await remoteDataSource.logout();
+      return right(unit);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
     }
   }
 }
