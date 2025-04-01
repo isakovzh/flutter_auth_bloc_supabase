@@ -14,8 +14,7 @@ class BottomNavBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       currentIndex: currentIndex,
-      selectedItemColor: Colors.brown,
-      unselectedItemColor: Colors.grey,
+
       onTap: onTap,
       items: const [
         BottomNavigationBarItem(

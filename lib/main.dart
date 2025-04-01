@@ -1,6 +1,5 @@
 import 'package:app/core/theme/theme.dart';
 import 'package:app/feature/auth/presentation/bloc/auth_bloc.dart';
-import 'package:app/feature/auth/presentation/pages/login_page.dart';
 import 'package:app/feature/auth/presentation/pages/splash_page.dart';
 import 'package:app/init_dependencies.dart';
 import 'package:flutter/material.dart';

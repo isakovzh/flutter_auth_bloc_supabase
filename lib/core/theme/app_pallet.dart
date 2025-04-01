@@ -4,7 +4,10 @@ class AppPalette {
   // Основные цвета приложения
   static const Color primary = Color(0xFF6B1D1D); // Тёмно-красный (кнопка, заголовки)
   static const Color background = Colors.white;
-  static const Color accent = Color(0xFFFFD700); // Золотой (для выделения)
+  static const Color accent = Color(0xFFFFD700); 
+
+  static const Color chartBar = Color(0xFF8B5E3C); // Коричневый для графика
+  static const Color chartBackground = Color(0xFFF5F2F0); // Светлый фон// Золотой (для выделения)
 
   // Цвета текста
   static const Color textPrimary = Colors.black;

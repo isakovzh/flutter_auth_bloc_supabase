@@ -4,6 +4,12 @@ import 'package:app/feature/auth/data/repository/auth_repository_impl.dart';
 import 'package:app/feature/auth/domain/repository/auth_repository.dart';
 import 'package:app/feature/auth/domain/usercases/auth_usecase.dart';
 import 'package:app/feature/auth/presentation/bloc/auth_bloc.dart';
+import 'package:app/feature/profile/data/datasource/proflie_remote_datasource.dart';
+import 'package:app/feature/profile/data/repositories/profile_deteils_repository_impl.dart';
+import 'package:app/feature/profile/domain/repositories/profile_deteils_repository.dart';
+import 'package:app/feature/profile/domain/usecases/get_profile_detelis.dart';
+import 'package:app/feature/profile/domain/usecases/update_profile_deteils.dart';
+import 'package:app/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -22,6 +28,8 @@ Future<void> initDependencies() async {
     () => AuthRemoteDataSourceImpl(sl()),
   );
 
+
+
   // Repository
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(sl()),
@@ -39,5 +47,22 @@ Future<void> initDependencies() async {
         login: sl(),
         currentUser: sl(),
         logout: sl(),
+      ));
+
+  // Profile
+  sl.registerLazySingleton<ProfileRemoteDataSource>(
+    () => ProfileRemoteDataSourceImpl(sl()),
+  );
+
+  sl.registerLazySingleton<ProfileRepository>(
+    () => ProfileRepositoryImpl(sl()),
+  );
+
+  sl.registerLazySingleton(() => GetProfileDetails(sl()));
+  sl.registerLazySingleton(() => UpdateProfileDetails(sl()));
+
+  sl.registerFactory(() => ProfileBloc(
+        getProfileDetails: sl(),
+        updateProfileDetails: sl(),
       ));
 }
