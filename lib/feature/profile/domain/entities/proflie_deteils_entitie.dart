@@ -1,7 +1,4 @@
-// lib/feature/profile/domain/entities/profile_details_entity.dart
-import 'package:equatable/equatable.dart';
-
-class ProfileDetailsEntity extends Equatable {
+class ProfileDetailsEntity {
   final String id;
   final String username;
   final String avatarUrl;
@@ -21,16 +18,4 @@ class ProfileDetailsEntity extends Equatable {
     required this.lessonsCompleted,
     required this.mistakes,
   });
-
-  @override
-  List<Object?> get props => [
-        id,
-        username,
-        avatarUrl,
-        level,
-        xp,
-        achievements,
-        lessonsCompleted,
-        mistakes,
-      ];
 }
