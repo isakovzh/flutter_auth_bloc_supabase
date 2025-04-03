@@ -7,9 +7,6 @@ class XPChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final barColor = Theme.of(context).colorScheme.secondary;
-    final backgroundColor = Theme.of(context).colorScheme.surface;
-    final labelColor = Theme.of(context).colorScheme.onSurface;
     return Card(
       color: AppPalette.cardBackground,
       elevation: 4,

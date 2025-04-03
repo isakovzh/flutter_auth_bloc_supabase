@@ -14,11 +14,7 @@ class ProfilePage extends StatelessWidget {
     const String avatarUrl =
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDl_6Kf7Vu_0QzlMb2LbmULSBH3xdNUuZsag&sg';
     const String name = 'Maksatbek';
-    const int level = 3;
-    const int xp = 850;
     final List<String> badges = ['🔥', '📚', '🏆'];
-    const int mistakes = 5;
-    const int completedLessons = 7;
 
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {

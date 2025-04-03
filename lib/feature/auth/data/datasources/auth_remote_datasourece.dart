@@ -16,10 +16,6 @@ abstract interface class AuthRemoteDataSource {
 
   Future<UserModel> getCurrentUserData();
   Future<void> logout();
-  Future<void> createProfileDetails({
-    required String id,
-    required String username,
-  });
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -28,27 +24,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   AuthRemoteDataSourceImpl(this.supabaseClient);
 
   Session? get _currentUserSession => supabaseClient.auth.currentSession;
-
-  @override
-  Future<void> createProfileDetails({
-    required String id,
-    required String username,
-  }) async {
-    try {
-      await supabaseClient.from('profile_details').insert({
-        'id': id,
-        'username': username,
-        'avatar_url': '',
-        'level': 1,
-        'xp': 0,
-        'achievements': [],
-        'lessons_completed': 0,
-        'mistakes': 0,
-      });
-    } catch (e) {
-      throw ServerException('Failed to create profile details: $e');
-    }
-  }
 
   @override
   Future<UserModel> getCurrentUserData() async {
@@ -115,10 +90,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           "Signup failed. Possibly email already in use or email confirmation required.",
         );
       }
-      await createProfileDetails(
-        id: response.user!.id,
-        username: name,
-      );
 
       return await getCurrentUserData();
     } catch (e) {
