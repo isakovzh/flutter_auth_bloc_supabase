@@ -1,7 +1,5 @@
 import 'package:app/core/error/execption.dart';
 import 'package:app/feature/auth/data/models/user_model.dart';
-import 'package:app/feature/profile/data/models/profilie_deteils_model.dart';
-import 'package:hive/hive.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract interface class AuthRemoteDataSource {
@@ -63,23 +61,23 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       if (response.user == null) {
         throw const ServerException("Login failed");
       }
-      final userId = response.user!.id;
+      // final userId = response.user!.id;
 
-// Проверь, есть ли пользователь в Hive
-      final box = await Hive.openBox<ProfileDetailsModel>('profile_details');
-      if (!box.containsKey(userId)) {
-        final localUser = ProfileDetailsModel(
-          id: userId,
-          username: 'User', // или можно получить из Supabase
-          avatarUrl: '',
-          level: 1,
-          xp: 0,
-          achievements: [],
-          lessonsCompleted: 0,
-          mistakes: 0,
-        );
-        await box.put(userId, localUser);
-      }
+// // Проверь, есть ли пользователь в Hive
+//       final box = await Hive.openBox<ProfileDetailsModel>('profile_details');
+//       if (!box.containsKey(userId)) {
+//         final localUser = ProfileDetailsModel(
+//           id: userId,
+//           username: 'User', // или можно получить из Supabase
+//           avatarUrl: '',
+//           level: 1,
+//           xp: 0,
+//           achievements: [],
+//           lessonsCompleted: 0,
+//           mistakes: 0,
+//         );
+//         await box.put(userId, localUser);
+//       }
 
       return await getCurrentUserData();
     } catch (e) {
@@ -110,23 +108,23 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         );
       }
 
-      final userId = response.user!.id;
+      // final userId = response.user!.id;
 
-      // 👇 СОЗДАЕМ локального пользователя
-      final localUser = ProfileDetailsModel(
-        id: userId,
-        username: name,
-        avatarUrl: '',
-        level: 1,
-        xp: 0,
-        achievements: [],
-        lessonsCompleted: 0,
-        mistakes: 0,
-      );
+      // // 👇 СОЗДАЕМ локального пользователя
+      // final localUser = ProfileDetailsModel(
+      //   id: userId,
+      //   username: name,
+      //   avatarUrl: '',
+      //   level: 1,
+      //   xp: 0,
+      //   achievements: [],
+      //   lessonsCompleted: 0,
+      //   mistakes: 0,
+      // );
 
-      // 👇 СОХРАНЯЕМ в Hive
-      final box = await Hive.openBox<ProfileDetailsModel>('profile_details');
-      await box.put(userId, localUser);
+      // // 👇 СОХРАНЯЕМ в Hive
+      // final box = await Hive.openBox<ProfileDetailsModel>('profile_details');
+      // await box.put(userId, localUser);
 
       return await getCurrentUserData();
     } catch (e) {

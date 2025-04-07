@@ -1,7 +1,7 @@
 // lib/feature/main/presentation/pages/main_screen.dart
 import 'package:app/core/common/widgets/bottom_navbar_widget.dart';
-import 'package:app/feature/home/presentation/pages/home_page.dart';
-import 'package:app/feature/quiz/presentation/pages/quiz_page.dart';
+import 'package:app/feature/lesson/presentation/pages/home_page.dart';
+import 'package:app/feature/character/presentation/pages/quiz_page.dart';
 import 'package:flutter/material.dart';
 import 'package:app/feature/profile/presentation/pages/profile_page.dart';
 

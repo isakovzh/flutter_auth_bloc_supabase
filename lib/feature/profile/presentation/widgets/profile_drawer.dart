@@ -44,7 +44,7 @@ class ProfileDrawer extends StatelessWidget {
               leading: const Icon(Icons.logout),
               title: const Text('Logout'),
               onTap: () {
-                context.read<AuthBloc>().add(AuthLogoutRequested());
+                context.read<AuthBloc>().add(const AuthLogoutRequested());
               },
             ),
           ],
