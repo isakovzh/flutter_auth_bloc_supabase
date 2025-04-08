@@ -23,7 +23,7 @@ class BottomNavBarWidget extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.menu_book),
-          label: 'Lesson',
+          label: 'Character',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.library_books),

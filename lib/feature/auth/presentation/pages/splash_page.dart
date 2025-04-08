@@ -1,7 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:async';
-import 'package:app/feature/main_sreen/main_screen.dart';
+import 'package:app/core/common/pages/main_screen.dart';
 import 'package:app/feature/auth/presentation/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

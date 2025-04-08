@@ -1,6 +1,7 @@
 import 'package:app/core/common/entities/user.dart';
 import 'package:app/core/usecases/usercase.dart';
 import 'package:app/feature/auth/domain/usercases/auth_usecase.dart';
+import 'package:app/feature/profile/domain/repository/profile_details_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,12 +13,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginWithEmailPassword login;
   final CurrentUserData currentUser;
   final Logout logout;
+  final ProfileRepository profileRepository;
 
   AuthBloc({
     required this.signUp,
     required this.login,
     required this.currentUser,
     required this.logout,
+    required this.profileRepository,
   }) : super(const AuthInitial()) {
     on<AuthSignUpRequested>(_onSignUp);
     on<AuthLoginRequested>(_onLogin);
@@ -28,19 +31,25 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onSignUp(
       AuthSignUpRequested event, Emitter<AuthState> emit) async {
     emit(const AuthLoading());
+
     final result = await signUp(SignUpParams(
       name: event.name,
       email: event.email,
       password: event.password,
     ));
-    result.match(
+
+    await result.match(
       (failure) {
         final is422 = failure.message.contains("422");
         final message =
             is422 ? "Invalid input or email already in use." : failure.message;
         emit(AuthFailure(message));
       },
-      (user) => emit(AuthSuccess(user)),
+      (user) async {
+        await profileRepository
+            .getProfileDetails(); // 👈 создаём/загружаем профиль
+        emit(AuthSuccess(user));
+      },
     );
   }
 
@@ -51,10 +60,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       email: event.email,
       password: event.password,
     ));
-    result.match(
-      (failure) => emit(AuthFailure(failure.message)),
-      (user) => emit(AuthSuccess(user)),
-    );
+    result.match((failure) => emit(AuthFailure(failure.message)), (user) async {
+      await profileRepository.getProfileDetails();
+      emit(
+        AuthSuccess(user),
+      );
+    });
   }
 
   Future<void> _onCheck(
@@ -74,8 +85,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     result.match(
       (failure) => emit(AuthFailure(failure.message)),
-      (_) => emit(
-          const AuthInitial()), 
+      (_) => emit(const AuthInitial()),
     );
   }
 }
