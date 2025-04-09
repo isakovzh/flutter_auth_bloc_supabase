@@ -72,4 +72,10 @@ class ProfileRepositoryImpl implements ProfileRepository {
       return left(Failure("Ошибка при удалении профиля: ${e.toString()}"));
     }
   }
+  
+  @override
+  Future<Either<Failure, Unit>> markLessonAsCompleted(String lessonId) {
+    // TODO: implement markLessonAsCompleted
+    throw UnimplementedError();
+  }
 }

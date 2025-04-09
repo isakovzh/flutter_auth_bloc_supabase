@@ -5,6 +5,7 @@ import 'package:fpdart/fpdart.dart';
 abstract interface class ProfileRepository {
   Future<Either<Failure, UserProfileDetailsEntity>> getProfileDetails();
   Future<Either<Failure, Unit>> updateProfileDetails(
-      UserProfileDetailsEntity profile);
+      UserProfileDetailsEntity entity);
   Future<Either<Failure, Unit>> clearProfileDetails();
+  Future<Either<Failure, Unit>> markLessonAsCompleted(String lessonId);
 }

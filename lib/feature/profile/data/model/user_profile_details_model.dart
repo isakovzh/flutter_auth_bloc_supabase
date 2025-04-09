@@ -36,6 +36,7 @@ class UserProfileDetailsModel extends UserProfileDetailsEntity {
   @override
   @HiveField(7)
   final int mistakes;
+  
 
   const UserProfileDetailsModel({
     required this.userId,

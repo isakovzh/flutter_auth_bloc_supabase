@@ -41,6 +41,7 @@
 //         logout: sl(),
 //       ));
 // }
+import 'package:app/core/common/init/init_lesson_dependnecies.dart';
 import 'package:app/core/common/init/init_profile_dependencies.dart';
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -62,4 +63,5 @@ Future<void> initDependencies() async {
   // Инициализация зависимостей каждой feature
   await initAuthDependencies();
   await initProfileDependencies(); // подключим позже
+  await initLessonDependencies(); // ✅ lessons
 }

@@ -1,117 +1,152 @@
+import 'package:app/core/common/init/init_auth_dependencies.dart';
+import 'package:app/feature/lesson/presentation/bloc/lesson_bloc.dart';
+import 'package:app/feature/lesson/presentation/bloc/lesson_event.dart';
+import 'package:app/feature/lesson/presentation/bloc/lesson_state.dart';
+import 'package:app/feature/lesson/presentation/pages/lesson_details_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  final List<Map<String, dynamic>> lessons = const [
-    {
-      'title': 'Lesson 1: The Birth of Manas',
-      'isCompleted': true,
-    },
-    {
-      'title': 'Lesson 2: The Childhood',
-      'isCompleted': true,
-    },
-    {
-      'title': 'Lesson 3: Becoming a Hero',
-      'isCompleted': false,
-    },
-  ];
-
-  final int xp = 850;
-  final int completed = 2;
-  final int totalLessons = 10;
-
   @override
   Widget build(BuildContext context) {
-    final double progress = completed / totalLessons;
+    return BlocProvider(
+      create: (_) => sl<LessonBloc>()..add(LoadLessonsEvent()),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Lessons'),
+        ),
+        body: BlocBuilder<LessonBloc, LessonState>(
+          builder: (context, state) {
+            if (state is LessonLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Lessons'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            // 👤 Progress Section
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.brown.shade50,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("XP: $xp", style: const TextStyle(fontSize: 18)),
-                  Text("Lessons Completed: $completed / $totalLessons"),
-                  const SizedBox(height: 10),
-                  LinearProgressIndicator(
-                    value: progress,
-                    backgroundColor: Colors.grey[300],
-                    color: Colors.brown,
-                    minHeight: 10,
-                  ),
-                ],
-              ),
-            ),
+            if (state is LessonLoaded) {
+              final lessons = state.lessons;
 
-            const SizedBox(height: 20),
+              // ✅ Пример завершённых уроков
+              final completedLessons = ['lesson_1', 'lesson_2'];
+              final completedCount = lessons
+                  .where((lesson) => completedLessons.contains(lesson.id))
+                  .length;
+              final totalXP = completedCount * 100;
+              final progress =
+                  lessons.isEmpty ? 0.0 : completedCount / lessons.length;
 
-            // 📚 Lesson Cards
-            Expanded(
-              child: ListView.builder(
-                itemCount: lessons.length,
-                itemBuilder: (context, index) {
-                  final lesson = lessons[index];
-                  return Card(
-                    elevation: 4,
-                    margin: const EdgeInsets.only(bottom: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
+              return Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    // 🔄 Progress bar
+                    Container(
                       padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.brown.shade50,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Text("XP: $totalXP",
+                              style: const TextStyle(fontSize: 18)),
                           Text(
-                            lesson['title'],
-                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
+                              "Lessons Completed: $completedCount / ${lessons.length}"),
                           const SizedBox(height: 10),
-                          Row(
-                            children: [
-                              ElevatedButton.icon(
-                                onPressed: () {
-                                  // TODO: open lesson
-                                },
-                                icon: const Icon(Icons.menu_book),
-                                label: const Text("Open"),
-                              ),
-                              const SizedBox(width: 10),
-                              if (lesson['isCompleted'])
-                                ElevatedButton.icon(
-                                  onPressed: () {
-                                    // TODO: take test
-                                  },
-                                  icon: const Icon(Icons.check),
-                                  label: const Text("Test"),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.green.shade600,
-                                  ),
-                                ),
-                            ],
+                          LinearProgressIndicator(
+                            value: progress,
+                            backgroundColor: Colors.grey[300],
+                            color: Colors.brown,
+                            minHeight: 10,
                           ),
                         ],
                       ),
                     ),
-                  );
-                },
-              ),
-            ),
-          ],
+
+                    const SizedBox(height: 20),
+
+                    // 📚 Cards
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: lessons.length,
+                        itemBuilder: (context, index) {
+                          final lesson = lessons[index];
+                          final isCompleted =
+                              completedLessons.contains(lesson.id);
+
+                          return Card(
+                            elevation: 3,
+                            margin: const EdgeInsets.only(bottom: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    lesson.title,
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    lesson.description,
+                                    style: const TextStyle(color: Colors.grey),
+                                  ),
+                                  const SizedBox(height: 12),
+                                  Row(
+                                    children: [
+                                      ElevatedButton.icon(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (_) => LessonDetailPage(
+                                                  lesson: lesson),
+                                            ),
+                                          );
+                                        },
+                                        icon: const Icon(Icons.menu_book),
+                                        label: const Text("Open"),
+                                      ),
+                                      const SizedBox(width: 10),
+                                      if (isCompleted)
+                                        ElevatedButton.icon(
+                                          onPressed: () {
+                                            // TODO: Quiz page
+                                          },
+                                          icon: const Icon(Icons.check),
+                                          label: const Text("Test"),
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor:
+                                                Colors.green.shade600,
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
+
+            if (state is LessonError) {
+              return Center(child: Text('Error: ${state.message}'));
+            }
+
+            return const SizedBox.shrink();
+          },
         ),
       ),
     );

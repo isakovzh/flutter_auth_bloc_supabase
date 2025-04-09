@@ -1,0 +1,137 @@
+[
+  {
+    "id": "lesson_1",
+    "title": "The Birth of Manas",
+    "description": "Learn about the birth of the great hero Manas and the prophecy that surrounded him.",
+    "content": "During a time of great suffering, the Kyrgyz people hoped for a savior. A child named Manas was born under a bright star, fulfilling a prophecy. From an early age, he showed signs of greatness, and the people believed he would one day free them.",
+    "quiz": {
+      "questions": [
+        {
+          "question": "Where was Manas born?",
+          "options": ["Talas", "Bishkek", "Osh", "Batken"],
+          "correctIndex": 0
+        },
+        {
+          "question": "What accompanied Manas’s birth?",
+          "options": ["Eclipse", "Prophecy", "Festival", "Famine"],
+          "correctIndex": 1
+        },
+        {
+          "question": "What was Manas’s father’s name?",
+          "options": ["Jakyp", "Almambet", "Semetey", "Kanykei"],
+          "correctIndex": 0
+        },
+        {
+          "question": "Why did people rejoice at his birth?",
+          "options": [
+            "He was rich",
+            "Prophecies came true",
+            "Winter ended",
+            "A feast was held"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "question": "What did the star symbolize?",
+          "options": ["Famine", "Hope", "Anger of gods", "Fire"],
+          "correctIndex": 1
+        }
+      ]
+    }
+  },
+  {
+    "id": "lesson_2",
+    "title": "The Childhood of Manas",
+    "description": "Discover how Manas showed signs of leadership and strength as a child.",
+    "content": "Manas was a unique child. At 5, he fought off a wolf to protect livestock. At 7, he was already leading children in protecting their village. He valued justice above all and was known for his strength and courage.",
+    "quiz": {
+      "questions": [
+        {
+          "question": "What did Manas do at age 5?",
+          "options": [
+            "Went to school",
+            "Tamed a horse",
+            "Fought a wolf",
+            "Traveled far"
+          ],
+          "correctIndex": 2
+        },
+        {
+          "question": "What did Manas value most?",
+          "options": ["Wealth", "Justice", "Power", "Silence"],
+          "correctIndex": 1
+        },
+        {
+          "question": "How was he different from other kids?",
+          "options": ["Coward", "Lazy", "Strong", "Quiet"],
+          "correctIndex": 2
+        },
+        {
+          "question": "What was his childhood dream?",
+          "options": ["Build a house", "Travel", "Become a hero", "Own gold"],
+          "correctIndex": 2
+        },
+        {
+          "question": "What did he do to bullies?",
+          "options": [
+            "Ignored them",
+            "Complained",
+            "Protected others",
+            "Joined them"
+          ],
+          "correctIndex": 2
+        }
+      ]
+    }
+  },
+  {
+    "id": "lesson_3",
+    "title": "Manas Becomes a    Hero",
+    "description": "See how Manas united his people and began his legendary journey.",
+    "content": "When Manas grew up, he realized he was destined to lead. He gathered brave warriors and fought the Kalmaks. His first victory became a symbol of national awakening. He was strong, wise, and just.",
+    "quiz": {
+      "questions": [
+        {
+          "question": "Why did people follow Manas?",
+          "options": [
+            "He was rich",
+            "He was royal",
+            "He was brave and wise",
+            "He promised rewards"
+          ],
+          "correctIndex": 2
+        },
+        {
+          "question": "Who did he fight against?",
+          "options": ["Romans", "Kalmaks", "Mongols", "Chinese"],
+          "correctIndex": 1
+        },
+        {
+          "question": "What was his first major victory?",
+          "options": [
+            "Built a fortress",
+            "Married a princess",
+            "Defeated Kalmak leader",
+            "Traveled abroad"
+          ],
+          "correctIndex": 2
+        },
+        {
+          "question": "How did he become a leader?",
+          "options": [
+            "Inherited throne",
+            "People chose him",
+            "Killed a beast",
+            "Was the oldest"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "question": "What quality made him a true hero?",
+          "options": ["Cruelty", "Wealth", "Power and justice", "Silence"],
+          "correctIndex": 2
+        }
+      ]
+    }
+  }
+]
