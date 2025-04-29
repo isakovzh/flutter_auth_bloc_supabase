@@ -39,7 +39,7 @@ It is designed to help users explore and learn the epic of Manas through interac
 
 - Log in or sign up using email/password
 - Choose a lesson to study
-- Tap “Open” to read the text and listen to the audio
+- Tap “Open” to read the text 
 - Complete the quiz after reading to earn XP and level up
 - Go to Profile to see your stats, achievements, and change avatar
 - Try to guess characters by reading clues in the character section
