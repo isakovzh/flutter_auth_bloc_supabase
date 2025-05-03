@@ -1,0 +1,32 @@
+[
+  {
+    "id": "manas",
+    "name": "Manas",
+    "description": "A great hero who united the Kyrgyz tribes and led them to victory.",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Manas_hero.jpg/220px-Manas_hero.jpg"
+  },
+  {
+    "id": "bakai",
+    "name": "Bakai",
+    "description": "A wise advisor and spiritual mentor of Manas.",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Bakai_Sage.png/220px-Bakai_Sage.png"
+  },
+  {
+    "id": "kanykei",
+    "name": "Kanykei",
+    "description": "The loyal and brave wife of Manas.",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Kanykei.jpg/220px-Kanykei.jpg"
+  },
+  {
+    "id": "almambet",
+    "name": "Almambet",
+    "description": "Manas' loyal friend and fearless warrior.",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Almambet.jpg/220px-Almambet.jpg"
+  },
+  {
+    "id": "koketey",
+    "name": "Kökötöy",
+    "description": "A respected elder and nobleman of the Kyrgyz people.",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Koketoy.jpg/220px-Koketoy.jpg"
+  }
+]

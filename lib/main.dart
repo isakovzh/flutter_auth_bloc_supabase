@@ -1,4 +1,5 @@
 import 'package:app/core/theme/theme.dart';
+import 'package:app/core/theme/theme_cubit.dart';
 import 'package:app/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:app/feature/auth/presentation/pages/splash_page.dart';
 import 'package:app/core/common/init/init_dependencies.dart';
@@ -21,19 +22,21 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (_) => sl<AuthBloc>(),
-        ),
-        BlocProvider(
-          create: (_) => sl<ProfileBloc>(),
-        ),
-        // Ты можешь здесь добавить другие Bloc-и позже
+        BlocProvider(create: (_) => sl<AuthBloc>()),
+        BlocProvider(create: (_) => sl<ProfileBloc>()),
+        BlocProvider(create: (_) => ThemeCubit()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Blog App',
-        theme: AppTheme.lightTheme,
-        home: const SplashScreen(),
+      child: BlocBuilder<ThemeCubit, ThemeMode>(
+        builder: (context, themeMode) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Manas App',
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: themeMode,
+            home: const SplashScreen(),
+          );
+        },
       ),
     );
   }

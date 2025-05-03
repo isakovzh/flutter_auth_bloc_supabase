@@ -11,6 +11,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return BlocProvider(
       create: (_) => sl<LessonBloc>()..add(LoadLessonsEvent()),
       child: Scaffold(
@@ -26,38 +28,41 @@ class HomePage extends StatelessWidget {
             if (state is LessonLoaded) {
               final lessons = state.lessons;
 
-              // ✅ Пример завершённых уроков
+              // TODO: Replace with actual completed lessons from user profile
               final completedLessons = ['lesson_1', 'lesson_2'];
               final completedCount = lessons
                   .where((lesson) => completedLessons.contains(lesson.id))
                   .length;
               final totalXP = completedCount * 100;
-              final progress =
-                  lessons.isEmpty ? 0.0 : completedCount / lessons.length;
+              final progress = lessons.isEmpty
+                  ? 0.0
+                  : completedCount / lessons.length;
 
               return Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
-                    // 🔄 Progress bar
+                    // 📊 Progress
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.brown.shade50,
+                        color: theme.colorScheme.surface,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text("XP: $totalXP",
-                              style: const TextStyle(fontSize: 18)),
+                              style: theme.textTheme.bodyLarge),
                           Text(
-                              "Lessons Completed: $completedCount / ${lessons.length}"),
+                            "Lessons Completed: $completedCount / ${lessons.length}",
+                            style: theme.textTheme.bodyMedium,
+                          ),
                           const SizedBox(height: 10),
                           LinearProgressIndicator(
                             value: progress,
-                            backgroundColor: Colors.grey[300],
-                            color: Colors.brown,
+                            backgroundColor: theme.dividerColor,
+                            color: theme.colorScheme.primary,
                             minHeight: 10,
                           ),
                         ],
@@ -66,7 +71,7 @@ class HomePage extends StatelessWidget {
 
                     const SizedBox(height: 20),
 
-                    // 📚 Cards
+                    // 📚 Lessons list
                     Expanded(
                       child: ListView.builder(
                         itemCount: lessons.length,
@@ -76,6 +81,7 @@ class HomePage extends StatelessWidget {
                               completedLessons.contains(lesson.id);
 
                           return Card(
+                            color: theme.cardColor,
                             elevation: 3,
                             margin: const EdgeInsets.only(bottom: 16),
                             shape: RoundedRectangleBorder(
@@ -88,15 +94,16 @@ class HomePage extends StatelessWidget {
                                 children: [
                                   Text(
                                     lesson.title,
-                                    style: const TextStyle(
-                                      fontSize: 18,
+                                    style: theme.textTheme.titleMedium?.copyWith(
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
                                     lesson.description,
-                                    style: const TextStyle(color: Colors.grey),
+                                    style: theme.textTheme.bodySmall?.copyWith(
+                                      color: theme.textTheme.bodySmall?.color?.withOpacity(0.7),
+                                    ),
                                   ),
                                   const SizedBox(height: 12),
                                   Row(
@@ -107,7 +114,8 @@ class HomePage extends StatelessWidget {
                                             context,
                                             MaterialPageRoute(
                                               builder: (_) => LessonDetailPage(
-                                                  lesson: lesson),
+                                                lesson: lesson,
+                                              ),
                                             ),
                                           );
                                         },
@@ -118,7 +126,7 @@ class HomePage extends StatelessWidget {
                                       if (isCompleted)
                                         ElevatedButton.icon(
                                           onPressed: () {
-                                            // TODO: Quiz page
+                                            // TODO: Navigate to Quiz Page
                                           },
                                           icon: const Icon(Icons.check),
                                           label: const Text("Test"),
@@ -142,7 +150,12 @@ class HomePage extends StatelessWidget {
             }
 
             if (state is LessonError) {
-              return Center(child: Text('Error: ${state.message}'));
+              return Center(
+                child: Text(
+                  'Error: ${state.message}',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              );
             }
 
             return const SizedBox.shrink();
