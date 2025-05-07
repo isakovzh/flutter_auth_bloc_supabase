@@ -23,6 +23,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<GetProfileDetailsEvent>(_onGetProfile);
     on<UpdateProfileDetailsEvent>(_onUpdateProfile);
     on<ClearProfileDetailsEvent>(_onClearProfile);
+    on<MarkLessonCompletedEvent>(_onMarkLessonCompleted); // ✅ Новый обработчик
   }
 
   Future<void> _onGetProfile(
@@ -59,5 +60,33 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       (failure) => emit(ProfileError(failure.message)),
       (_) => emit(ProfileInitial()),
     );
+  }
+
+  // ✅ Новый метод для отметки урока как завершённого
+  Future<void> _onMarkLessonCompleted(
+    MarkLessonCompletedEvent event,
+    Emitter<ProfileState> emit,
+  ) async {
+    if (state is ProfileLoaded) {
+      final currentProfile = (state as ProfileLoaded).profile;
+
+      // Проверка, не завершён ли уже этот урок
+      if (!currentProfile.completedLessons.contains(event.lessonId)) {
+        final updatedProfile = currentProfile.copyWith(
+          completedLessons: [
+            ...currentProfile.completedLessons,
+            event.lessonId
+          ],
+          lessonsCompleted: currentProfile.lessonsCompleted + 1,
+        );
+
+        emit(ProfileLoading());
+        final result = await updateProfileDetails(updatedProfile);
+        result.match(
+          (failure) => emit(ProfileError(failure.message)),
+          (_) => add(const GetProfileDetailsEvent()),
+        );
+      }
+    }
   }
 }

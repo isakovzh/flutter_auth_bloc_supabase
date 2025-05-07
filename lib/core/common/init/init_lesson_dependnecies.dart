@@ -23,5 +23,9 @@ Future<void> initLessonDependencies() async {
   sl.registerLazySingleton(() => GetAllLessonsUseCase(sl()));
 
   // Bloc
-  sl.registerFactory(() => LessonBloc(getAllLessons: sl()));
+  sl.registerFactory(
+    () => LessonBloc(
+      getAllLessons: sl(),
+    ),
+  );
 }

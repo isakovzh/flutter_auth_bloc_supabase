@@ -21,6 +21,12 @@ class LessonLoaded extends LessonState {
   List<Object?> get props => [lessons];
 }
 
+class LessonCompleted extends LessonState {
+  final String lessonId;
+
+  const LessonCompleted(this.lessonId);
+}
+
 class LessonError extends LessonState {
   final String message;
 

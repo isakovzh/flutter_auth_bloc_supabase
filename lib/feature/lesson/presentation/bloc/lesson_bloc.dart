@@ -1,3 +1,5 @@
+// lib/feature/lesson/presentation/bloc/lesson_bloc.dart
+
 import 'package:app/feature/lesson/domain/entities/lesson.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fpdart/fpdart.dart';
@@ -10,7 +12,9 @@ import 'lesson_state.dart';
 class LessonBloc extends Bloc<LessonEvent, LessonState> {
   final GetAllLessonsUseCase getAllLessons;
 
-  LessonBloc({required this.getAllLessons}) : super(LessonInitial()) {
+  LessonBloc({
+    required this.getAllLessons,
+  }) : super(LessonInitial()) {
     on<LoadLessonsEvent>(_onLoadLessons);
   }
 
@@ -29,4 +33,3 @@ class LessonBloc extends Bloc<LessonEvent, LessonState> {
     );
   }
 }
- 

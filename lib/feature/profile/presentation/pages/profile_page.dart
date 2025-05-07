@@ -110,7 +110,7 @@ class ProfilePage extends StatelessWidget {
                       ListTile(
                         leading: const Icon(Icons.check_circle_outline),
                         title: Text(
-                            'Lessons Completed: ${profile.lessonsCompleted}'),
+                            'Lessons Completed: ${profile.completedLessons.length}'),
                       ),
                       ListTile(
                         leading: const Icon(Icons.error_outline),

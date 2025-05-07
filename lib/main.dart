@@ -3,6 +3,7 @@ import 'package:app/core/theme/theme_cubit.dart';
 import 'package:app/feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:app/feature/auth/presentation/pages/splash_page.dart';
 import 'package:app/core/common/init/init_dependencies.dart';
+import 'package:app/feature/lesson/presentation/bloc/lesson_bloc.dart';
 import 'package:app/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => sl<AuthBloc>()),
         BlocProvider(create: (_) => sl<ProfileBloc>()),
         BlocProvider(create: (_) => ThemeCubit()),
+         BlocProvider(create: (_) => sl<LessonBloc>()),
       ],
       child: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, themeMode) {

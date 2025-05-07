@@ -39,6 +39,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
         achievements: [],
         lessonsCompleted: 0,
         mistakes: 0,
+        completedLessons: [],
       );
 
       await localDataSource.saveProfile(newProfile);
@@ -72,10 +73,29 @@ class ProfileRepositoryImpl implements ProfileRepository {
       return left(Failure("Ошибка при удалении профиля: ${e.toString()}"));
     }
   }
-  
+
   @override
-  Future<Either<Failure, Unit>> markLessonAsCompleted(String lessonId) {
-    // TODO: implement markLessonAsCompleted
-    throw UnimplementedError();
+  Future<Either<Failure, Unit>> markLessonAsCompleted(String lessonId) async {
+    try {
+      final user = supabase.auth.currentUser;
+      if (user == null) {
+        return left(Failure("User not authenticated"));
+      }
+
+      final localProfile = await localDataSource.getProfileDetails(user.id);
+      if (localProfile == null) {
+        return left(Failure("Profile not found"));
+      }
+
+      if (!localProfile.completedLessons.contains(lessonId)) {
+        localProfile.completedLessons.add(lessonId);
+        await localDataSource.updateProfileDetails(localProfile);
+      }
+
+      return right(unit);
+    } catch (e) {
+      return left(
+          Failure("Error marking lesson as completed: ${e.toString()}"));
+    }
   }
 }

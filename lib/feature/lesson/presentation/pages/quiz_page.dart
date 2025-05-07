@@ -1,5 +1,10 @@
+// lib/feature/lesson/presentation/pages/quiz_page.dart
+
 import 'package:app/feature/lesson/domain/entities/lesson.dart';
+import 'package:app/feature/profile/presentation/bloc/profile_bloc.dart';
+import 'package:app/feature/profile/presentation/bloc/profile_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QuizPage extends StatefulWidget {
   final LessonEntity lesson;
@@ -15,6 +20,7 @@ class _QuizPageState extends State<QuizPage> {
   int score = 0;
   bool answered = false;
   int? selectedIndex;
+  bool isQuizCompleted = false;
 
   void _answer(int index) {
     if (answered) return;
@@ -31,38 +37,68 @@ class _QuizPageState extends State<QuizPage> {
     });
 
     Future.delayed(const Duration(seconds: 1), () {
-      setState(() {
-        currentQuestionIndex++;
-        answered = false;
-        selectedIndex = null;
-      });
+      if (currentQuestionIndex + 1 < widget.lesson.quiz.questions.length) {
+        setState(() {
+          currentQuestionIndex++;
+          answered = false;
+          selectedIndex = null;
+        });
+      } else {
+        setState(() {
+          isQuizCompleted = true;
+        });
+      }
     });
+  }
+
+  void _onDonePressed() {
+    final profileBloc = context.read<ProfileBloc>();
+    final currentState = profileBloc.state;
+
+    if (currentState is ProfileLoaded) {
+      final profile = currentState.profile;
+
+      // Обновляем профиль: добавляем id завершённого урока
+      final updatedProfile = profile.copyWith(
+        completedLessons: List.from(profile.completedLessons)
+          ..add(widget.lesson.id),
+      );
+
+      // Отправляем событие обновления профиля
+      profileBloc.add(UpdateProfileDetailsEvent(updatedProfile));
+    }
+
+    // Возвращаемся на HomePage
+    Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
     final questions = widget.lesson.quiz.questions;
 
-    if (currentQuestionIndex >= questions.length) {
+    if (isQuizCompleted) {
       return Scaffold(
         appBar: AppBar(title: const Text('Quiz Completed')),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'Your Score: $score / ${questions.length}',
+                '✅ Your Score: $score / ${questions.length}',
                 style:
                     const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Back to Lessons'),
-              )
+              const SizedBox(height: 30),
+              ElevatedButton.icon(
+                onPressed: _onDonePressed,
+                icon: const Icon(Icons.check),
+                label: const Text('Done'),
+                style: ElevatedButton.styleFrom(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                ),
+              ),
             ],
           ),
         ),
@@ -82,14 +118,16 @@ class _QuizPageState extends State<QuizPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Question ${currentQuestionIndex + 1}/${questions.length}',
+                'Question ${currentQuestionIndex + 1} / ${questions.length}',
                 style: const TextStyle(fontSize: 18),
               ),
               const SizedBox(height: 16),
               Text(
                 question.question,
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 20),
               ...List.generate(question.options.length, (index) {

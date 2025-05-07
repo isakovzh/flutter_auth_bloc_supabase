@@ -23,16 +23,17 @@ class UserProfileDetailsModelAdapter
       avatarUrl: fields[2] as String,
       xp: fields[3] as int,
       level: fields[4] as int,
-      achievements: (fields[5] as List).cast<String>(),
+      achievements: (fields[5] as List?)?.cast<String>() ?? [],
       lessonsCompleted: fields[6] as int,
       mistakes: fields[7] as int,
+      completedLessons: (fields[8] as List?)?.cast<String>() ?? [],
     );
   }
 
   @override
   void write(BinaryWriter writer, UserProfileDetailsModel obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.userId)
       ..writeByte(1)
@@ -48,7 +49,9 @@ class UserProfileDetailsModelAdapter
       ..writeByte(6)
       ..write(obj.lessonsCompleted)
       ..writeByte(7)
-      ..write(obj.mistakes);
+      ..write(obj.mistakes)
+      ..writeByte(8)
+      ..write(obj.completedLessons);
   }
 
   @override

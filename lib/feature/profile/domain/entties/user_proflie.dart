@@ -7,6 +7,7 @@ class UserProfileDetailsEntity {
   final List<String> achievements;
   final int lessonsCompleted;
   final int mistakes;
+  final List<String> completedLessons; // ← новое поле
 
   const UserProfileDetailsEntity({
     required this.userId,
@@ -17,9 +18,9 @@ class UserProfileDetailsEntity {
     required this.achievements,
     required this.lessonsCompleted,
     required this.mistakes,
+    required this.completedLessons, // ← добавлено в конструктор
   });
 
-  // 👇 Добавляем copyWith:
   UserProfileDetailsEntity copyWith({
     String? userId,
     String? username,
@@ -29,6 +30,7 @@ class UserProfileDetailsEntity {
     List<String>? achievements,
     int? lessonsCompleted,
     int? mistakes,
+    List<String>? completedLessons, // ← добавлено в copyWith
   }) {
     return UserProfileDetailsEntity(
       userId: userId ?? this.userId,
@@ -39,6 +41,7 @@ class UserProfileDetailsEntity {
       achievements: achievements ?? this.achievements,
       lessonsCompleted: lessonsCompleted ?? this.lessonsCompleted,
       mistakes: mistakes ?? this.mistakes,
+      completedLessons: completedLessons ?? this.completedLessons,
     );
   }
 }

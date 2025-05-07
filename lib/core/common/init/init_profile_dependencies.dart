@@ -18,7 +18,13 @@ Future<void> initProfileDependencies() async {
     Hive.registerAdapter(UserProfileDetailsModelAdapter());
   }
 
-  final box = await Hive.openBox<UserProfileDetailsModel>('user_profile');
+  final box = await Hive.openBox<UserProfileDetailsModel>('proprofileBox');
+  if (await Hive.boxExists('profileBox')) {
+    var box = await Hive.openBox<UserProfileDetailsModel>('profileBox');
+    await box.clear();
+    await box.close();
+    print('profileBox cleared before reinitialization.');
+  }
 
   // Data Source
   sl.registerLazySingleton<ProfileLocalDataSource>(
@@ -40,5 +46,6 @@ Future<void> initProfileDependencies() async {
         getProfileDetails: sl(),
         updateProfileDetails: sl(),
         clearProfileDetails: sl(),
+        
       ));
 }
