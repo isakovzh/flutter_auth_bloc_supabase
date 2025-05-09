@@ -1,3 +1,4 @@
+import 'package:app/feature/profile/data/model/quiz_result_entry.dart';
 import 'package:hive/hive.dart';
 import 'package:app/feature/profile/domain/entties/user_proflie.dart';
 
@@ -29,8 +30,11 @@ class UserProfileDetailsModel extends HiveObject {
   @HiveField(7)
   final int mistakes;
 
-  @HiveField(8) // ← новое поле в Hive
+  @HiveField(8)
   final List<String> completedLessons;
+
+  @HiveField(9)
+  late List<QuizResultEntry> quizResults;
 
   UserProfileDetailsModel({
     required this.userId,
@@ -42,6 +46,7 @@ class UserProfileDetailsModel extends HiveObject {
     required this.lessonsCompleted,
     required this.mistakes,
     required this.completedLessons,
+    required this.quizResults,
   });
 
   factory UserProfileDetailsModel.fromEntity(UserProfileDetailsEntity entity) {
@@ -55,6 +60,12 @@ class UserProfileDetailsModel extends HiveObject {
       lessonsCompleted: entity.lessonsCompleted,
       mistakes: entity.mistakes,
       completedLessons: entity.completedLessons,
+      quizResults: entity.quizResults.entries
+          .map((e) => QuizResultEntry(
+                lessonId: e.key,
+                correctAnswers: e.value,
+              ))
+          .toList(),
     );
   }
 
@@ -69,6 +80,35 @@ class UserProfileDetailsModel extends HiveObject {
       lessonsCompleted: lessonsCompleted,
       mistakes: mistakes,
       completedLessons: completedLessons,
+      quizResults: {
+        for (var e in quizResults) e.lessonId: e.correctAnswers,
+      },
+    );
+  }
+
+  UserProfileDetailsModel copyWith({
+    String? userId,
+    String? username,
+    String? avatarUrl,
+    int? xp,
+    int? level,
+    List<String>? achievements,
+    int? lessonsCompleted,
+    int? mistakes,
+    List<String>? completedLessons,
+    List<QuizResultEntry>? quizResults,
+  }) {
+    return UserProfileDetailsModel(
+      userId: userId ?? this.userId,
+      username: username ?? this.username,
+      avatarUrl: avatarUrl ?? this.avatarUrl,
+      xp: xp ?? this.xp,
+      level: level ?? this.level,
+      achievements: achievements ?? this.achievements,
+      lessonsCompleted: lessonsCompleted ?? this.lessonsCompleted,
+      mistakes: mistakes ?? this.mistakes,
+      completedLessons: completedLessons ?? this.completedLessons,
+      quizResults: quizResults ?? this.quizResults,
     );
   }
 }

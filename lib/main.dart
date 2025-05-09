@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => sl<AuthBloc>()),
         BlocProvider(create: (_) => sl<ProfileBloc>()),
         BlocProvider(create: (_) => ThemeCubit()),
-         BlocProvider(create: (_) => sl<LessonBloc>()),
+        BlocProvider(create: (_) => sl<LessonBloc>()),
       ],
       child: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, themeMode) {

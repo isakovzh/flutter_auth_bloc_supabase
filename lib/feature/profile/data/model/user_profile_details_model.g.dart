@@ -27,13 +27,14 @@ class UserProfileDetailsModelAdapter
       lessonsCompleted: fields[6] as int,
       mistakes: fields[7] as int,
       completedLessons: (fields[8] as List?)?.cast<String>() ?? [],
+      quizResults: (fields[9] as List?)?.cast<QuizResultEntry>() ?? [],
     );
   }
 
   @override
   void write(BinaryWriter writer, UserProfileDetailsModel obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.userId)
       ..writeByte(1)
@@ -51,7 +52,9 @@ class UserProfileDetailsModelAdapter
       ..writeByte(7)
       ..write(obj.mistakes)
       ..writeByte(8)
-      ..write(obj.completedLessons);
+      ..write(obj.completedLessons)
+      ..writeByte(9)
+      ..write(obj.quizResults);
   }
 
   @override

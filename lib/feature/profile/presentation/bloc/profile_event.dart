@@ -20,9 +20,14 @@ class ClearProfileDetailsEvent extends ProfileEvent {
   const ClearProfileDetailsEvent();
 }
 
-// ✅ Новый event для отметки урока как завершённого
-class MarkLessonCompletedEvent extends ProfileEvent {
+class AddQuizResultEvent extends ProfileEvent {
   final String lessonId;
+  final int correctAnswers;
+  final int totalQuestions;
 
-  const MarkLessonCompletedEvent(this.lessonId);
+  const AddQuizResultEvent({
+    required this.lessonId,
+    required this.correctAnswers,
+    required this.totalQuestions,
+  });
 }

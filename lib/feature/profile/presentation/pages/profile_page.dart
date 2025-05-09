@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:app/core/common/init/init_auth_dependencies.dart';
-import 'package:app/feature/profile/presentation/bloc/profile_state.dart';
 import 'package:app/feature/profile/presentation/widgets/proflie_xp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -3,8 +3,8 @@ import 'package:app/feature/lesson/presentation/bloc/lesson_bloc.dart';
 import 'package:app/feature/lesson/presentation/bloc/lesson_event.dart';
 import 'package:app/feature/lesson/presentation/bloc/lesson_state.dart';
 import 'package:app/feature/lesson/presentation/pages/lesson_details_page.dart';
+import 'package:app/feature/lesson/presentation/pages/quiz_page.dart';
 import 'package:app/feature/profile/presentation/bloc/profile_bloc.dart';
-import 'package:app/feature/profile/presentation/bloc/profile_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,16 +37,18 @@ class HomePage extends StatelessWidget {
 
               return BlocBuilder<ProfileBloc, ProfileState>(
                 builder: (context, profileState) {
+                  Map<String, int> quizResults = {};
                   List<String> completedLessons = [];
 
                   if (profileState is ProfileLoaded) {
                     completedLessons = profileState.profile.completedLessons;
+                   quizResults = profileState.profile.quizResults;
                   }
 
-                  final completedCount = lessons
-                      .where((lesson) => completedLessons.contains(lesson.id))
-                      .length;
-                  final totalXP = completedCount * 100;
+                  final completedCount = completedLessons.length;
+                  final totalXP = profileState is ProfileLoaded
+                      ? profileState.profile.xp
+                      : 0;
                   final progress =
                       lessons.isEmpty ? 0.0 : completedCount / lessons.length;
 
@@ -54,7 +56,7 @@ class HomePage extends StatelessWidget {
                     padding: const EdgeInsets.all(16),
                     child: Column(
                       children: [
-                        // 📊 Progress
+                        // Progress block
                         Container(
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
@@ -82,7 +84,7 @@ class HomePage extends StatelessWidget {
                         ),
                         const SizedBox(height: 20),
 
-                        // 📚 Lessons list
+                        // Lessons list
                         Expanded(
                           child: ListView.builder(
                             itemCount: lessons.length,
@@ -90,6 +92,10 @@ class HomePage extends StatelessWidget {
                               final lesson = lessons[index];
                               final isCompleted =
                                   completedLessons.contains(lesson.id);
+                              final correctAnswers =
+                                  quizResults[lesson.id] ?? 0;
+                              final totalQuestions =
+                                  lesson.quiz.questions.length;
 
                               return Card(
                                 color: isCompleted
@@ -118,8 +124,34 @@ class HomePage extends StatelessWidget {
                                             ),
                                           ),
                                           if (isCompleted)
-                                            const Icon(Icons.check_circle,
-                                                color: Colors.green),
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  correctAnswers ==
+                                                          totalQuestions
+                                                      ? Icons.check_circle
+                                                      : Icons
+                                                          .check_circle_outline,
+                                                  color: correctAnswers ==
+                                                          totalQuestions
+                                                      ? Colors.green
+                                                      : Colors.orange,
+                                                ),
+                                                const SizedBox(width: 6),
+                                                Text(
+                                                  '$correctAnswers/$totalQuestions correct',
+                                                  style: theme
+                                                      .textTheme.bodySmall
+                                                      ?.copyWith(
+                                                    color: correctAnswers ==
+                                                            totalQuestions
+                                                        ? Colors.green.shade700
+                                                        : Colors
+                                                            .orange.shade700,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                         ],
                                       ),
                                       const SizedBox(height: 8),
@@ -150,16 +182,29 @@ class HomePage extends StatelessWidget {
                                             label: const Text("Open"),
                                           ),
                                           const SizedBox(width: 10),
-                                          if (isCompleted)
-                                            ElevatedButton.icon(
-                                              onPressed: () {},
-                                              icon: const Icon(Icons.check),
-                                              label: const Text("Retake Quiz"),
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor:
-                                                    Colors.green.shade600,
-                                              ),
+                                          ElevatedButton.icon(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (_) => QuizPage(
+                                                    lesson: lesson,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            icon: const Icon(Icons.quiz),
+                                            label: Text(
+                                              isCompleted
+                                                  ? "Retake Quiz"
+                                                  : "Take Quiz",
                                             ),
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: isCompleted
+                                                  ? Colors.green.shade600
+                                                  : null,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ],
