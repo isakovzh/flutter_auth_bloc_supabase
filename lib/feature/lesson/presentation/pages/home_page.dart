@@ -42,7 +42,7 @@ class HomePage extends StatelessWidget {
 
                   if (profileState is ProfileLoaded) {
                     completedLessons = profileState.profile.completedLessons;
-                   quizResults = profileState.profile.quizResults;
+                    quizResults = profileState.profile.quizResults;
                   }
 
                   final completedCount = completedLessons.length;
@@ -176,7 +176,11 @@ class HomePage extends StatelessWidget {
                                                       LessonDetailPage(
                                                           lesson: lesson),
                                                 ),
-                                              );
+                                              ).then((_) {
+                                                // 🔥 Когда возвращаемся обратно после квиза — обновляем профиль
+                                                context.read<ProfileBloc>().add(
+                                                    const GetProfileDetailsEvent());
+                                              });
                                             },
                                             icon: const Icon(Icons.menu_book),
                                             label: const Text("Open"),
@@ -191,7 +195,11 @@ class HomePage extends StatelessWidget {
                                                     lesson: lesson,
                                                   ),
                                                 ),
-                                              );
+                                              ).then((_) {
+                                                // 🔥 Когда возвращаемся обратно после квиза — обновляем профиль
+                                                context.read<ProfileBloc>().add(
+                                                    const GetProfileDetailsEvent());
+                                              });
                                             },
                                             icon: const Icon(Icons.quiz),
                                             label: Text(

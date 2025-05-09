@@ -139,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                               },
                               child: RichText(
                                 text: TextSpan(
-                                  text: "Already have an account? Sign In",
+                                  text: "Don't have an account? Sign Up",
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleMedium

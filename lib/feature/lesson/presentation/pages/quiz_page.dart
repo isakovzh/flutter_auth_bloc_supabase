@@ -59,19 +59,16 @@ class _QuizPageState extends State<QuizPage> {
         ),
         actions: [
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               // Отправляем AddQuizResultEvent
               context.read<ProfileBloc>().add(AddQuizResultEvent(
                     lessonId: widget.lesson.id,
                     correctAnswers: correctAnswers,
                     totalQuestions: totalQuestions,
                   ));
-              print(widget.lesson.id);
-              print(correctAnswers);
-              print(totalQuestions);
 
               Navigator.pop(context); // Закрыть диалог
-              Navigator.pop(context); // Вернуться на HomePage
+              Navigator.pop(context); // Закрыть QuizPage
             },
             child: const Text('Done'),
           ),
