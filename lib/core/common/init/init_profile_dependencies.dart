@@ -3,7 +3,9 @@ import 'package:app/feature/profile/data/repository/proflie_repository_impl.dart
 import 'package:app/feature/profile/domain/repository/profile_details_repository.dart';
 import 'package:app/feature/profile/domain/usecases/add_quiz_result.dart';
 import 'package:app/feature/profile/domain/usecases/clear_proflie_deteils.dart';
+import 'package:app/feature/profile/domain/usecases/complete_error_quiz_usecase.dart';
 import 'package:app/feature/profile/domain/usecases/get_proflie_deteild.dart';
+import 'package:app/feature/profile/domain/usecases/update_error_progress_usecase%20.dart';
 import 'package:app/feature/profile/domain/usecases/update_proflie_details.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
@@ -20,15 +22,10 @@ Future<void> initProfileDependencies() async {
   if (!Hive.isAdapterRegistered(UserProfileDetailsModelAdapter().typeId)) {
     Hive.registerAdapter(UserProfileDetailsModelAdapter());
     Hive.registerAdapter(QuizResultEntryAdapter());
-    
-    
   }
 
-  // ❗ Используй одно и то же имя бокса ВЕЗДЕ:
   final box = await Hive.openBox<UserProfileDetailsModel>('profileBox');
-  
 
-  // ✅ УБЕРИ очистку, чтобы не терять данные:
   // if (await Hive.boxExists('profileBox')) {
   //   var box = await Hive.openBox<UserProfileDetailsModel>('profileBox');
   //   await box.clear();
@@ -53,6 +50,8 @@ Future<void> initProfileDependencies() async {
   sl.registerLazySingleton(() => UpdateProfileDetails(sl()));
   sl.registerLazySingleton(() => ClearProfileDetails(sl()));
   sl.registerLazySingleton(() => AddQuizResultUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateErrorProgressUseCase(sl()));
+  sl.registerLazySingleton(() => CompleteErrorQuizUseCase(sl()));
 
   // Bloc
   sl.registerFactory(() => ProfileBloc(
@@ -60,5 +59,7 @@ Future<void> initProfileDependencies() async {
         updateProfileDetails: sl(),
         clearProfileDetails: sl(),
         addQuizResult: sl(),
+        updateErrorProgress: sl(),
+        completeErrorQuiz: sl(),
       ));
 }

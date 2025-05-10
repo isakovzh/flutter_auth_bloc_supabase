@@ -36,6 +36,9 @@ class UserProfileDetailsModel extends HiveObject {
   @HiveField(9)
   late List<QuizResultEntry> quizResults;
 
+  @HiveField(10)
+  final Map<String, Map<int, int>> errorProgress;
+
   UserProfileDetailsModel({
     required this.userId,
     required this.username,
@@ -47,6 +50,7 @@ class UserProfileDetailsModel extends HiveObject {
     required this.mistakes,
     required this.completedLessons,
     required this.quizResults,
+    required this.errorProgress,
   });
 
   factory UserProfileDetailsModel.fromEntity(UserProfileDetailsEntity entity) {
@@ -66,6 +70,7 @@ class UserProfileDetailsModel extends HiveObject {
                 correctAnswers: e.value,
               ))
           .toList(),
+      errorProgress: entity.errorProgress,
     );
   }
 
@@ -83,6 +88,7 @@ class UserProfileDetailsModel extends HiveObject {
       quizResults: {
         for (var e in quizResults) e.lessonId: e.correctAnswers,
       },
+      errorProgress: errorProgress,
     );
   }
 
@@ -97,6 +103,7 @@ class UserProfileDetailsModel extends HiveObject {
     int? mistakes,
     List<String>? completedLessons,
     List<QuizResultEntry>? quizResults,
+    Map<String, Map<int, int>>? errorProgress,
   }) {
     return UserProfileDetailsModel(
       userId: userId ?? this.userId,
@@ -109,6 +116,7 @@ class UserProfileDetailsModel extends HiveObject {
       mistakes: mistakes ?? this.mistakes,
       completedLessons: completedLessons ?? this.completedLessons,
       quizResults: quizResults ?? this.quizResults,
+      errorProgress: errorProgress ?? this.errorProgress,
     );
   }
 }

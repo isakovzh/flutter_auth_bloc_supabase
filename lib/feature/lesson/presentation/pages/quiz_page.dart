@@ -21,13 +21,21 @@ class _QuizPageState extends State<QuizPage> {
   void _answer(int index) {
     if (answered) return;
 
+    final currentQuestion = widget.lesson.quiz.questions[currentQuestionIndex];
+    final isCorrect = index == currentQuestion.correctIndex;
+
     setState(() {
       selectedIndex = index;
       answered = true;
 
-      final currentQuestion =
-          widget.lesson.quiz.questions[currentQuestionIndex];
-      if (index == currentQuestion.correctIndex) {
+      if (!isCorrect) {
+        context.read<ProfileBloc>().add(UpdateErrorProgressEvent(
+              lessonId: widget.lesson.id,
+              questionIndex: currentQuestionIndex,
+              isCorrect: isCorrect,
+            ));
+      }
+      if (isCorrect) {
         correctAnswers++;
       }
     });

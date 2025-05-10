@@ -2,25 +2,27 @@ class UserProfileDetailsEntity {
   final String userId;
   final String username;
   final String avatarUrl;
-  final int level;
   final int xp;
+  final int level;
   final List<String> achievements;
   final int lessonsCompleted;
   final int mistakes;
   final List<String> completedLessons;
-  final Map<String, int> quizResults; // 🆕 добавили сюда
+  final Map<String, int> quizResults;
+  final Map<String, Map<int, int>> errorProgress;
 
   const UserProfileDetailsEntity({
     required this.userId,
     required this.username,
     required this.avatarUrl,
-    required this.level,
     required this.xp,
+    required this.level,
     required this.achievements,
     required this.lessonsCompleted,
     required this.mistakes,
     required this.completedLessons,
-    required this.quizResults, // 👈 добавили в конструктор
+    required this.quizResults,
+    required this.errorProgress,
   });
 
   UserProfileDetailsEntity copyWith({
@@ -33,7 +35,8 @@ class UserProfileDetailsEntity {
     int? lessonsCompleted,
     int? mistakes,
     List<String>? completedLessons,
-    Map<String, int>? quizResults, // 👈 сюда тоже добавляем
+    Map<String, int>? quizResults,
+    Map<String, Map<int, int>>? errorProgress,
   }) {
     return UserProfileDetailsEntity(
       userId: userId ?? this.userId,
@@ -45,7 +48,8 @@ class UserProfileDetailsEntity {
       lessonsCompleted: lessonsCompleted ?? this.lessonsCompleted,
       mistakes: mistakes ?? this.mistakes,
       completedLessons: completedLessons ?? this.completedLessons,
-      quizResults: quizResults ?? this.quizResults, // 👈 здесь тоже
+      quizResults: quizResults ?? this.quizResults,
+      errorProgress: errorProgress ?? this.errorProgress,
     );
   }
 }

@@ -1,12 +1,30 @@
+import 'dart:math';
 import 'package:app/core/common/init/init_auth_dependencies.dart';
 import 'package:app/feature/lesson/presentation/bloc/lesson_bloc.dart';
 import 'package:app/feature/lesson/presentation/bloc/lesson_event.dart';
 import 'package:app/feature/lesson/presentation/bloc/lesson_state.dart';
 import 'package:app/feature/lesson/presentation/pages/lesson_details_page.dart';
 import 'package:app/feature/lesson/presentation/pages/quiz_page.dart';
+import 'package:app/feature/lesson/presentation/pages/error_quiz_page.dart';
 import 'package:app/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+class ErrorQuestion {
+  final String lessonId;
+  final int questionIndex;
+  final String questionText;
+  final List<String> options;
+  final int correctIndex;
+
+  ErrorQuestion({
+    required this.lessonId,
+    required this.questionIndex,
+    required this.questionText,
+    required this.options,
+    required this.correctIndex,
+  });
+}
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -39,10 +57,39 @@ class HomePage extends StatelessWidget {
                 builder: (context, profileState) {
                   Map<String, int> quizResults = {};
                   List<String> completedLessons = [];
+                  List<ErrorQuestion> preparedErrorQuestions = [];
 
                   if (profileState is ProfileLoaded) {
                     completedLessons = profileState.profile.completedLessons;
                     quizResults = profileState.profile.quizResults;
+
+                    // 🔥 Подготавливаем Error Questions здесь
+                    final errorProgress = profileState.profile.errorProgress;
+                    final allErrorQuestions = <ErrorQuestion>[];
+                    print(profileState.profile.errorProgress);
+
+                    for (final lesson in lessons) {
+                      final errorMap = errorProgress[lesson.id];
+                      if (errorMap != null) {
+                        errorMap.forEach((questionIndex, attemptCount) {
+                          final question = lesson.quiz.questions[questionIndex];
+                          allErrorQuestions.add(
+                            ErrorQuestion(
+                              lessonId: lesson.id,
+                              questionIndex: questionIndex,
+                              questionText: question.question,
+                              options: question.options,
+                              correctIndex: question.correctIndex,
+                            ),
+                          );
+                        });
+                      }
+                    }
+
+                    allErrorQuestions.shuffle(Random());
+                    preparedErrorQuestions = allErrorQuestions.take(5).toList();
+                    print(allErrorQuestions.length);
+                    print(preparedErrorQuestions.length);
                   }
 
                   final completedCount = completedLessons.length;
@@ -84,12 +131,95 @@ class HomePage extends StatelessWidget {
                         ),
                         const SizedBox(height: 20),
 
-                        // Lessons list
+                        // Lessons list + Error Quiz card
                         Expanded(
                           child: ListView.builder(
-                            itemCount: lessons.length,
+                            itemCount: lessons.length + 1, // +1 for Error Quiz
                             itemBuilder: (context, index) {
-                              final lesson = lessons[index];
+                              // Error Quiz card at index 0
+                              if (index == 0) {
+                                if (preparedErrorQuestions.length >= 5) {
+                                  return Card(
+                                    color: Colors.red.shade50,
+                                    elevation: 3,
+                                    margin: const EdgeInsets.only(bottom: 16),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              const Icon(Icons.error_outline,
+                                                  color: Colors.red),
+                                              const SizedBox(width: 8),
+                                              Expanded(
+                                                child: Text(
+                                                  'Error Quiz',
+                                                  style: theme
+                                                      .textTheme.titleMedium
+                                                      ?.copyWith(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.red.shade700,
+                                                  ),
+                                                ),
+                                              ),
+                                              Text(
+                                                '${preparedErrorQuestions.length} questions',
+                                                style:
+                                                    theme.textTheme.bodySmall,
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 8),
+                                          Text(
+                                            'Practice your mistakes to improve!',
+                                            style: theme.textTheme.bodySmall
+                                                ?.copyWith(
+                                              color: theme
+                                                  .textTheme.bodySmall?.color
+                                                  ?.withOpacity(0.7),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 12),
+                                          ElevatedButton.icon(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (_) => ErrorQuizPage(
+                                                    errorQuestions:
+                                                        preparedErrorQuestions,
+                                                  ),
+                                                ),
+                                              ).then((_) {
+                                                context.read<ProfileBloc>().add(
+                                                    const GetProfileDetailsEvent());
+                                              });
+                                            },
+                                            icon: const Icon(Icons.play_arrow),
+                                            label:
+                                                const Text('Start Error Quiz'),
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor:
+                                                  Colors.red.shade600,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  return const SizedBox.shrink();
+                                }
+                              }
+
+                              // Regular lessons (index - 1)
+                              final lesson = lessons[index - 1];
                               final isCompleted =
                                   completedLessons.contains(lesson.id);
                               final correctAnswers =
@@ -177,7 +307,6 @@ class HomePage extends StatelessWidget {
                                                           lesson: lesson),
                                                 ),
                                               ).then((_) {
-                                                // 🔥 Когда возвращаемся обратно после квиза — обновляем профиль
                                                 context.read<ProfileBloc>().add(
                                                     const GetProfileDetailsEvent());
                                               });
@@ -196,7 +325,6 @@ class HomePage extends StatelessWidget {
                                                   ),
                                                 ),
                                               ).then((_) {
-                                                // 🔥 Когда возвращаемся обратно после квиза — обновляем профиль
                                                 context.read<ProfileBloc>().add(
                                                     const GetProfileDetailsEvent());
                                               });

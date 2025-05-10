@@ -2,7 +2,9 @@
 
 import 'package:app/core/usecases/usercase.dart';
 import 'package:app/feature/profile/domain/usecases/clear_proflie_deteils.dart';
+import 'package:app/feature/profile/domain/usecases/complete_error_quiz_usecase.dart';
 import 'package:app/feature/profile/domain/usecases/get_proflie_deteild.dart';
+import 'package:app/feature/profile/domain/usecases/update_error_progress_usecase%20.dart';
 import 'package:app/feature/profile/domain/usecases/update_proflie_details.dart';
 import 'package:app/feature/profile/domain/usecases/add_quiz_result.dart'; // ✅ Используем этот UseCase
 import 'package:app/feature/profile/domain/entties/user_proflie.dart';
@@ -17,17 +19,23 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final UpdateProfileDetails updateProfileDetails;
   final ClearProfileDetails clearProfileDetails;
   final AddQuizResultUseCase addQuizResult;
+  final UpdateErrorProgressUseCase updateErrorProgress;
+  final CompleteErrorQuizUseCase completeErrorQuiz;
 
-  ProfileBloc({
-    required this.getProfileDetails,
-    required this.updateProfileDetails,
-    required this.clearProfileDetails,
-    required this.addQuizResult, // ✅ внедрили
-  }) : super(ProfileInitial()) {
+  ProfileBloc(
+      {required this.getProfileDetails,
+      required this.updateProfileDetails,
+      required this.clearProfileDetails,
+      required this.addQuizResult, // ✅ внедрили
+      required this.updateErrorProgress,
+      required this.completeErrorQuiz})
+      : super(ProfileInitial()) {
     on<GetProfileDetailsEvent>(_onGetProfile);
     on<UpdateProfileDetailsEvent>(_onUpdateProfile);
     on<ClearProfileDetailsEvent>(_onClearProfile);
     on<AddQuizResultEvent>(_onAddQuizResult); // ✅ новый обработчик
+    on<UpdateErrorProgressEvent>(_onUpdateErrorProgress);
+    on<CompleteErrorQuizEvent>(_onCompleteErrorQuiz);
   }
 
   Future<void> _onGetProfile(
@@ -81,5 +89,35 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       (failure) => emit(ProfileError(failure.message)),
       (_) => add(const GetProfileDetailsEvent()),
     );
+  }
+
+  Future<void> _onUpdateErrorProgress(
+    UpdateErrorProgressEvent event,
+    Emitter<ProfileState> emit,
+  ) async {
+    emit(ProfileLoading());
+    final result = await updateErrorProgress(UpdateErrorProgressParams(
+      lessonId: event.lessonId,
+      questionIndex: event.questionIndex,
+      isCorrect: event.isCorrect,
+    ));
+    result.match(
+      (failure) => emit(ProfileError(failure.message)),
+      (_) => add(const GetProfileDetailsEvent()),
+    );
+  }
+
+  Future<void> _onCompleteErrorQuiz(
+    CompleteErrorQuizEvent event,
+    Emitter<ProfileState> emit,
+  ) async {
+    if (state is ProfileLoaded) {
+      emit(ProfileLoading());
+      final result = await completeErrorQuiz(event.correctAnswers);
+      result.match(
+        (failure) => emit(ProfileError(failure.message)),
+        (_) => add(const GetProfileDetailsEvent()),
+      );
+    }
   }
 }

@@ -31,3 +31,21 @@ class AddQuizResultEvent extends ProfileEvent {
     required this.totalQuestions,
   });
 }
+
+class UpdateErrorProgressEvent extends ProfileEvent {
+  final String lessonId;
+  final int questionIndex;
+  final bool isCorrect;
+
+  const UpdateErrorProgressEvent({
+    required this.lessonId,
+    required this.questionIndex,
+    required this.isCorrect,
+  });
+}
+
+class CompleteErrorQuizEvent extends ProfileEvent {
+  final int correctAnswers;
+
+  const CompleteErrorQuizEvent(this.correctAnswers);
+}

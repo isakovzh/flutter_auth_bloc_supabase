@@ -16,11 +16,20 @@ import 'package:fpdart/fpdart.dart';
 // }
 abstract interface class ProfileRepository {
   Future<Either<Failure, UserProfileDetailsEntity>> getProfileDetails();
-  Future<Either<Failure, Unit>> updateProfileDetails(UserProfileDetailsEntity entity);
+  Future<Either<Failure, Unit>> updateProfileDetails(
+      UserProfileDetailsEntity entity);
   Future<Either<Failure, Unit>> clearProfileDetails();
   Future<Either<Failure, Unit>> addQuizResult({
     required String lessonId,
     required int correctAnswers,
     required int totalQuestions,
+  });
+  Future<Either<Failure, Unit>> updateErrorProgress({
+    required String lessonId,
+    required int questionIndex,
+    required bool isCorrect,
+  });
+  Future<Either<Failure, Unit>> completeErrorQuiz({
+    required int correctAnswers,
   });
 }

@@ -111,11 +111,11 @@ class ProfilePage extends StatelessWidget {
                         title: Text(
                             'Lessons Completed: ${profile.completedLessons.length}'),
                       ),
-                      ListTile(
-                        leading: const Icon(Icons.error_outline),
-                        title: Text('Mistakes: ${profile.mistakes}'),
-                      ),
-                      const SizedBox(height: 30),
+                      // ListTile(
+                      //   leading: const Icon(Icons.error_outline),
+                      //   title: Text('Mistakes: ${profile.mistakes}'),
+                      // ),
+                      // const SizedBox(height: 30),
                       // ElevatedButton.icon(
                       //   onPressed: () =>
                       //       _pickImageFromGallery(context, profile),

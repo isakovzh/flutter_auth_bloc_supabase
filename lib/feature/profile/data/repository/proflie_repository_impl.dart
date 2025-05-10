@@ -171,6 +171,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
         mistakes: 0,
         completedLessons: [],
         quizResults: [],
+        errorProgress: {},
       );
       await localDataSource.saveProfile(newProfile);
       return right(newProfile.toEntity());
@@ -222,7 +223,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
         return left(Failure("Profile not found"));
       }
 
-      // 2️⃣ Ищем старый результат по этому уроку (с orElse заглушкой!)
+      // 2️⃣ Ищем старый результат по этому уроку
       final oldResult = profile.quizResults.firstWhere(
         (e) => e.lessonId == lessonId,
         orElse: () => QuizResultEntry(lessonId: '', correctAnswers: 0),
@@ -231,14 +232,16 @@ class ProfileRepositoryImpl implements ProfileRepository {
       final bool hasOldResult = oldResult.lessonId.isNotEmpty;
       final int oldCorrectAnswers = hasOldResult ? oldResult.correctAnswers : 0;
 
-      // 3️⃣ Вычисляем XP за улучшение результата
-      int xpGain = 0;
-      if (correctAnswers > oldCorrectAnswers) {
-        final diff = correctAnswers - oldCorrectAnswers;
-        xpGain = ((diff / totalQuestions) * 100).round();
+      // 3️⃣ Проверка: если новый результат не лучше старого — ничего не делаем
+      if (correctAnswers <= oldCorrectAnswers) {
+        return right(unit);
       }
 
-      // 4️⃣ Обновляем список результатов
+      // 4️⃣ Вычисляем XP за улучшение результата
+      final diff = correctAnswers - oldCorrectAnswers;
+      final xpGain = ((diff / totalQuestions) * 100).round();
+
+      // 5️⃣ Обновляем список результатов
       List<QuizResultEntry> updatedResults;
       if (hasOldResult) {
         updatedResults = profile.quizResults.map((e) {
@@ -260,20 +263,91 @@ class ProfileRepositoryImpl implements ProfileRepository {
         ];
       }
 
-      // 5️⃣ Обновляем профиль
-      final updated = profile.copyWith(
+      // 6️⃣ Обновляем профиль
+      final updatedProfile = profile.copyWith(
         xp: profile.xp + xpGain,
-        lessonsCompleted: profile.completedLessons.contains(lessonId)
-            ? profile.lessonsCompleted
-            : profile.lessonsCompleted + 1,
+        quizResults: updatedResults,
         completedLessons: profile.completedLessons.contains(lessonId)
             ? profile.completedLessons
             : [...profile.completedLessons, lessonId],
-        quizResults: updatedResults,
       );
 
-      // 6️⃣ Сохраняем обратно в Hive
+      await localDataSource.updateProfileDetails(updatedProfile);
+      return right(unit);
+    } catch (e) {
+      return left(Failure("Error: ${e.toString()}"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> updateErrorProgress({
+    required String lessonId,
+    required int questionIndex,
+    required bool isCorrect,
+  }) async {
+    try {
+      final user = supabase.auth.currentUser;
+      if (user == null) {
+        return left(Failure("User not authenticated"));
+      }
+
+      final profile = await localDataSource.getProfileDetails(user.id);
+      if (profile == null) {
+        return left(Failure("Profile not found"));
+      }
+
+      final errorProgress = {...profile.errorProgress};
+      final currentLessonErrors =
+          Map<int, int>.from(errorProgress[lessonId] ?? {});
+
+      if (isCorrect) {
+        final count = (currentLessonErrors[questionIndex] ?? 0) + 1;
+        if (count >= 3) {
+          currentLessonErrors.remove(questionIndex);
+        } else {
+          currentLessonErrors[questionIndex] = count;
+        }
+      } else {
+        currentLessonErrors[questionIndex] = 0;
+      }
+
+      if (currentLessonErrors.isEmpty) {
+        errorProgress.remove(lessonId);
+      } else {
+        errorProgress[lessonId] = currentLessonErrors;
+      }
+
+      final updated = profile.copyWith(errorProgress: errorProgress);
       await localDataSource.updateProfileDetails(updated);
+      return right(unit);
+    } catch (e) {
+      return left(Failure("Error updating error progress: ${e.toString()}"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> completeErrorQuiz({
+    required int correctAnswers,
+  }) async {
+    try {
+      final user = supabase.auth.currentUser;
+      if (user == null) {
+        return left(Failure("User not authenticated"));
+      }
+
+      final profile = await localDataSource.getProfileDetails(user.id);
+      if (profile == null) {
+        return left(Failure("Profile not found"));
+      }
+
+      final int xpGain = correctAnswers * 5;
+
+      final updated = profile.copyWith(
+        xp: profile.xp + xpGain,
+      );
+
+      await localDataSource.updateProfileDetails(updated);
+
       return right(unit);
     } catch (e) {
       return left(Failure("Error: ${e.toString()}"));

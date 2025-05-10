@@ -28,3 +28,15 @@ void main() {
     expect(find.text('1'), findsOneWidget);
   });
 }
+
+
+      // userId: fields[0] as String,
+      // username: fields[1] as String,
+      // avatarUrl: fields[2] as String,
+      // xp: fields[3] as int,
+      // level: fields[4] as int,
+      // achievements: (fields[5] as List?)?.cast<String>() ?? [],
+      // lessonsCompleted: fields[6] as int,
+      // mistakes: fields[7] as int,
+      // completedLessons: (fields[8] as List?)?.cast<String>() ?? [],
+      // quizResults: (fields[9] as List?)?.cast<QuizResultEntry>() ?? [],

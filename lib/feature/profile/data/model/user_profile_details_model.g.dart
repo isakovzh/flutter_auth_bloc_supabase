@@ -28,13 +28,16 @@ class UserProfileDetailsModelAdapter
       mistakes: fields[7] as int,
       completedLessons: (fields[8] as List?)?.cast<String>() ?? [],
       quizResults: (fields[9] as List?)?.cast<QuizResultEntry>() ?? [],
+      errorProgress: (fields[10] as Map?)?.map((dynamic k, dynamic v) =>
+              MapEntry(k as String, (v as Map).cast<int, int>())) ??
+          {},
     );
   }
 
   @override
   void write(BinaryWriter writer, UserProfileDetailsModel obj) {
     writer
-      ..writeByte(10)
+      ..writeByte(11)
       ..writeByte(0)
       ..write(obj.userId)
       ..writeByte(1)
@@ -54,7 +57,9 @@ class UserProfileDetailsModelAdapter
       ..writeByte(8)
       ..write(obj.completedLessons)
       ..writeByte(9)
-      ..write(obj.quizResults);
+      ..write(obj.quizResults)
+      ..writeByte(10)
+      ..write(obj.errorProgress);
   }
 
   @override
