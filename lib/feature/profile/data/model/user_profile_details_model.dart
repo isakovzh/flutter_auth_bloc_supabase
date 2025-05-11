@@ -39,6 +39,9 @@ class UserProfileDetailsModel extends HiveObject {
   @HiveField(10)
   final Map<String, Map<int, int>> errorProgress;
 
+  @HiveField(11)
+  final Map<String, double> xpPerDay;
+
   UserProfileDetailsModel({
     required this.userId,
     required this.username,
@@ -51,6 +54,7 @@ class UserProfileDetailsModel extends HiveObject {
     required this.completedLessons,
     required this.quizResults,
     required this.errorProgress,
+    required this.xpPerDay,
   });
 
   factory UserProfileDetailsModel.fromEntity(UserProfileDetailsEntity entity) {
@@ -71,6 +75,7 @@ class UserProfileDetailsModel extends HiveObject {
               ))
           .toList(),
       errorProgress: entity.errorProgress,
+      xpPerDay: entity.xpPerDay,
     );
   }
 
@@ -89,6 +94,7 @@ class UserProfileDetailsModel extends HiveObject {
         for (var e in quizResults) e.lessonId: e.correctAnswers,
       },
       errorProgress: errorProgress,
+      xpPerDay: xpPerDay,
     );
   }
 
@@ -104,6 +110,7 @@ class UserProfileDetailsModel extends HiveObject {
     List<String>? completedLessons,
     List<QuizResultEntry>? quizResults,
     Map<String, Map<int, int>>? errorProgress,
+    Map<String, double>? xpPerDay,
   }) {
     return UserProfileDetailsModel(
       userId: userId ?? this.userId,
@@ -117,6 +124,7 @@ class UserProfileDetailsModel extends HiveObject {
       completedLessons: completedLessons ?? this.completedLessons,
       quizResults: quizResults ?? this.quizResults,
       errorProgress: errorProgress ?? this.errorProgress,
+      xpPerDay: xpPerDay ?? this.xpPerDay,
     );
   }
 }

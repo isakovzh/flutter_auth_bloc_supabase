@@ -54,6 +54,8 @@ class ProfilePage extends StatelessWidget {
 
               if (state is ProfileLoaded) {
                 final profile = state.profile;
+                print(profile.xpPerDay);
+
 
                 return SingleChildScrollView(
                   padding: const EdgeInsets.all(16),
@@ -79,7 +81,8 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      const XPChart(),
+                      XPChart(xpPerDay: profile.xpPerDay),
+
                       const SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,

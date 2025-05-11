@@ -90,6 +90,9 @@ class HomePage extends StatelessWidget {
                     preparedErrorQuestions = allErrorQuestions.take(5).toList();
                     print(allErrorQuestions.length);
                     print(preparedErrorQuestions.length);
+                    print('hell');
+                    print(profileState.profile.xpPerDay);
+                    print('object');
                   }
 
                   final completedCount = completedLessons.length;

@@ -31,13 +31,17 @@ class UserProfileDetailsModelAdapter
       errorProgress: (fields[10] as Map?)?.map((dynamic k, dynamic v) =>
               MapEntry(k as String, (v as Map).cast<int, int>())) ??
           {},
+      xpPerDay: (fields[11] is Map)
+          ? (fields[11] as Map)
+              .map((key, value) => MapEntry(key.toString(), value as double))
+          : {},
     );
   }
 
   @override
   void write(BinaryWriter writer, UserProfileDetailsModel obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.userId)
       ..writeByte(1)
@@ -59,7 +63,9 @@ class UserProfileDetailsModelAdapter
       ..writeByte(9)
       ..write(obj.quizResults)
       ..writeByte(10)
-      ..write(obj.errorProgress);
+      ..write(obj.errorProgress)
+      ..writeByte(11)
+      ..write(obj.xpPerDay);
   }
 
   @override
