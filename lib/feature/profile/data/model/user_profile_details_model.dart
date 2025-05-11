@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:app/feature/profile/domain/entties/user_proflie.dart';
 
 part 'user_profile_details_model.g.dart';
-
+// 📁 lib/feature/profile/data/model/user_profile_details_model.dart
 @HiveType(typeId: 1)
 class UserProfileDetailsModel extends HiveObject {
   @HiveField(0)
@@ -22,7 +22,7 @@ class UserProfileDetailsModel extends HiveObject {
   final int level;
 
   @HiveField(5)
-  final List<String> achievements;
+  final List<String> achievements; // ✅ уже есть
 
   @HiveField(6)
   final int lessonsCompleted;

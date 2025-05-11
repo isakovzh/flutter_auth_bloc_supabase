@@ -4,13 +4,13 @@ class UserProfileDetailsEntity {
   final String avatarUrl;
   final int level;
   final int xp;
-  final List<String> achievements;
+  final List<String> achievements; // ✅ добавлено
   final int lessonsCompleted;
   final int mistakes;
   final List<String> completedLessons;
   final Map<String, int> quizResults;
   final Map<String, Map<int, int>> errorProgress;
-  final Map<String, double> xpPerDay; // 💥 новинка
+  final Map<String, double> xpPerDay;
 
   const UserProfileDetailsEntity({
     required this.userId,
@@ -24,7 +24,7 @@ class UserProfileDetailsEntity {
     required this.completedLessons,
     required this.quizResults,
     required this.errorProgress,
-    required this.xpPerDay, // 💥 новинка
+    required this.xpPerDay,
   });
 
   UserProfileDetailsEntity copyWith({
@@ -39,7 +39,7 @@ class UserProfileDetailsEntity {
     List<String>? completedLessons,
     Map<String, int>? quizResults,
     Map<String, Map<int, int>>? errorProgress,
-    Map<String, double>? xpPerDay, // 💥 новинка
+    Map<String, double>? xpPerDay,
   }) {
     return UserProfileDetailsEntity(
       userId: userId ?? this.userId,
@@ -53,7 +53,7 @@ class UserProfileDetailsEntity {
       completedLessons: completedLessons ?? this.completedLessons,
       quizResults: quizResults ?? this.quizResults,
       errorProgress: errorProgress ?? this.errorProgress,
-      xpPerDay: xpPerDay ?? this.xpPerDay, // 💥 новинка
+      xpPerDay: xpPerDay ?? this.xpPerDay,
     );
   }
 }

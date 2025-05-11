@@ -3,10 +3,11 @@ import 'package:hive/hive.dart';
 
 abstract interface class ProfileLocalDataSource {
   Future<void> updateProfileDetails(UserProfileDetailsModel model);
-  Future<UserProfileDetailsModel?> getProfileDetails(
-      String userId); // <-- обновлённый метод
-  Future<void> clearProfileDetails(String userId); // <-- обновлённый
-  Future<void> saveProfile(UserProfileDetailsModel model); // <-- новый
+  Future<UserProfileDetailsModel?> getProfileDetails(String userId);
+  Future<void> clearProfileDetails(String userId);
+  Future<void> saveProfile(UserProfileDetailsModel model);
+  Future<void> unlockAchievement(
+      String userId, String achievementId); // ✅ добавлено
 }
 
 class ProfileLocalDataSourceImpl implements ProfileLocalDataSource {
@@ -16,7 +17,7 @@ class ProfileLocalDataSourceImpl implements ProfileLocalDataSource {
 
   @override
   Future<void> updateProfileDetails(UserProfileDetailsModel model) async {
-    await _box.put(model.userId, model); // userId как ключ
+    await _box.put(model.userId, model);
   }
 
   @override
@@ -32,5 +33,19 @@ class ProfileLocalDataSourceImpl implements ProfileLocalDataSource {
   @override
   Future<void> saveProfile(UserProfileDetailsModel model) async {
     await _box.put(model.userId, model);
+  }
+
+  @override
+  Future<void> unlockAchievement(String userId, String achievementId) async {
+    final profile = await getProfileDetails(userId);
+    if (profile == null) return;
+
+    if (!profile.achievements.contains(achievementId)) {
+      final updated = profile.copyWith(
+        achievements: [...profile.achievements, achievementId],
+      );
+      await updateProfileDetails(updated);
+      print('📝 Сохраняем достижение: $achievementId');
+    }
   }
 }

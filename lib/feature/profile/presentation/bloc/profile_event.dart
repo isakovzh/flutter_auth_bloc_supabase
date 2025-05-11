@@ -24,11 +24,13 @@ class AddQuizResultEvent extends ProfileEvent {
   final String lessonId;
   final int correctAnswers;
   final int totalQuestions;
+  final BuildContext context;
 
   const AddQuizResultEvent({
     required this.lessonId,
     required this.correctAnswers,
     required this.totalQuestions,
+    required this.context,
   });
 }
 

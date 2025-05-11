@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:app/core/common/init/init_auth_dependencies.dart';
+import 'package:app/feature/profile/presentation/widgets/achievement_gallery.dart';
 import 'package:app/feature/profile/presentation/widgets/proflie_xp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,7 +57,6 @@ class ProfilePage extends StatelessWidget {
                 final profile = state.profile;
                 print(profile.xpPerDay);
 
-
                 return SingleChildScrollView(
                   padding: const EdgeInsets.all(16),
                   child: Column(
@@ -94,19 +94,17 @@ class ProfilePage extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 20),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Achievements:',
-                          style: Theme.of(context).textTheme.titleMedium,
+                      ElevatedButton.icon(
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => AchievementGalleryPage(
+                              unlocked: profile.achievements,
+                            ),
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      Wrap(
-                        spacing: 10,
-                        children: profile.achievements
-                            .map((e) => Chip(label: Text(e)))
-                            .toList(),
+                        icon: const Icon(Icons.emoji_events),
+                        label: const Text("Посмотреть достижения"),
                       ),
                       const SizedBox(height: 20),
                       ListTile(

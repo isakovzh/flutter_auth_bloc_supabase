@@ -66,7 +66,7 @@ class HomePage extends StatelessWidget {
                     // 🔥 Подготавливаем Error Questions здесь
                     final errorProgress = profileState.profile.errorProgress;
                     final allErrorQuestions = <ErrorQuestion>[];
-                    print(profileState.profile.errorProgress);
+                    // print(profileState.profile.errorProgress);
 
                     for (final lesson in lessons) {
                       final errorMap = errorProgress[lesson.id];
@@ -88,11 +88,8 @@ class HomePage extends StatelessWidget {
 
                     allErrorQuestions.shuffle(Random());
                     preparedErrorQuestions = allErrorQuestions.take(5).toList();
-                    print(allErrorQuestions.length);
-                    print(preparedErrorQuestions.length);
-                    print('hell');
-                    print(profileState.profile.xpPerDay);
-                    print('object');
+                    // print('hell');
+                    // print(profileState.profile.xpPerDay);
                   }
 
                   final completedCount = completedLessons.length;

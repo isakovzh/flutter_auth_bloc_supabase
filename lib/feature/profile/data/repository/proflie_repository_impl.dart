@@ -1,5 +1,9 @@
 import 'package:app/core/error/failure.dart';
+import 'package:app/core/utils/global_keys.dart';
+import 'package:app/core/utils/show_achievement_toast.dart';
 import 'package:app/feature/profile/data/model/quiz_result_entry.dart';
+import 'package:flutter/material.dart';
+
 import 'package:fpdart/fpdart.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:app/feature/profile/data/datacources/profile_local_datasource.dart';
@@ -73,12 +77,14 @@ class ProfileRepositoryImpl implements ProfileRepository {
       return left(Failure("Error: \${e.toString()}"));
     }
   }
+// === Обновлено: используем BuildContext напрямую ===
 
   @override
   Future<Either<Failure, Unit>> addQuizResult({
     required String lessonId,
     required int correctAnswers,
     required int totalQuestions,
+    required BuildContext context, // добавлен контекст
   }) async {
     try {
       final user = supabase.auth.currentUser;
@@ -105,6 +111,12 @@ class ProfileRepositoryImpl implements ProfileRepository {
 
       final diff = correctAnswers - oldCorrectAnswers;
       final xpGain = ((diff / totalQuestions) * 100).round();
+      final today = DateTime.now();
+      final todayStr =
+          "${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}";
+
+      final updatedXpPerDay = Map<String, double>.from(profile.xpPerDay);
+      updatedXpPerDay[todayStr] = (updatedXpPerDay[todayStr] ?? 0) + xpGain;
 
       List<QuizResultEntry> updatedResults;
       if (hasOldResult) {
@@ -134,9 +146,22 @@ class ProfileRepositoryImpl implements ProfileRepository {
         completedLessons: profile.completedLessons.contains(lessonId)
             ? profile.completedLessons
             : [...profile.completedLessons, lessonId],
+        xpPerDay: updatedXpPerDay,
       );
 
       await localDataSource.updateProfileDetails(updatedProfile);
+
+      final unlocked = await checkAndUnlockAchievements(
+        profile: updatedProfile,
+        correctAnswers: correctAnswers,
+        totalQuestions: totalQuestions,
+      );
+
+      for (final id in unlocked) {
+        Future.delayed(const Duration(milliseconds: 300), () {
+          showAchievementToast(context, id);
+        });
+      }
       return right(unit);
     } catch (e) {
       return left(Failure("Error: \${e.toString()}"));
@@ -205,16 +230,82 @@ class ProfileRepositoryImpl implements ProfileRepository {
       }
 
       final int xpGain = correctAnswers * 5;
+      final today = DateTime.now();
+      final todayStr =
+          "${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}";
+
+      final updatedXpPerDay = Map<String, double>.from(profile.xpPerDay);
+      updatedXpPerDay[todayStr] = (updatedXpPerDay[todayStr] ?? 0) + xpGain;
 
       final updated = profile.copyWith(
         xp: profile.xp + xpGain,
         level: _calculateLevel(profile.xp + xpGain),
+        xpPerDay: updatedXpPerDay,
       );
 
       await localDataSource.updateProfileDetails(updated);
+
+      final unlocked = await checkAndUnlockErrorAchievement(updated);
+
+      for (final id in unlocked) {
+        Future.delayed(const Duration(milliseconds: 300), () {
+          final ctx = navigatorKey.currentContext;
+          if (ctx != null) {
+            showAchievementToast(ctx, id);
+            
+          }
+        });
+      }
       return right(unit);
     } catch (e) {
       return left(Failure("Error: \${e.toString()}"));
     }
+  }
+}
+
+extension ProfileAchievementChecker on ProfileRepositoryImpl {
+  Future<List<String>> checkAndUnlockAchievements({
+    required UserProfileDetailsModel profile,
+    required int correctAnswers,
+    required int totalQuestions,
+  }) async {
+    final userId = profile.userId;
+    List<String> unlockedNow = [];
+
+    if (!profile.achievements.contains("first_quiz_passed")) {
+      await localDataSource.unlockAchievement(userId, "first_quiz_passed");
+      unlockedNow.add("first_quiz_passed");
+    }
+
+    if (correctAnswers == totalQuestions &&
+        !profile.achievements.contains("perfect_quiz_score")) {
+      await localDataSource.unlockAchievement(userId, "perfect_quiz_score");
+      unlockedNow.add("perfect_quiz_score");
+    }
+
+    if ((profile.xp >= 100) && !profile.achievements.contains("xp_100")) {
+      await localDataSource.unlockAchievement(userId, "xp_100");
+      unlockedNow.add("xp_100");
+    }
+
+    if ((profile.completedLessons.length >= 5) &&
+        !profile.achievements.contains("lesson_5_completed")) {
+      await localDataSource.unlockAchievement(userId, "lesson_5_completed");
+      unlockedNow.add("lesson_5_completed");
+    }
+
+    return unlockedNow;
+  }
+
+  Future<List<String>> checkAndUnlockErrorAchievement(
+      UserProfileDetailsModel profile) async {
+    List<String> unlockedNow = [];
+    if (profile.mistakes == 0 &&
+        !profile.achievements.contains("cleared_all_mistakes")) {
+      await localDataSource.unlockAchievement(
+          profile.userId, "cleared_all_mistakes");
+      unlockedNow.add("cleared_all_mistakes");
+    }
+    return unlockedNow;
   }
 }

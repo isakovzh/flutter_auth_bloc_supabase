@@ -1,5 +1,6 @@
 import 'package:app/core/error/failure.dart';
 import 'package:app/feature/profile/domain/entties/user_proflie.dart';
+import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 
 // abstract interface class ProfileRepository {
@@ -23,6 +24,7 @@ abstract interface class ProfileRepository {
     required String lessonId,
     required int correctAnswers,
     required int totalQuestions,
+    required BuildContext context,
   });
   Future<Either<Failure, Unit>> updateErrorProgress({
     required String lessonId,

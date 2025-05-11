@@ -9,6 +9,7 @@ import 'package:app/feature/profile/domain/usecases/update_proflie_details.dart'
 import 'package:app/feature/profile/domain/usecases/add_quiz_result.dart'; // ✅ Используем этот UseCase
 import 'package:app/feature/profile/domain/entties/user_proflie.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'profile_event.dart';
@@ -84,6 +85,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       lessonId: event.lessonId,
       correctAnswers: event.correctAnswers,
       totalQuestions: event.totalQuestions,
+       context: event.context, 
     ));
     result.match(
       (failure) => emit(ProfileError(failure.message)),

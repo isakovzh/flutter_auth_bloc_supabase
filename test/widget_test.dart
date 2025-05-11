@@ -29,8 +29,16 @@ void main() {
   });
 }
 
+ 
+ 
+  // final today = DateTime.now();
+  //     final todayStr =
+  //         "${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}";
 
-      // userId: fields[0] as String,
+  //     final updatedXpPerDay = Map<String, double>.from(profile.xpPerDay);
+  //     updatedXpPerDay[todayStr] = (updatedXpPerDay[todayStr] ?? 0) + xpGain;
+
+      //   userId: fields[0] as String,
       // username: fields[1] as String,
       // avatarUrl: fields[2] as String,
       // xp: fields[3] as int,
@@ -43,3 +51,7 @@ void main() {
       // errorProgress: (fields[10] as Map?)?.map((dynamic k, dynamic v) =>
       //         MapEntry(k as String, (v as Map).cast<int, int>())) ??
       //     {},
+      // xpPerDay: (fields[11] is Map)
+      //     ? (fields[11] as Map)
+      //         .map((key, value) => MapEntry(key.toString(), value as double))
+      //     : {},

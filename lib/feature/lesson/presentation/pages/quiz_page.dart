@@ -73,6 +73,7 @@ class _QuizPageState extends State<QuizPage> {
                     lessonId: widget.lesson.id,
                     correctAnswers: correctAnswers,
                     totalQuestions: totalQuestions,
+                    context: context,
                   ));
 
               Navigator.pop(context); // Закрыть диалог
