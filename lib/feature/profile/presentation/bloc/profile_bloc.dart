@@ -85,7 +85,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       lessonId: event.lessonId,
       correctAnswers: event.correctAnswers,
       totalQuestions: event.totalQuestions,
-       context: event.context, 
+      context: event.context,
     ));
     result.match(
       (failure) => emit(ProfileError(failure.message)),
@@ -115,7 +115,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ) async {
     if (state is ProfileLoaded) {
       emit(ProfileLoading());
-      final result = await completeErrorQuiz(event.correctAnswers);
+
+      final result = await completeErrorQuiz(
+        CompleteErrorQuizParams(
+          correctAnswers: event.correctAnswers,
+          context: event.context,
+        ),
+      );
+
       result.match(
         (failure) => emit(ProfileError(failure.message)),
         (_) => add(const GetProfileDetailsEvent()),

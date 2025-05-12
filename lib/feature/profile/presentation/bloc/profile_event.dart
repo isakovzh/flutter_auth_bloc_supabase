@@ -48,6 +48,10 @@ class UpdateErrorProgressEvent extends ProfileEvent {
 
 class CompleteErrorQuizEvent extends ProfileEvent {
   final int correctAnswers;
+  final BuildContext context;
 
-  const CompleteErrorQuizEvent(this.correctAnswers);
+  const CompleteErrorQuizEvent({
+    required this.correctAnswers,
+    required this.context,
+  });
 }

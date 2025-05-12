@@ -74,9 +74,12 @@ class _ErrorQuizPageState extends State<ErrorQuizPage> {
         actions: [
           TextButton(
             onPressed: () {
-              context
-                  .read<ProfileBloc>()
-                  .add(CompleteErrorQuizEvent(correctAnswers));
+              context.read<ProfileBloc>().add(
+                    CompleteErrorQuizEvent(
+                      correctAnswers: correctAnswers,
+                      context: context,
+                    ),
+                  );
 
               Navigator.pop(context); // Закрыть диалог
               Navigator.pop(context); // Вернуться на HomePage

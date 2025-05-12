@@ -1,5 +1,4 @@
 import 'package:app/core/error/failure.dart';
-import 'package:app/core/utils/global_keys.dart';
 import 'package:app/core/utils/show_achievement_toast.dart';
 import 'package:app/feature/profile/data/model/quiz_result_entry.dart';
 import 'package:flutter/material.dart';
@@ -111,6 +110,13 @@ class ProfileRepositoryImpl implements ProfileRepository {
 
       final diff = correctAnswers - oldCorrectAnswers;
       final xpGain = ((diff / totalQuestions) * 100).round();
+      // // final today = DateTime.now();
+      // const todayStr =
+      //     "\${today.year}-\${today.month.toString().padLeft(2, '0')}-\${today.day.toString().padLeft(2, '0')}";
+
+      // final updatedXpPerDay = Map<String, double>.from(profile.xpPerDay);
+      // updatedXpPerDay[todayStr] = (updatedXpPerDay[todayStr] ?? 0) + xpGain;
+
       final today = DateTime.now();
       final todayStr =
           "${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}";
@@ -158,9 +164,10 @@ class ProfileRepositoryImpl implements ProfileRepository {
       );
 
       for (final id in unlocked) {
-        Future.delayed(const Duration(milliseconds: 300), () {
-          showAchievementToast(context, id);
-        });
+        if (!context.mounted) break;
+        showAchievementToast(context, id);
+        await Future.delayed(
+            const Duration(seconds: 2)); // ⏳ Пауза между тостами
       }
       return right(unit);
     } catch (e) {
@@ -217,6 +224,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
   @override
   Future<Either<Failure, Unit>> completeErrorQuiz({
     required int correctAnswers,
+    required BuildContext context,
   }) async {
     try {
       final user = supabase.auth.currentUser;
@@ -248,17 +256,14 @@ class ProfileRepositoryImpl implements ProfileRepository {
       final unlocked = await checkAndUnlockErrorAchievement(updated);
 
       for (final id in unlocked) {
-        Future.delayed(const Duration(milliseconds: 300), () {
-          final ctx = navigatorKey.currentContext;
-          if (ctx != null) {
-            showAchievementToast(ctx, id);
-            
-          }
-        });
+        if (!context.mounted) break;
+        showAchievementToast(context, id);
+        await Future.delayed(const Duration(seconds: 2));
       }
+
       return right(unit);
     } catch (e) {
-      return left(Failure("Error: \${e.toString()}"));
+      return left(Failure("Error: ${e.toString()}"));
     }
   }
 }

@@ -19,7 +19,7 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _pages = const [
     HomePage(),
     CharactersPage(),
-    ManasOriginalPage(),
+    ManasChaptersPage(),
     ProfilePage(),
   ];
 

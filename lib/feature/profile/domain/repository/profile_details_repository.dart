@@ -33,5 +33,6 @@ abstract interface class ProfileRepository {
   });
   Future<Either<Failure, Unit>> completeErrorQuiz({
     required int correctAnswers,
+    required BuildContext context,
   });
 }
