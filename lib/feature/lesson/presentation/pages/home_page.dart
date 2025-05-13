@@ -1,5 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:math';
 import 'package:app/core/common/init/init_auth_dependencies.dart';
+import 'package:app/feature/lesson/domain/entities/eroor_quiesttion.dart';
 import 'package:app/feature/lesson/presentation/bloc/lesson_bloc.dart';
 import 'package:app/feature/lesson/presentation/bloc/lesson_event.dart';
 import 'package:app/feature/lesson/presentation/bloc/lesson_state.dart';
@@ -9,22 +12,6 @@ import 'package:app/feature/lesson/presentation/pages/error_quiz_page.dart';
 import 'package:app/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-class ErrorQuestion {
-  final String lessonId;
-  final int questionIndex;
-  final String questionText;
-  final List<String> options;
-  final int correctIndex;
-
-  ErrorQuestion({
-    required this.lessonId,
-    required this.questionIndex,
-    required this.questionText,
-    required this.options,
-    required this.correctIndex,
-  });
-}
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

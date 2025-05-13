@@ -5,10 +5,6 @@ void showAchievementToast(BuildContext context, String achievementId) {
   print('🏆 Показываем тост для: $achievementId');
 
   final overlay = Overlay.of(context);
-  if (overlay == null) {
-    print('❌ Overlay не найден');
-    return;
-  }
 
   final message = _getDescription(achievementId);
 

@@ -77,7 +77,6 @@ class ManasChaptersPage extends StatelessWidget {
   }
 }
 
-// === Обновлённый ManasOriginalPage с поддержкой модели ===
 class ManasOriginalPage extends StatefulWidget {
   final EpsChapterModel chapter;
   const ManasOriginalPage({super.key, required this.chapter});
@@ -90,11 +89,33 @@ class _ManasOriginalPageState extends State<ManasOriginalPage> {
   final AudioPlayer _player = AudioPlayer();
   bool isPlaying = false;
 
+  Duration _currentPosition = Duration.zero;
+  Duration _totalDuration = Duration.zero;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Слушаем изменения позиции
+    _player.onPositionChanged.listen((position) {
+      setState(() {
+        _currentPosition = position;
+      });
+    });
+
+    // Слушаем установку общей длительности
+    _player.onDurationChanged.listen((duration) {
+      setState(() {
+        _totalDuration = duration;
+      });
+    });
+  }
+
   void _togglePlay() async {
     if (isPlaying) {
       await _player.pause();
     } else {
-      await _player.play(AssetSource(widget.chapter.audio.replaceFirst('assets/audio/', '')));
+      await _player.play(AssetSource(widget.chapter.audio));
     }
 
     setState(() {
@@ -106,6 +127,12 @@ class _ManasOriginalPageState extends State<ManasOriginalPage> {
   void dispose() {
     _player.dispose();
     super.dispose();
+  }
+
+  String _formatDuration(Duration duration) {
+    final minutes = duration.inMinutes.remainder(60).toString().padLeft(2, '0');
+    final seconds = duration.inSeconds.remainder(60).toString().padLeft(2, '0');
+    return '$minutes:$seconds';
   }
 
   @override
@@ -125,6 +152,30 @@ class _ManasOriginalPageState extends State<ManasOriginalPage> {
               ),
             ),
             const SizedBox(height: 16),
+
+            /// ▶️ Прогресс проигрывания
+            Column(
+              children: [
+                Slider(
+                  value: _currentPosition.inSeconds.toDouble(),
+                  max: _totalDuration.inSeconds.toDouble(),
+                  onChanged: (value) {
+                    _player.seek(Duration(seconds: value.toInt()));
+                  },
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(_formatDuration(_currentPosition)),
+                    Text(_formatDuration(_totalDuration)),
+                  ],
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 10),
+
+            /// ▶️ Кнопка Play / Pause
             ElevatedButton.icon(
               onPressed: _togglePlay,
               icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow),
@@ -136,4 +187,3 @@ class _ManasOriginalPageState extends State<ManasOriginalPage> {
     );
   }
 }
- 

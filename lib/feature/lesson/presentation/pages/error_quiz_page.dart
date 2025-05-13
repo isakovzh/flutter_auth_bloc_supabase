@@ -1,7 +1,7 @@
+import 'package:app/feature/lesson/domain/entities/eroor_quiesttion.dart';
 import 'package:app/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../lesson/presentation/pages/home_page.dart'; // Импортируй свой ErrorQuestion
 
 class ErrorQuizPage extends StatefulWidget {
   final List<ErrorQuestion> errorQuestions;

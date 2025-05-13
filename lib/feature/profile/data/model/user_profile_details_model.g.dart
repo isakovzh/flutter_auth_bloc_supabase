@@ -23,18 +23,14 @@ class UserProfileDetailsModelAdapter
       avatarUrl: fields[2] as String,
       xp: fields[3] as int,
       level: fields[4] as int,
-      achievements: (fields[5] as List?)?.cast<String>() ?? [],
+      achievements: (fields[5] as List).cast<String>(),
       lessonsCompleted: fields[6] as int,
       mistakes: fields[7] as int,
-      completedLessons: (fields[8] as List?)?.cast<String>() ?? [],
-      quizResults: (fields[9] as List?)?.cast<QuizResultEntry>() ?? [],
-      errorProgress: (fields[10] as Map?)?.map((dynamic k, dynamic v) =>
-              MapEntry(k as String, (v as Map).cast<int, int>())) ??
-          {},
-      xpPerDay: (fields[11] is Map)
-          ? (fields[11] as Map)
-              .map((key, value) => MapEntry(key.toString(), value as double))
-          : {},
+      completedLessons: (fields[8] as List).cast<String>(),
+      quizResults: (fields[9] as List).cast<QuizResultEntry>(),
+      errorProgress: (fields[10] as Map).map((dynamic k, dynamic v) =>
+          MapEntry(k as String, (v as Map).cast<int, int>())),
+      xpPerDay: (fields[11] as Map).cast<String, double>(),
     );
   }
 

@@ -22,7 +22,7 @@ class UserProfileDetailsModel extends HiveObject {
   final int level;
 
   @HiveField(5)
-  final List<String> achievements; // ✅ уже есть
+  final List<String> achievements; 
 
   @HiveField(6)
   final int lessonsCompleted;
