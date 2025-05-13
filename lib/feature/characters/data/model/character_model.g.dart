@@ -22,13 +22,14 @@ class CharacterModelAdapter extends TypeAdapter<CharacterModel> {
       description: fields[2] as String,
       imageUrl: fields[3] as String,
       isUnlocked: fields[4] as bool,
+      userId: fields[5] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, CharacterModel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -38,7 +39,9 @@ class CharacterModelAdapter extends TypeAdapter<CharacterModel> {
       ..writeByte(3)
       ..write(obj.imageUrl)
       ..writeByte(4)
-      ..write(obj.isUnlocked);
+      ..write(obj.isUnlocked)
+      ..writeByte(5)
+      ..write(obj.userId);
   }
 
   @override

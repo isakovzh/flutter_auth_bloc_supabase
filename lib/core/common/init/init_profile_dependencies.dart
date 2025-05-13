@@ -61,5 +61,7 @@ Future<void> initProfileDependencies() async {
         addQuizResult: sl(),
         updateErrorProgress: sl(),
         completeErrorQuiz: sl(),
+        profileRepository: sl(),
+        
       ));
 }

@@ -55,3 +55,8 @@ class CompleteErrorQuizEvent extends ProfileEvent {
     required this.context,
   });
 }
+
+class AddXPEvent extends ProfileEvent {
+  final int xp;
+  const AddXPEvent(this.xp);
+}

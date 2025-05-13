@@ -12,3 +12,13 @@ class UnlockCharacterUseCase {
   UnlockCharacterUseCase(this.repository);
   Future<void> call(String id) => repository.unlockCharacter(id);
 }
+
+class InitCharactersUseCase {
+  final CharacterRepository repository;
+
+  InitCharactersUseCase(this.repository);
+
+  Future<void> call() async {
+    await repository.initCharacters();
+  }
+}

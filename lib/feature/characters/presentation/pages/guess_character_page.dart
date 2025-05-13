@@ -1,5 +1,6 @@
 import 'package:app/feature/characters/domain/entity/characters.dart';
 import 'package:app/feature/characters/presentation/bloc/character_bloc.dart';
+import 'package:app/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,9 +23,11 @@ class _GuessCharacterPageState extends State<GuessCharacterPage> {
 
     if (input == correct) {
       if (!widget.character.isUnlocked) {
+        print("📢 Отправляем AddXPEvent");
         context
             .read<CharacterBloc>()
             .add(UnlockCharacterEvent(widget.character.id));
+        context.read<ProfileBloc>().add(const AddXPEvent(15));
       }
 
       setState(() {

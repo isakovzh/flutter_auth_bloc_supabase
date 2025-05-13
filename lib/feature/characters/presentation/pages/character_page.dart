@@ -1,3 +1,4 @@
+import 'package:app/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:app/feature/characters/presentation/bloc/character_bloc.dart';
@@ -40,10 +41,8 @@ class CharactersPage extends StatelessWidget {
               padding: const EdgeInsets.all(12),
               child: Column(
                 children: [
-                  /// 🔥 Прогресс-блок
                   Container(
                     padding: const EdgeInsets.all(16),
-                    margin: const EdgeInsets.only(bottom: 20),
                     decoration: BoxDecoration(
                       color: theme.colorScheme.surface,
                       borderRadius: BorderRadius.circular(12),
@@ -51,21 +50,48 @@ class CharactersPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Characters Unlocked",
-                            style: theme.textTheme.bodyLarge),
+                        Text("XP: ${ProfileState}", style: theme.textTheme.bodyLarge),
                         Text(
-                          "$unlockedCount / $totalCount unlocked",
+                          "Characters Unlocked: $unlockedCount / ${characters.length}",
                           style: theme.textTheme.bodyMedium,
                         ),
                         const SizedBox(height: 10),
                         LinearProgressIndicator(
                           value: progress,
                           backgroundColor: theme.dividerColor,
+                          color: theme.colorScheme.primary,
                           minHeight: 10,
                         ),
                       ],
                     ),
                   ),
+
+                  /// 🔥 Прогресс-блок
+                  // Container(
+                  //   padding: const EdgeInsets.all(16),
+                  //   margin: const EdgeInsets.only(bottom: 20),
+                  //   decoration: BoxDecoration(
+                  //     color: theme.colorScheme.surface,
+                  //     borderRadius: BorderRadius.circular(12),
+                  //   ),
+                  //   child: Column(
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: [
+                  //       Text("Characters Unlocked",
+                  //           style: theme.textTheme.bodyLarge),
+                  //       Text(
+                  //         "$unlockedCount / $totalCount unlocked",
+                  //         style: theme.textTheme.bodyMedium,
+                  //       ),
+                  //       const SizedBox(height: 10),
+                  //       LinearProgressIndicator(
+                  //         value: progress,
+                  //         backgroundColor: theme.dividerColor,
+                  //         minHeight: 10,
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
 
                   /// 🔥 Сетка персонажей
                   Expanded(

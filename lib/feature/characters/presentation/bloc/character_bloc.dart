@@ -6,14 +6,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'character_event.dart';
 part 'character_state.dart';
 
-
 class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
   final GetAllCharactersUseCase getAllCharacters;
   final UnlockCharacterUseCase unlockCharacter;
+  final InitCharactersUseCase initCharacters;
 
   CharacterBloc({
     required this.getAllCharacters,
     required this.unlockCharacter,
+    required this.initCharacters,
   }) : super(CharacterInitial()) {
     on<LoadCharactersEvent>(_onLoadCharacters);
     on<UnlockCharacterEvent>(_onUnlockCharacter);
@@ -25,6 +26,7 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
   ) async {
     emit(CharacterLoading());
     try {
+      await initCharacters();
       final characters = await getAllCharacters();
       emit(CharacterLoaded(characters));
     } catch (e) {

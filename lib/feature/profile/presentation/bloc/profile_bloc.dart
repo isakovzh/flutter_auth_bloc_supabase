@@ -1,6 +1,7 @@
 // lib/feature/profile/presentation/bloc/profile_bloc.dart
 
 import 'package:app/core/usecases/usercase.dart';
+import 'package:app/feature/profile/domain/repository/profile_details_repository.dart';
 import 'package:app/feature/profile/domain/usecases/clear_proflie_deteils.dart';
 import 'package:app/feature/profile/domain/usecases/complete_error_quiz_usecase.dart';
 import 'package:app/feature/profile/domain/usecases/get_proflie_deteild.dart';
@@ -22,21 +23,46 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final AddQuizResultUseCase addQuizResult;
   final UpdateErrorProgressUseCase updateErrorProgress;
   final CompleteErrorQuizUseCase completeErrorQuiz;
+  final ProfileRepository profileRepository;
 
-  ProfileBloc(
-      {required this.getProfileDetails,
-      required this.updateProfileDetails,
-      required this.clearProfileDetails,
-      required this.addQuizResult, // ✅ внедрили
-      required this.updateErrorProgress,
-      required this.completeErrorQuiz})
-      : super(ProfileInitial()) {
+  ProfileBloc({
+    required this.getProfileDetails,
+    required this.updateProfileDetails,
+    required this.clearProfileDetails,
+    required this.addQuizResult, // ✅ внедрили
+    required this.updateErrorProgress,
+    required this.completeErrorQuiz,
+    required this.profileRepository,
+  }) : super(ProfileInitial()) {
     on<GetProfileDetailsEvent>(_onGetProfile);
     on<UpdateProfileDetailsEvent>(_onUpdateProfile);
     on<ClearProfileDetailsEvent>(_onClearProfile);
     on<AddQuizResultEvent>(_onAddQuizResult); // ✅ новый обработчик
     on<UpdateErrorProgressEvent>(_onUpdateErrorProgress);
     on<CompleteErrorQuizEvent>(_onCompleteErrorQuiz);
+    on<AddXPEvent>((event, emit) async {
+      if (state is ProfileLoaded) {
+        final current = (state as ProfileLoaded).profile;
+        final newXP = current.xp + event.xp;
+
+        // 📅 Обновляем xpPerDay
+        final today = DateTime.now();
+        final todayStr =
+            "${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}";
+
+        final updatedXpPerDay = Map<String, double>.from(current.xpPerDay);
+        updatedXpPerDay[todayStr] = (updatedXpPerDay[todayStr] ?? 0) + event.xp;
+
+        final updated = current.copyWith(
+          xp: newXP,
+          level: (newXP ~/ 100) + 1,
+          xpPerDay: updatedXpPerDay,
+        );
+
+        await profileRepository.updateProfileDetails(updated);
+        emit(ProfileLoaded(updated));
+      }
+    });
   }
 
   Future<void> _onGetProfile(

@@ -16,12 +16,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   await initDependencies();
-  if (await Hive.boxExists('charactersBox')) {
-    final oldBox = await Hive.openBox('charactersBox');
-    await oldBox.clear();
-    await oldBox.close();
-    await Hive.deleteBoxFromDisk('charactersBox');
-  }
+  // if (await Hive.boxExists('charactersBox')) {
+  //   final oldBox = await Hive.openBox('charactersBox');
+  //   await oldBox.clear();
+  //   await oldBox.close();
+  //   await Hive.deleteBoxFromDisk('charactersBox');
+  // }
   runApp(const MyApp());
 }
 
@@ -33,11 +33,14 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => sl<AuthBloc>()),
-        BlocProvider(create: (_) => sl<ProfileBloc>()),
+        BlocProvider(
+            create: (_) =>
+                sl<ProfileBloc>()..add(const GetProfileDetailsEvent())),
         BlocProvider(create: (_) => ThemeCubit()),
         BlocProvider(create: (_) => sl<LessonBloc>()),
         BlocProvider(
-            create: (_) => sl<CharacterBloc>()..add(LoadCharactersEvent())),
+          create: (_) => sl<CharacterBloc>()..add(LoadCharactersEvent()),
+        ),
       ],
       child: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, themeMode) {

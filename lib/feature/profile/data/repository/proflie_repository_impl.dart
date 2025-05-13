@@ -55,6 +55,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
   @override
   Future<Either<Failure, Unit>> updateProfileDetails(
       UserProfileDetailsEntity entity) async {
+    print('📦 Saving profile to Hive: ');
     try {
       await localDataSource
           .updateProfileDetails(UserProfileDetailsModel.fromEntity(entity));
@@ -92,6 +93,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
       }
 
       final profile = await localDataSource.getProfileDetails(user.id);
+
       if (profile == null) {
         return left(Failure("Profile not found"));
       }
