@@ -1,9 +1,9 @@
 import 'package:app/feature/lesson/domain/entities/lesson.dart';
+import 'package:app/feature/lesson/presentation/pages/home_page.dart';
 import 'package:app/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:app/l10n/app_localizations.dart';
-
 
 class QuizPage extends StatefulWidget {
   final LessonEntity lesson;
@@ -73,7 +73,7 @@ class _QuizPageState extends State<QuizPage> {
         ),
         actions: [
           TextButton(
-            onPressed: () async {
+            onPressed: () {
               context.read<ProfileBloc>().add(AddQuizResultEvent(
                     lessonId: widget.lesson.id,
                     correctAnswers: correctAnswers,
@@ -81,8 +81,10 @@ class _QuizPageState extends State<QuizPage> {
                     context: context,
                   ));
 
-              Navigator.pop(context);
-              Navigator.pop(context);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => const HomePage()),
+              );
             },
             child: Text(AppLocalizations.of(context).done),
           ),
