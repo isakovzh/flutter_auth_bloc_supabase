@@ -18,8 +18,8 @@ class CharacterRepositoryImpl implements CharacterRepository {
   }
 
   @override
-  Future<void> initCharacters() async {
-    await localDataSource.init(_userId);
+  Future<void> initCharacters(String languageCode) async {
+    await localDataSource.init(_userId, languageCode);
   }
 
   @override

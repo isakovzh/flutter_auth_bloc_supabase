@@ -10,8 +10,11 @@ import 'package:app/feature/lesson/presentation/pages/lesson_details_page.dart';
 import 'package:app/feature/lesson/presentation/pages/quiz_page.dart';
 import 'package:app/feature/lesson/presentation/pages/error_quiz_page.dart';
 import 'package:app/feature/profile/presentation/bloc/profile_bloc.dart';
+import 'package:app/core/theme/language_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:app/l10n/app_localizations.dart';
+import 'package:app/core/theme/theme.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -19,17 +22,24 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
+    final customColors = theme.extension<CustomColors>();
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => sl<LessonBloc>()..add(LoadLessonsEvent())),
+        BlocProvider(
+          create: (_) => LessonBloc(
+            getAllLessons: sl(),
+            languageCubit: context.read<LanguageCubit>(),
+          )..add(LoadLessonsEvent()),
+        ),
         BlocProvider(
             create: (_) =>
                 sl<ProfileBloc>()..add(const GetProfileDetailsEvent())),
       ],
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Lessons'),
+          title: Text(l10n.lessons),
         ),
         body: BlocBuilder<LessonBloc, LessonState>(
           builder: (context, lessonState) {
@@ -100,18 +110,29 @@ class HomePage extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("XP: $totalXP",
+                              Text(l10n.xpPoints(totalXP.toString()),
                                   style: theme.textTheme.bodyLarge),
-                              Text(
-                                "Lessons Completed: $completedCount / ${lessons.length}",
-                                style: theme.textTheme.bodyMedium,
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    l10n.lessonsCompleted(completedCount),
+                                    style: theme.textTheme.bodyMedium,
+                                  ),
+                                  Text(
+                                    " / ${lessons.length}",
+                                    style: theme.textTheme.bodyMedium,
+                                  ),
+                                ],
                               ),
                               const SizedBox(height: 10),
                               LinearProgressIndicator(
                                 value: progress,
-                                backgroundColor: theme.dividerColor,
-                                color: theme.colorScheme.primary,
+                                backgroundColor: theme
+                                    .progressIndicatorTheme.linearTrackColor,
+                                color: theme.progressIndicatorTheme.color,
                                 minHeight: 10,
+                                borderRadius: BorderRadius.circular(5),
                               ),
                             ],
                           ),
@@ -127,7 +148,7 @@ class HomePage extends StatelessWidget {
                               if (index == 0) {
                                 if (preparedErrorQuestions.length >= 5) {
                                   return Card(
-                                    color: Colors.red.shade50,
+                                    color: customColors?.errorCard,
                                     elevation: 3,
                                     margin: const EdgeInsets.only(bottom: 16),
                                     shape: RoundedRectangleBorder(
@@ -141,35 +162,39 @@ class HomePage extends StatelessWidget {
                                         children: [
                                           Row(
                                             children: [
-                                              const Icon(Icons.error_outline,
-                                                  color: Colors.red),
+                                              Icon(Icons.error_outline,
+                                                  color:
+                                                      customColors?.errorText),
                                               const SizedBox(width: 8),
                                               Expanded(
                                                 child: Text(
-                                                  'Error Quiz',
+                                                  l10n.errorQuizTitle,
                                                   style: theme
                                                       .textTheme.titleMedium
                                                       ?.copyWith(
                                                     fontWeight: FontWeight.bold,
-                                                    color: Colors.red.shade700,
+                                                    color:
+                                                        customColors?.errorText,
                                                   ),
                                                 ),
                                               ),
                                               Text(
                                                 '${preparedErrorQuestions.length} questions',
-                                                style:
-                                                    theme.textTheme.bodySmall,
+                                                style: theme.textTheme.bodySmall
+                                                    ?.copyWith(
+                                                  color: customColors?.errorText
+                                                      .withOpacity(0.8),
+                                                ),
                                               ),
                                             ],
                                           ),
                                           const SizedBox(height: 8),
                                           Text(
-                                            'Practice your mistakes to improve!',
+                                            l10n.errorQuizDesc,
                                             style: theme.textTheme.bodySmall
                                                 ?.copyWith(
-                                              color: theme
-                                                  .textTheme.bodySmall?.color
-                                                  ?.withOpacity(0.7),
+                                              color: customColors?.errorText
+                                                  .withOpacity(0.7),
                                             ),
                                           ),
                                           const SizedBox(height: 12),
@@ -190,10 +215,12 @@ class HomePage extends StatelessWidget {
                                             },
                                             icon: const Icon(Icons.play_arrow),
                                             label:
-                                                const Text('Start Error Quiz'),
+                                                Text(l10n.errorQuizStartButton),
                                             style: ElevatedButton.styleFrom(
                                               backgroundColor:
-                                                  Colors.red.shade600,
+                                                  customColors?.errorText,
+                                              foregroundColor:
+                                                  customColors?.errorCard,
                                             ),
                                           ),
                                         ],
@@ -216,7 +243,7 @@ class HomePage extends StatelessWidget {
 
                               return Card(
                                 color: isCompleted
-                                    ? Colors.green.shade100
+                                    ? customColors?.lessonCardCompleted
                                     : theme.cardColor,
                                 elevation: 3,
                                 margin: const EdgeInsets.only(bottom: 16),
@@ -231,43 +258,39 @@ class HomePage extends StatelessWidget {
                                     children: [
                                       Row(
                                         children: [
+                                          Icon(
+                                            isCompleted
+                                                ? Icons.check_circle
+                                                : Icons.circle_outlined,
+                                            color: isCompleted
+                                                ? customColors?.lessonCardText
+                                                : theme.iconTheme.color,
+                                          ),
+                                          const SizedBox(width: 8),
                                           Expanded(
                                             child: Text(
                                               lesson.title,
                                               style: theme.textTheme.titleMedium
                                                   ?.copyWith(
-                                                fontWeight: FontWeight.bold,
+                                                color: isCompleted
+                                                    ? customColors
+                                                        ?.lessonCardText
+                                                    : theme.textTheme
+                                                        .titleMedium?.color,
                                               ),
                                             ),
                                           ),
                                           if (isCompleted)
-                                            Row(
-                                              children: [
-                                                Icon(
-                                                  correctAnswers ==
-                                                          totalQuestions
-                                                      ? Icons.check_circle
-                                                      : Icons
-                                                          .check_circle_outline,
-                                                  color: correctAnswers ==
-                                                          totalQuestions
-                                                      ? Colors.green
-                                                      : Colors.orange,
-                                                ),
-                                                const SizedBox(width: 6),
-                                                Text(
-                                                  '$correctAnswers/$totalQuestions correct',
-                                                  style: theme
-                                                      .textTheme.bodySmall
-                                                      ?.copyWith(
-                                                    color: correctAnswers ==
-                                                            totalQuestions
-                                                        ? Colors.green.shade700
-                                                        : Colors
-                                                            .orange.shade700,
-                                                  ),
-                                                ),
-                                              ],
+                                            Text(
+                                              l10n.correctAnswersCount(
+                                                  correctAnswers,
+                                                  totalQuestions),
+                                              style: theme.textTheme.bodySmall
+                                                  ?.copyWith(
+                                                color: customColors
+                                                    ?.lessonCardText
+                                                    .withOpacity(0.8),
+                                              ),
                                             ),
                                         ],
                                       ),
@@ -284,48 +307,62 @@ class HomePage extends StatelessWidget {
                                       const SizedBox(height: 12),
                                       Row(
                                         children: [
-                                          ElevatedButton.icon(
-                                            onPressed: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (_) =>
-                                                      LessonDetailPage(
-                                                          lesson: lesson),
-                                                ),
-                                              ).then((_) {
-                                                context.read<ProfileBloc>().add(
-                                                    const GetProfileDetailsEvent());
-                                              });
-                                            },
-                                            icon: const Icon(Icons.menu_book),
-                                            label: const Text("Open"),
+                                          Expanded(
+                                            child: ElevatedButton.icon(
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        LessonDetailPage(
+                                                            lesson: lesson),
+                                                  ),
+                                                ).then((_) {
+                                                  context.read<ProfileBloc>().add(
+                                                      const GetProfileDetailsEvent());
+                                                });
+                                              },
+                                              icon: const Icon(Icons.menu_book),
+                                              label: Text(l10n.open),
+                                            ),
                                           ),
                                           const SizedBox(width: 10),
-                                          ElevatedButton.icon(
-                                            onPressed: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (_) => QuizPage(
-                                                    lesson: lesson,
+                                          Expanded(
+                                            child: ElevatedButton.icon(
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (_) => QuizPage(
+                                                      lesson: lesson,
+                                                    ),
                                                   ),
-                                                ),
-                                              ).then((_) {
-                                                context.read<ProfileBloc>().add(
-                                                    const GetProfileDetailsEvent());
-                                              });
-                                            },
-                                            icon: const Icon(Icons.quiz),
-                                            label: Text(
-                                              isCompleted
-                                                  ? "Retake Quiz"
-                                                  : "Take Quiz",
-                                            ),
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: isCompleted
-                                                  ? Colors.green.shade600
-                                                  : null,
+                                                ).then((_) {
+                                                  context.read<ProfileBloc>().add(
+                                                      const GetProfileDetailsEvent());
+                                                });
+                                              },
+                                              icon: const Icon(Icons.quiz),
+                                              label: Text(
+                                                isCompleted
+                                                    ? l10n.retakeQuiz
+                                                    : l10n.takeQuiz,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: isCompleted
+                                                    ? customColors
+                                                        ?.lessonCardText
+                                                    : theme.elevatedButtonTheme
+                                                        .style?.backgroundColor
+                                                        ?.resolve({}),
+                                                foregroundColor: isCompleted
+                                                    ? customColors
+                                                        ?.lessonCardCompleted
+                                                    : theme.elevatedButtonTheme
+                                                        .style?.foregroundColor
+                                                        ?.resolve({}),
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -347,7 +384,7 @@ class HomePage extends StatelessWidget {
             if (lessonState is LessonError) {
               return Center(
                 child: Text(
-                  'Error: ${lessonState.message}',
+                  l10n.error(lessonState.message),
                   style: theme.textTheme.bodyLarge,
                 ),
               );

@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:app/l10n/app_localizations.dart';
+
 
 class EpsChapterModel {
   final String id;
@@ -38,8 +40,10 @@ class ManasChaptersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Главы эпоса Манас')),
+      appBar: AppBar(title: Text(l10n.eposChapters)),
       body: FutureBuilder<List<EpsChapterModel>>(
         future: _loadChapters(),
         builder: (context, snapshot) {
@@ -137,6 +141,8 @@ class _ManasOriginalPageState extends State<ManasOriginalPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(title: Text(widget.chapter.title)),
       body: Padding(
@@ -179,7 +185,7 @@ class _ManasOriginalPageState extends State<ManasOriginalPage> {
             ElevatedButton.icon(
               onPressed: _togglePlay,
               icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow),
-              label: Text(isPlaying ? 'Пауза' : 'Слушать'),
+              label: Text(isPlaying ? l10n.pause : l10n.listen),
             ),
           ],
         ),

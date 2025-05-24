@@ -1,3 +1,4 @@
+import 'package:app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class AchievementGalleryPage extends StatelessWidget {
@@ -6,6 +7,7 @@ class AchievementGalleryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final all = [
       'first_quiz_passed',
       'perfect_quiz_score',
@@ -15,7 +17,7 @@ class AchievementGalleryPage extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Achievements Gallery')),
+      appBar: AppBar(title: Text(l10n.achievementsGallery)),
       body: GridView.builder(
         padding: const EdgeInsets.all(16),
         itemCount: all.length,
@@ -32,15 +34,18 @@ class AchievementGalleryPage extends StatelessWidget {
             onTap: () => showDialog(
               context: context,
               builder: (_) => AlertDialog(
-                title: Text(
-                    isUnlocked ? 'Achievement Unlocked!' : 'Как получить?'),
+                title: Text(isUnlocked
+                    ? l10n.achievementTitle
+                    : l10n.achievementHowToUnlock),
                 content: Text(
-                  isUnlocked ? _getDescription(id) : _getRequirementHint(id),
+                  isUnlocked
+                      ? _getDescription(id, l10n)
+                      : _getRequirementHint(id, l10n),
                 ),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text('OK'),
+                    child: Text(l10n.ok),
                   ),
                 ],
               ),
@@ -60,7 +65,7 @@ class AchievementGalleryPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    id.replaceAll('_', ' '),
+                    _getAchievementTitle(id, l10n),
                     textAlign: TextAlign.center,
                     style: const TextStyle(fontSize: 14),
                   ),
@@ -73,37 +78,54 @@ class AchievementGalleryPage extends StatelessWidget {
     );
   }
 
-  String _getDescription(String id) {
+  String _getAchievementTitle(String id, AppLocalizations l10n) {
     switch (id) {
       case 'first_quiz_passed':
-        return 'Ты прошёл свой первый тест. Молодец!';
+        return l10n.achievementFirstQuiz;
       case 'perfect_quiz_score':
-        return 'Ты прошёл тест без единой ошибки!';
+        return l10n.achievementPerfectScore;
       case 'xp_100':
-        return 'Ты набрал 100 очков опыта!';
+        return l10n.achievement100XP;
       case 'lesson_5_completed':
-        return 'Ты завершил 5 уроков. Продолжай в том же духе!';
+        return l10n.achievement5Lessons;
       case 'cleared_all_mistakes':
-        return 'Ты исправил все свои ошибки. Настоящий герой!';
+        return l10n.achievementNoMistakes;
       default:
-        return 'Достижение получено!';
+        return l10n.achievementUnlocked;
     }
   }
 
-  String _getRequirementHint(String id) {
+  String _getDescription(String id, AppLocalizations l10n) {
     switch (id) {
       case 'first_quiz_passed':
-        return 'Пройди хотя бы один тест.';
+        return l10n.achievementFirstQuizDesc;
       case 'perfect_quiz_score':
-        return 'Ответь правильно на все вопросы одного теста.';
+        return l10n.achievementPerfectScoreDesc;
       case 'xp_100':
-        return 'Набери как минимум 100 XP.';
+        return l10n.achievement100XPDesc;
       case 'lesson_5_completed':
-        return 'Заверши 5 разных уроков.';
+        return l10n.achievement5LessonsDesc;
       case 'cleared_all_mistakes':
-        return 'Пройди все ошибки повторно без ошибок.';
+        return l10n.achievementNoMistakesDesc;
       default:
-        return 'Выполни условие для получения.';
+        return l10n.achievementUnlockedDesc;
+    }
+  }
+
+  String _getRequirementHint(String id, AppLocalizations l10n) {
+    switch (id) {
+      case 'first_quiz_passed':
+        return l10n.achievementFirstQuizHint;
+      case 'perfect_quiz_score':
+        return l10n.achievementPerfectScoreHint;
+      case 'xp_100':
+        return l10n.achievement100XPHint;
+      case 'lesson_5_completed':
+        return l10n.achievement5LessonsHint;
+      case 'cleared_all_mistakes':
+        return l10n.achievementNoMistakesHint;
+      default:
+        return l10n.achievementGenericHint;
     }
   }
 }

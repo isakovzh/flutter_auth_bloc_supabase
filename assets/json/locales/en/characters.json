@@ -1,0 +1,37 @@
+[
+  {
+    "id": "manas",
+    "name": "Manas",
+    "description": "The great hero who united the Kyrgyz tribes.",
+    "imageUrl": "assets/images/manas.jpg",
+    "isUnlocked": false
+  },
+  {
+    "id": "bakai",
+    "name": "Bakai",
+    "description": "Wise mentor and advisor to Manas.",
+    "imageUrl": "assets/images/bakai.jpg",
+    "isUnlocked": false
+  },
+  {
+    "id": "kanykei",
+    "name": "Kanykei",
+    "description": "Loyal and brave wife of Manas.",
+    "imageUrl": "assets/images/kanykei.jpg",
+    "isUnlocked": false
+  },
+  {
+    "id": "almambet",
+    "name": "Almambet",
+    "description": "Strong and brave warrior, loyal friend of Manas.",
+    "imageUrl": "assets/images/almambet.jpg",
+    "isUnlocked": false
+  },
+  {
+    "id": "koketei",
+    "name": "Koketei",
+    "description": "Father of Manas, respected elder.",
+    "imageUrl": "assets/images/koketey.jpg",
+    "isUnlocked": false
+  }
+]

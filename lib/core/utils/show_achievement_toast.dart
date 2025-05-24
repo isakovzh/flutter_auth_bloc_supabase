@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:app/feature/profile/presentation/widgets/achievement_toast.dart';
+import 'package:app/l10n/app_localizations.dart';
 
 void showAchievementToast(BuildContext context, String achievementId) {
-  print('🏆 Показываем тост для: $achievementId');
-
+  final l10n = AppLocalizations.of(context);
   final overlay = Overlay.of(context);
 
-  final message = _getDescription(achievementId);
+  final message = _getDescription(achievementId, l10n);
 
   final entry = OverlayEntry(
     builder: (_) => AchievementToast(message: message),
@@ -16,19 +16,19 @@ void showAchievementToast(BuildContext context, String achievementId) {
   Future.delayed(const Duration(seconds: 4), () => entry.remove());
 }
 
-String _getDescription(String id) {
+String _getDescription(String id, AppLocalizations l10n) {
   switch (id) {
     case 'first_quiz_passed':
-      return 'Ты прошёл свой первый тест!';
+      return l10n.achievementFirstQuizDesc;
     case 'perfect_quiz_score':
-      return 'Идеальный результат — все ответы верны!';
+      return l10n.achievementPerfectScoreDesc;
     case 'xp_100':
-      return 'Ты набрал 100 XP!';
+      return l10n.achievement100XPDesc;
     case 'lesson_5_completed':
-      return 'Ты завершил 5 уроков!';
+      return l10n.achievement5LessonsDesc;
     case 'cleared_all_mistakes':
-      return 'Ты исправил все ошибки!';
+      return l10n.achievementNoMistakesDesc;
     default:
-      return 'Новое достижение!';
+      return l10n.achievementUnlockedDesc;
   }
 }

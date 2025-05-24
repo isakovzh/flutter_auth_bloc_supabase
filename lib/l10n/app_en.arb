@@ -1,0 +1,412 @@
+{
+    "@@locale": "en",
+    "appTitle": "Manas App",
+    "@appTitle": {
+        "description": "The title of the application"
+    },
+    "quizTitle": "Quiz: {lessonTitle}",
+    "@quizTitle": {
+        "description": "Title for the quiz page",
+        "placeholders": {
+            "lessonTitle": {
+                "type": "String"
+            }
+        }
+    },
+    "questionCounter": "Question {current}/{total}",
+    "@questionCounter": {
+        "description": "Shows current question number and total questions",
+        "placeholders": {
+            "current": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            }
+        }
+    },
+    "quizCompleted": "Quiz Completed",
+    "@quizCompleted": {
+        "description": "Title for quiz completion dialog"
+    },
+    "quizResults": "You answered {correct} / {total} correctly.\nYou earned {xp} XP!",
+    "@quizResults": {
+        "description": "Shows quiz results with correct answers and XP earned",
+        "placeholders": {
+            "correct": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            },
+            "xp": {
+                "type": "int"
+            }
+        }
+    },
+    "errorQuizResults": "You answered {correct} / {total} correctly.\nYou earned {xp} XP! (5 XP per correct answer)",
+    "@errorQuizResults": {
+        "description": "Shows error quiz results with correct answers and XP earned",
+        "placeholders": {
+            "correct": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            },
+            "xp": {
+                "type": "int"
+            }
+        }
+    },
+    "done": "Done",
+    "@done": {
+        "description": "Text for done button"
+    },
+    "settings": "Settings",
+    "@settings": {
+        "description": "Settings title in drawer"
+    },
+    "changeTheme": "Change Theme",
+    "@changeTheme": {
+        "description": "Change theme option in drawer"
+    },
+    "changeLanguage": "Change Language",
+    "@changeLanguage": {
+        "description": "Change language option in drawer"
+    },
+    "logout": "Logout",
+    "@logout": {
+        "description": "Logout option in drawer"
+    },
+    "profile": "Profile",
+    "@profile": {
+        "description": "Profile page title"
+    },
+    "viewAchievements": "View Achievements",
+    "@viewAchievements": {
+        "description": "Button to view achievements"
+    },
+    "achievementsGallery": "Achievements Gallery",
+    "@achievementsGallery": {
+        "description": "Title of achievements gallery"
+    },
+    "ok": "OK",
+    "@ok": {
+        "description": "OK button text"
+    },
+    "lessons": "Lessons",
+    "@lessons": {
+        "description": "Lessons page title"
+    },
+    "startQuiz": "Start Quiz",
+    "@startQuiz": {
+        "description": "Button to start quiz"
+    },
+    "startErrorQuiz": "Start Error Quiz",
+    "@startErrorQuiz": {
+        "description": "Button to start error quiz"
+    },
+    "errorQuiz": "Error Quiz",
+    "@errorQuiz": {
+        "description": "Error quiz title"
+    },
+    "errorQuizCompleted": "Error Quiz Completed",
+    "@errorQuizCompleted": {
+        "description": "Error quiz completion title"
+    },
+    "open": "Open",
+    "@open": {
+        "description": "Open button text"
+    },
+    "characters": "Characters",
+    "@characters": {
+        "description": "Characters page title"
+    },
+    "error": "Error: {message}",
+    "@error": {
+        "description": "Error message",
+        "placeholders": {
+            "message": {
+                "type": "String"
+            }
+        }
+    },
+    "xpPoints": "XP: {points}",
+    "@xpPoints": {
+        "description": "XP points display",
+        "placeholders": {
+            "points": {
+                "type": "String"
+            }
+        }
+    },
+    "eposChapters": "Chapters of Manas Epos",
+    "@eposChapters": {
+        "description": "Title for epos chapters page"
+    },
+    "errorLoadingChapters": "Error loading chapters",
+    "@errorLoadingChapters": {
+        "description": "Error message when loading chapters fails"
+    },
+    "pause": "Pause",
+    "@pause": {
+        "description": "Pause button text"
+    },
+    "listen": "Listen",
+    "@listen": {
+        "description": "Listen button text"
+    },
+    "lessonsCompleted": "Lessons Completed: {completed}",
+    "@lessonsCompleted": {
+        "description": "Shows completed lessons count",
+        "placeholders": {
+            "completed": {
+                "type": "int"
+            }
+        }
+    },
+    
+    "retakeQuiz": "Retake Quiz",
+    "@retakeQuiz": {
+        "description": "Button text for retaking a quiz"
+    },
+    "takeQuiz": "Take Quiz",
+    "@takeQuiz": {
+        "description": "Button text for taking a quiz for the first time"
+    },
+    "correctAnswersCount": "{correct}/{total} correct",
+    "@correctAnswersCount": {
+        "description": "Shows correct answers count",
+        "placeholders": {
+            "correct": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            }
+        }
+    },
+    "charactersUnlocked": "Characters Unlocked: {unlocked} / {total}",
+    "@charactersUnlocked": {
+        "description": "Shows how many characters are unlocked",
+        "placeholders": {
+            "unlocked": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            }
+        }
+    },
+    "weeklyXpProgress": "Weekly XP Progress",
+    "@weeklyXpProgress": {
+        "description": "Text in progress chartBar"
+    },
+    "monday": "Mon",
+    "@monday": {
+        "description": "Monday abbreviation"
+    },
+    "tuesday": "Tue",
+    "@tuesday": {
+        "description": "Tuesday abbreviation"
+    },
+    "wednesday": "Wed",
+    "@wednesday": {
+        "description": "Wednesday abbreviation"
+    },
+    "thursday": "Thu",
+    "@thursday": {
+        "description": "Thursday abbreviation"
+    },
+    "friday": "Fri",
+    "@friday": {
+        "description": "Friday abbreviation"
+    },
+    "saturday": "Sat",
+    "@saturday": {
+        "description": "Saturday abbreviation"
+    },
+    "sunday": "Sun",
+    "@sunday": {
+        "description": "Sunday abbreviation"
+    },
+    "achievementFirstQuiz": "You completed your first quiz!",
+    "@achievementFirstQuiz": {
+        "description": "Achievement message for completing first quiz"
+    },
+    "achievementPerfectScore": "Perfect score - all answers correct!",
+    "@achievementPerfectScore": {
+        "description": "Achievement message for perfect quiz score"
+    },
+    "achievement100XP": "You earned 100 XP!",
+    "@achievement100XP": {
+        "description": "Achievement message for earning 100 XP"
+    },
+    "achievement5Lessons": "You completed 5 lessons!",
+    "@achievement5Lessons": {
+        "description": "Achievement message for completing 5 lessons"
+    },
+    "achievementNoMistakes": "You fixed all your mistakes!",
+    "@achievementNoMistakes": {
+        "description": "Achievement message for fixing all mistakes"
+    },
+    "achievementUnlocked": "New Achievement!",
+    "@achievementUnlocked": {
+        "description": "Generic achievement unlocked message"
+    },
+    "achievementTitle": "Achievement",
+    "@achievementTitle": {
+        "description": "Title for achievement dialog"
+    },
+    "achievementDescription": "How to unlock:",
+    "@achievementDescription": {
+        "description": "Label for achievement unlock instructions"
+    },
+    "achievementGalleryTitle": "Achievements Gallery",
+    "@achievementGalleryTitle": {
+        "description": "Title for achievements gallery page"
+    },
+    "achievementFirstQuizDesc": "You completed your first test. Well done!",
+    "@achievementFirstQuizDesc": {
+        "description": "Detailed description for first quiz achievement"
+    },
+    "achievementPerfectScoreDesc": "You completed the test without any mistakes!",
+    "@achievementPerfectScoreDesc": {
+        "description": "Detailed description for perfect score achievement"
+    },
+    "achievement100XPDesc": "You earned 100 experience points!",
+    "@achievement100XPDesc": {
+        "description": "Detailed description for 100 XP achievement"
+    },
+    "achievement5LessonsDesc": "You completed 5 lessons. Keep it up!",
+    "@achievement5LessonsDesc": {
+        "description": "Detailed description for 5 lessons achievement"
+    },
+    "achievementNoMistakesDesc": "You fixed all your mistakes. True hero!",
+    "@achievementNoMistakesDesc": {
+        "description": "Detailed description for no mistakes achievement"
+    },
+    "achievementUnlockedDesc": "Achievement unlocked!",
+    "@achievementUnlockedDesc": {
+        "description": "Generic achievement unlocked description"
+    },
+    "achievementFirstQuizHint": "Complete at least one test.",
+    "@achievementFirstQuizHint": {
+        "description": "Hint for unlocking first quiz achievement"
+    },
+    "achievementPerfectScoreHint": "Answer all questions correctly in one test.",
+    "@achievementPerfectScoreHint": {
+        "description": "Hint for unlocking perfect score achievement"
+    },
+    "achievement100XPHint": "Earn at least 100 XP.",
+    "@achievement100XPHint": {
+        "description": "Hint for unlocking 100 XP achievement"
+    },
+    "achievement5LessonsHint": "Complete 5 different lessons.",
+    "@achievement5LessonsHint": {
+        "description": "Hint for unlocking 5 lessons achievement"
+    },
+    "achievementNoMistakesHint": "Retake all mistakes without errors.",
+    "@achievementNoMistakesHint": {
+        "description": "Hint for unlocking no mistakes achievement"
+    },
+    "achievementGenericHint": "Complete the requirements to unlock.",
+    "@achievementGenericHint": {
+        "description": "Generic hint for unlocking achievements"
+    },
+    "achievementHowToUnlock": "How to unlock?",
+    
+    "achievementButtonText": "View achievements",
+    "@achievementButtonText":{
+        "description":"text in achievement button"
+    },
+    "errorQuizTitle": "Error Quiz",
+     "@errorQuizTitle":{
+        "description":"123"
+    },
+    "errorQuizDesc":"Practice your mistakes to improve!",
+    "errorQuizStartButton":"Start Error Quiz",
+    "login": "LOGIN",
+    "@login": {
+        "description": "Login page title"
+    },
+    "registration": "REGISTRATION",
+    "@registration": {
+        "description": "Registration page title"
+    },
+    "email": "Email",
+    "@email": {
+        "description": "Email field label"
+    },
+    "password": "Password",
+    "@password": {
+        "description": "Password field label"
+    },
+    "username": "Username",
+    "@username": {
+        "description": "Username field label"
+    },
+    "confirmPassword": "Confirm Password",
+    "@confirmPassword": {
+        "description": "Confirm password field label"
+    },
+    "enterEmail": "Enter your email",
+    "@enterEmail": {
+        "description": "Email field hint"
+    },
+    "enterPassword": "Enter your password",
+    "@enterPassword": {
+        "description": "Password field hint"
+    },
+    "enterUsername": "Enter your username",
+    "@enterUsername": {
+        "description": "Username field hint"
+    },
+    "reenterPassword": "Re-enter your password",
+    "@reenterPassword": {
+        "description": "Confirm password field hint"
+    },
+    "signIn": "Sign In",
+    "@signIn": {
+        "description": "Sign in button text"
+    },
+    "signUp": "Sign Up",
+    "@signUp": {
+        "description": "Sign up button text"
+    },
+    "noAccount": "Don't have an account? Sign Up",
+    "@noAccount": {
+        "description": "Text for signup link"
+    },
+    "haveAccount": "Already have an account? Sign In",
+    "@haveAccount": {
+        "description": "Text for signin link"
+    },
+    "guessCharacterTitle": "Guess the Character",
+    "@guessCharacterTitle": {
+        "description": "Title for the guess character page"
+    },
+    "guessCharacterInputLabel": "Who is this?",
+    "@guessCharacterInputLabel": {
+        "description": "Label for the input field in guess character page"
+    },
+    "guessCharacterSubmitButton": "Answer",
+    "@guessCharacterSubmitButton": {
+        "description": "Text for the submit button in guess character page"
+    },
+    "guessCharacterCorrect": "✅ Correct! This is {name}",
+    "@guessCharacterCorrect": {
+        "description": "Message shown when the guess is correct",
+        "placeholders": {
+            "name": {
+                "type": "String",
+                "example": "Manas"
+            }
+        }
+    },
+    "guessCharacterIncorrect": "❌ Incorrect. Try again.",
+    "@guessCharacterIncorrect": {
+        "description": "Message shown when the guess is incorrect"
+    }
+} 

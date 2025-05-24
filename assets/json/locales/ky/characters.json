@@ -1,0 +1,37 @@
+[
+  {
+    "id": "manas",
+    "name": "Манас",
+    "description": "Кыргыз урууларын бириктирген улуу баатыр.",
+    "imageUrl": "assets/images/manas.jpg",
+    "isUnlocked": false
+  },
+  {
+    "id": "bakai",
+    "name": "Бакай",
+    "description": "Манастын акылман кеңешчиси жана насаатчысы.",
+    "imageUrl": "assets/images/bakai.jpg",
+    "isUnlocked": false
+  },
+  {
+    "id": "kanykei",
+    "name": "Каныкей",
+    "description": "Манастын ишенимдүү жана эр жүрөк жубайы.",
+    "imageUrl": "assets/images/kanykei.jpg",
+    "isUnlocked": false
+  },
+  {
+    "id": "almambet",
+    "name": "Алмамбет",
+    "description": "Манастын күчтүү жана баатыр жоокери, ишенимдүү досу.",
+    "imageUrl": "assets/images/almambet.jpg",
+    "isUnlocked": false
+  },
+  {
+    "id": "koketei",
+    "name": "Көкөтөй",
+    "description": "Манастын атасы, урматтуу аксакал.",
+    "imageUrl": "assets/images/koketey.jpg",
+    "isUnlocked": false
+  }
+]

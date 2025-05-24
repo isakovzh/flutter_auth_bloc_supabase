@@ -3,6 +3,7 @@ import 'package:app/feature/characters/presentation/bloc/character_bloc.dart';
 import 'package:app/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:app/l10n/app_localizations.dart';
 
 class GuessCharacterPage extends StatefulWidget {
   final CharacterEntity character;
@@ -20,6 +21,7 @@ class _GuessCharacterPageState extends State<GuessCharacterPage> {
   void _checkAnswer() {
     final input = _controller.text.trim().toLowerCase();
     final correct = widget.character.name.trim().toLowerCase();
+    final l10n = AppLocalizations.of(context);
 
     if (input == correct) {
       if (!widget.character.isUnlocked) {
@@ -31,7 +33,7 @@ class _GuessCharacterPageState extends State<GuessCharacterPage> {
       }
 
       setState(() {
-        _feedback = "✅ Верно! Это ${widget.character.name}";
+        _feedback = l10n.guessCharacterCorrect(widget.character.name);
       });
 
       Future.delayed(const Duration(seconds: 2), () {
@@ -39,7 +41,7 @@ class _GuessCharacterPageState extends State<GuessCharacterPage> {
       });
     } else {
       setState(() {
-        _feedback = "❌ Неверно. Попробуй ещё раз.";
+        _feedback = l10n.guessCharacterIncorrect;
       });
     }
   }
@@ -66,8 +68,10 @@ class _GuessCharacterPageState extends State<GuessCharacterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Угадай персонажа')),
+      appBar: AppBar(title: Text(l10n.guessCharacterTitle)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -82,15 +86,15 @@ class _GuessCharacterPageState extends State<GuessCharacterPage> {
             const SizedBox(height: 20),
             TextField(
               controller: _controller,
-              decoration: const InputDecoration(
-                labelText: 'Кто это?',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.guessCharacterInputLabel,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: _checkAnswer,
-              child: const Text('Ответить'),
+              child: Text(l10n.guessCharacterSubmitButton),
             ),
             const SizedBox(height: 20),
             if (_feedback != null)

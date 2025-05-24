@@ -1,36 +1,36 @@
 [
   {
     "id": "manas",
-    "name": "manas",
-    "description": "Великий герой, объединивший кыргызские племена.",
+    "name": "Manas",
+    "description": "The great hero who united the Kyrgyz tribes.",
     "imageUrl": "assets/images/manas.jpg",
     "isUnlocked": false
   },
   {
     "id": "bakai",
-    "name": "bakai",
-    "description": "Мудрый наставник и советник Манаса.",
+    "name": "Bakai",
+    "description": "The wise mentor and advisor of Manas.",
     "imageUrl": "assets/images/bakai.jpg",
     "isUnlocked": false
   },
   {
     "id": "kanykei",
-    "name": "kanykei",
-    "description": "Верная и смелая жена Манаса.",
+    "name": "Kanykei",
+    "description": "The loyal and brave wife of Manas.",
     "imageUrl": "assets/images/kanykei.jpg",
     "isUnlocked": false
   },
   {
     "id": "almambet",
-    "name": "almambet",
-    "description": "Сильный и храбрый соратник Манаса, преданный друг.",
+    "name": "Almambet",
+    "description": "A strong and courageous ally of Manas, a loyal friend.",
     "imageUrl": "assets/images/almambet.jpg",
     "isUnlocked": false
   },
   {
     "id": "koketei",
-    "name": "koketei",
-    "description": "Отец Манаса, уважаемый старейшина.",
+    "name": "Koketei",
+    "description": "Father of Manas, a respected elder.",
     "imageUrl": "assets/images/koketey.jpg",
     "isUnlocked": false
   }

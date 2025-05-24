@@ -10,9 +10,10 @@ class LessonRepositoryImpl implements LessonRepository {
   LessonRepositoryImpl(this.localDataSource);
 
   @override
-  Future<Either<Failure, List<LessonEntity>>> getAllLessons() async {
+  Future<Either<Failure, List<LessonEntity>>> getAllLessons(
+      String languageCode) async {
     try {
-      final lessons = await localDataSource.loadLessons();
+      final lessons = await localDataSource.loadLessons(languageCode);
       return Right(lessons);
     } catch (e) {
       return Left(Failure('Failed to load lessons: ${e.toString()}'));

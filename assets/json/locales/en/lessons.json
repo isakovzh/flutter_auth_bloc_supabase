@@ -1,0 +1,352 @@
+[
+  {
+    "id": "lesson_1",
+    "title": "Birth of Manas",
+    "description": "Learn about the birth of the great hero Manas and the prophecy surrounding him.",
+    "content": "During a time of great hardship, the Kyrgyz people were waiting for a savior. A child named Manas was born under a bright star, fulfilling a prophecy. From an early age, he showed signs of greatness, and people believed he would lead them to freedom.",
+    "quiz": {
+      "questions": [
+        {
+          "question": "Where was Manas born?",
+          "options": ["Talas", "Bishkek", "Osh", "Batken"],
+          "correctIndex": 0
+        },
+        {
+          "question": "What accompanied Manas's birth?",
+          "options": ["Eclipse", "Prophecy", "Festival", "Famine"],
+          "correctIndex": 1
+        },
+        {
+          "question": "What was Manas's father's name?",
+          "options": ["Jakyp", "Almambet", "Semetey", "Kanykei"],
+          "correctIndex": 0
+        },
+        {
+          "question": "Why did people rejoice at his birth?",
+          "options": ["He was wealthy", "Prophecies were fulfilled", "Winter ended", "There was a feast"],
+          "correctIndex": 1
+        },
+        {
+          "question": "What did the star symbolize?",
+          "options": ["Famine", "Hope", "Gods' anger", "Fire"],
+          "correctIndex": 1
+        }
+      ]
+    }
+  },
+  {
+    "id": "lesson_2",
+    "title": "The Childhood of Manas",
+    "description": "Discover how Manas showed signs of leadership and strength as a child.",
+    "content": "Manas was a unique child. At 5, he fought off a wolf to protect livestock. At 7, he was already leading children in protecting their village. He valued justice above all and was known for his strength and courage.",
+    "quiz": {
+      "questions": [
+        {
+          "question": "What did Manas do at age 5?",
+          "options": ["Went to school", "Tamed a horse", "Fought a wolf", "Traveled far"],
+          "correctIndex": 2
+        },
+        {
+          "question": "What did Manas value most?",
+          "options": ["Wealth", "Justice", "Power", "Silence"],
+          "correctIndex": 1
+        },
+        {
+          "question": "How was he different from other kids?",
+          "options": ["Coward", "Lazy", "Strong", "Quiet"],
+          "correctIndex": 2
+        },
+        {
+          "question": "What was his childhood dream?",
+          "options": ["Build a house", "Travel", "Become a hero", "Own gold"],
+          "correctIndex": 2
+        },
+        {
+          "question": "What did he do to bullies?",
+          "options": ["Ignored them", "Complained", "Protected others", "Joined them"],
+          "correctIndex": 2
+        }
+      ]
+    }
+  },
+  {
+    "id": "lesson_3",
+    "title": "Manas Becomes a Hero",
+    "description": "See how Manas united his people and began his legendary journey.",
+    "content": "When Manas grew up, he realized he was destined to lead. He gathered brave warriors and fought the Kalmaks. His first victory became a symbol of national awakening. He was strong, wise, and just.",
+    "quiz": {
+      "questions": [
+        {
+          "question": "Why did people follow Manas?",
+          "options": ["He was rich", "He was royal", "He was brave and wise", "He promised rewards"],
+          "correctIndex": 2
+        },
+        {
+          "question": "Who did he fight against?",
+          "options": ["Romans", "Kalmaks", "Mongols", "Chinese"],
+          "correctIndex": 1
+        },
+        {
+          "question": "What was his first major victory?",
+          "options": ["Built a fortress", "Married a princess", "Defeated Kalmak leader", "Traveled abroad"],
+          "correctIndex": 2
+        },
+        {
+          "question": "How did he become a leader?",
+          "options": ["Inherited throne", "People chose him", "Killed a beast", "Was the oldest"],
+          "correctIndex": 1
+        },
+        {
+          "question": "What quality made him a true hero?",
+          "options": ["Cruelty", "Wealth", "Power and justice", "Silence"],
+          "correctIndex": 2
+        }
+      ]
+    }
+  },
+  {
+    "id": "lesson_4",
+    "title": "Friendship with Almambet",
+    "description": "Learn about the deep bond between Manas and his loyal friend Almambet.",
+    "content": "Manas met Almambet, a warrior from a different tribe, during his youth. Though from different backgrounds, they became close friends. Almambet admired Manas’s courage and fairness, and they pledged loyalty to one another. Their friendship symbolized unity among tribes. Together, they protected their people and planned great campaigns.",
+    "quiz": {
+      "questions": [
+        {
+          "question": "Who was Manas's best friend?",
+          "options": ["Almambet", "Semetey", "Jakyp", "Bekbolot"],
+          "correctIndex": 0
+        },
+        {
+          "question": "What did their friendship represent?",
+          "options": ["Wealth", "Conflict", "Unity", "Fear"],
+          "correctIndex": 2
+        },
+        {
+          "question": "What was Almambet’s background?",
+          "options": ["Farmer", "Scholar", "Warrior", "Trader"],
+          "correctIndex": 2
+        },
+        {
+          "question": "Why did Almambet trust Manas?",
+          "options": ["He was rich", "He was funny", "He was fair and brave", "He was older"],
+          "correctIndex": 2
+        },
+        {
+          "question": "What did they do together?",
+          "options": ["Built houses", "Protected people", "Opened a school", "Became merchants"],
+          "correctIndex": 1
+        }
+      ]
+    }
+  },
+  {
+    "id": "lesson_5",
+    "title": "The First Battle",
+    "description": "Dive into Manas's first major battle and the strategies he used.",
+    "content": "Manas led his warriors into battle against the Kalmak invaders who threatened his homeland. Though outnumbered, Manas used clever tactics and inspired his men with courage. The victory strengthened his reputation as a leader and gave hope to his people.",
+    "quiz": {
+      "questions": [
+        {
+          "question": "Who attacked the Kyrgyz lands?",
+          "options": ["Kalmaks", "Romans", "Turks", "Huns"],
+          "correctIndex": 0
+        },
+        {
+          "question": "What helped Manas win the battle?",
+          "options": ["Magic", "Bravery and tactics", "A large army", "Rainstorm"],
+          "correctIndex": 1
+        },
+        {
+          "question": "What was the result of the battle?",
+          "options": ["Defeat", "Victory", "Surrender", "Escape"],
+          "correctIndex": 1
+        },
+        {
+          "question": "Why was this battle important?",
+          "options": ["It was his last", "It made him famous", "It lost their lands", "It scared allies"],
+          "correctIndex": 1
+        },
+        {
+          "question": "How did the people react after the battle?",
+          "options": ["They feared him", "They exiled him", "They celebrated", "They ignored it"],
+          "correctIndex": 2
+        }
+      ]
+    }
+  },
+  {
+    "id": "lesson_6",
+    "title": "Manas Unites the Tribes",
+    "description": "Learn how Manas brought together different tribes to build a strong and united nation.",
+    "content": "Manas realized that unity was the key to defeating their enemies. He sent messengers to various Kyrgyz tribes, inviting them to join forces. Through diplomacy and shared purpose, he united the people under one banner, forming a strong army and a vision for an independent homeland.",
+    "quiz": {
+      "questions": [
+        {
+          "question": "What did Manas do to strengthen his nation?",
+          "options": ["Built a palace", "Married a princess", "United the tribes", "Moved to a new land"],
+          "correctIndex": 2
+        },
+        {
+          "question": "Why did the tribes follow Manas?",
+          "options": ["He gave them gold", "He promised new lands", "He inspired unity and strength", "He had magic powers"],
+          "correctIndex": 2
+        },
+        {
+          "question": "What did Manas form with the tribes?",
+          "options": ["A new religion", "A school", "A strong army", "A trade union"],
+          "correctIndex": 2
+        },
+        {
+          "question": "How did Manas bring them together?",
+          "options": ["Through force", "By gifts", "Through diplomacy", "By magic"],
+          "correctIndex": 2
+        },
+        {
+          "question": "What was the ultimate goal of unity?",
+          "options": ["Peace with enemies", "An independent homeland", "A bigger palace", "More trade"],
+          "correctIndex": 1
+        }
+      ]
+    }
+  },
+  {
+    "id": "lesson_7",
+    "title": "The Marriage of Manas and Kanykei",
+    "description": "Explore the story of how Manas met and married the wise and brave Kanykei.",
+    "content": "During one of his travels, Manas met Kanykei, a noble and intelligent woman from another tribe. She was known for her wisdom and strength. Their marriage was more than love — it symbolized the alliance of tribes and the unification of the Kyrgyz people.",
+    "quiz": {
+      "questions": [
+        {
+          "question": "Who did Manas marry?",
+          "options": ["A princess from China", "Kanykei", "A warrior queen", "A merchant’s daughter"],
+          "correctIndex": 1
+        },
+        {
+          "question": "What was special about Kanykei?",
+          "options": ["She had magical powers", "She was very rich", "She was wise and brave", "She was from the enemy tribe"],
+          "correctIndex": 2
+        },
+        {
+          "question": "What did the marriage symbolize?",
+          "options": ["Wealth and power", "Love and poetry", "Alliance of tribes", "Escape from war"],
+          "correctIndex": 2
+        },
+        {
+          "question": "How did Manas meet Kanykei?",
+          "options": ["In battle", "At a celebration", "During travels", "Through a messenger"],
+          "correctIndex": 2
+        },
+        {
+          "question": "What did Kanykei contribute to Manas’s life?",
+          "options": ["Strength in battle", "Wise support and unity", "More enemies", "Jewels"],
+          "correctIndex": 1
+        }
+      ]
+    }
+  },
+  {
+    "id": "lesson_8",
+    "title": "The Betrayal and the Trap",
+    "description": "Discover how betrayal within Manas’s circle led to a dangerous trap set by enemies.",
+    "content": "As Manas grew more powerful, envy and fear spread among rival tribes. One of his own allies secretly plotted against him and informed the enemy of Manas’s plans. A trap was laid, and Manas was ambushed, but thanks to his courage and loyal companions, he narrowly escaped.",
+    "quiz": {
+      "questions": [
+        {
+          "question": "Why was Manas betrayed?",
+          "options": ["He was too kind", "His power caused envy", "He broke a promise", "He lost a battle"],
+          "correctIndex": 1
+        },
+        {
+          "question": "Who betrayed Manas?",
+          "options": ["Kanykei", "A loyal soldier", "One of his allies", "His father"],
+          "correctIndex": 2
+        },
+        {
+          "question": "What did the enemies do?",
+          "options": ["Sent a gift", "Laid a trap", "Surrendered", "Asked for peace"],
+          "correctIndex": 1
+        },
+        {
+          "question": "How did Manas survive?",
+          "options": ["He used magic", "He fled alone", "He fought and won", "With the help of loyal companions"],
+          "correctIndex": 3
+        },
+        {
+          "question": "What did this event teach Manas?",
+          "options": ["To avoid all battles", "To trust no one", "To choose allies wisely", "To attack first"],
+          "correctIndex": 2
+        }
+      ]
+    }
+  },
+  {
+    "id": "lesson_9",
+    "title": "Victory and Celebration",
+    "description": "Learn about a great victory of Manas and the celebrations that followed.",
+    "content": "After regrouping his forces, Manas led a strategic attack on enemy strongholds. The victory was overwhelming, and the Kyrgyz people celebrated with songs, games, and storytelling. This victory brought peace to the land and made Manas a legend in his own time.",
+    "quiz": {
+      "questions": [
+        {
+          "question": "What did Manas do after the betrayal?",
+          "options": ["Gave up", "Retired", "Planned a strategic attack", "Left the country"],
+          "correctIndex": 2
+        },
+        {
+          "question": "How did the people react to the victory?",
+          "options": ["They left", "They were afraid", "They celebrated", "They demanded more war"],
+          "correctIndex": 2
+        },
+        {
+          "question": "What followed the victory?",
+          "options": ["Revenge", "Peace and celebration", "Migration", "Sickness"],
+          "correctIndex": 1
+        },
+        {
+          "question": "What traditions were part of the celebration?",
+          "options": ["War dances", "Poetry and song", "Building castles", "Hunting"],
+          "correctIndex": 1
+        },
+        {
+          "question": "What did this victory make Manas?",
+          "options": ["A king", "A myth", "A forgotten hero", "A national legend"],
+          "correctIndex": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "lesson_10",
+    "title": "Manas’s Legacy",
+    "description": "Understand the legacy of Manas and how his story continues to inspire.",
+    "content": "Even after his time, Manas’s story lived on through generations. His courage, leadership, and love for his people became the foundation of Kyrgyz national identity. The Epic of Manas continues to be recited, reminding people of their roots and values.",
+    "quiz": {
+      "questions": [
+        {
+          "question": "How is Manas remembered today?",
+          "options": ["As a king", "As a wealthy trader", "As a national hero", "As a musician"],
+          "correctIndex": 2
+        },
+        {
+          "question": "What lives on after Manas’s time?",
+          "options": ["His treasure", "His palace", "His story", "His army"],
+          "correctIndex": 2
+        },
+        {
+          "question": "What values did Manas represent?",
+          "options": ["Wealth and fame", "Wisdom and silence", "Courage and unity", "Magic and mystery"],
+          "correctIndex": 2
+        },
+        {
+          "question": "How is the Epic of Manas shared today?",
+          "options": ["Through songs", "In books only", "In secret", "Through recitation"],
+          "correctIndex": 3
+        },
+        {
+          "question": "Why is Manas important to Kyrgyz people?",
+          "options": ["He was the richest", "He represents their history and identity", "He ruled many lands", "He built many castles"],
+          "correctIndex": 1
+        }
+      ]
+    }
+  }
+]

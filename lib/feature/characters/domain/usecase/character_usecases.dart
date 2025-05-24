@@ -18,7 +18,7 @@ class InitCharactersUseCase {
 
   InitCharactersUseCase(this.repository);
 
-  Future<void> call() async {
-    await repository.initCharacters();
+  Future<void> call(String languageCode) async {
+    await repository.initCharacters(languageCode);
   }
 }

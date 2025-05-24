@@ -1,6 +1,7 @@
 import 'package:app/feature/lesson/domain/entities/lesson.dart';
 import 'package:app/feature/lesson/presentation/pages/quiz_page.dart';
 import 'package:flutter/material.dart';
+import 'package:app/l10n/app_localizations.dart';
 
 class LessonDetailPage extends StatelessWidget {
   final LessonEntity lesson;
@@ -9,6 +10,8 @@ class LessonDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(lesson.title),
@@ -53,7 +56,7 @@ class LessonDetailPage extends StatelessWidget {
                 );
               },
               icon: const Icon(Icons.quiz),
-              label: const Text('Start Quiz'),
+              label: Text(l10n.startQuiz),
               style: ElevatedButton.styleFrom(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 32, vertical: 14),

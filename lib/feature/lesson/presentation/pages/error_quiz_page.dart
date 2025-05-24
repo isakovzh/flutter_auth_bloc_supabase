@@ -1,5 +1,6 @@
 import 'package:app/feature/lesson/domain/entities/eroor_quiesttion.dart';
 import 'package:app/feature/profile/presentation/bloc/profile_bloc.dart';
+import 'package:app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -63,13 +64,17 @@ class _ErrorQuizPageState extends State<ErrorQuizPage> {
   }
 
   void _showCompletionDialog() {
+    final l10n = AppLocalizations.of(context);
+    final totalQuestions = widget.errorQuestions.length;
+    final earnedXP = correctAnswers * 5;
+
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (_) => AlertDialog(
-        title: const Text('Error Quiz Completed'),
+        title: Text(l10n.errorQuizCompleted),
         content: Text(
-          '✅ You answered $correctAnswers / ${widget.errorQuestions.length} correctly.\nYou earned ${correctAnswers * 5} XP!',
+          l10n.errorQuizResults(correctAnswers, totalQuestions, earnedXP),
         ),
         actions: [
           TextButton(
@@ -81,10 +86,10 @@ class _ErrorQuizPageState extends State<ErrorQuizPage> {
                     ),
                   );
 
-              Navigator.pop(context); // Закрыть диалог
-              Navigator.pop(context); // Вернуться на HomePage
+              Navigator.pop(context);
+              Navigator.pop(context);
             },
-            child: const Text('Done'),
+            child: Text(l10n.done),
           ),
         ],
       ),
@@ -93,9 +98,13 @@ class _ErrorQuizPageState extends State<ErrorQuizPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.errorQuestions.isEmpty) {
+    final l10n = AppLocalizations.of(context);
+    final questions = widget.errorQuestions;
+    final question = questions[currentQuestionIndex];
+
+    if (questions.isEmpty) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Error Quiz')),
+        appBar: AppBar(title: Text(l10n.errorQuiz)),
         body: const Center(
           child: Text(
             '🎉 No mistakes to review! Great job!',
@@ -105,11 +114,9 @@ class _ErrorQuizPageState extends State<ErrorQuizPage> {
       );
     }
 
-    final current = widget.errorQuestions[currentQuestionIndex];
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Error Quiz'),
+        title: Text(l10n.errorQuiz),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -117,21 +124,21 @@ class _ErrorQuizPageState extends State<ErrorQuizPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Question ${currentQuestionIndex + 1} / ${widget.errorQuestions.length}',
+              l10n.questionCounter(currentQuestionIndex + 1, questions.length),
               style: const TextStyle(fontSize: 18),
             ),
             const SizedBox(height: 16),
             Text(
-              current.questionText,
+              question.questionText,
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 20),
-            ...List.generate(current.options.length, (index) {
+            ...List.generate(question.options.length, (index) {
               final isSelected = index == selectedIndex;
-              final isCorrect = index == current.correctIndex;
+              final isCorrect = index == question.correctIndex;
 
               Color? buttonColor;
               if (answered) {
@@ -153,7 +160,7 @@ class _ErrorQuizPageState extends State<ErrorQuizPage> {
                     backgroundColor: buttonColor,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                   ),
-                  child: Text(current.options[index]),
+                  child: Text(question.options[index]),
                 ),
               );
             }),

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:app/core/common/init/init_auth_dependencies.dart';
 import 'package:app/feature/profile/presentation/widgets/achievement_gallery.dart';
 import 'package:app/feature/profile/presentation/widgets/proflie_xp.dart';
+import 'package:app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:app/core/utils/image_picker_helper.dart';
@@ -17,6 +18,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -36,7 +38,7 @@ class ProfilePage extends StatelessWidget {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: const Text('Profile'),
+            title: Text(l10n.profile),
             actions: [
               Builder(
                 builder: (context) => IconButton(
@@ -104,13 +106,16 @@ class ProfilePage extends StatelessWidget {
                           ),
                         ),
                         icon: const Icon(Icons.emoji_events),
-                        label: const Text("Посмотреть достижения"),
+                        label: Text(l10n.achievementButtonText),
                       ),
                       const SizedBox(height: 20),
                       ListTile(
                         leading: const Icon(Icons.check_circle_outline),
                         title: Text(
-                            'Lessons Completed: ${profile.completedLessons.length}'),
+                          l10n.lessonsCompleted(
+                            profile.completedLessons.length,
+                          ),
+                        ),
                       ),
                       // ListTile(
                       //   leading: const Icon(Icons.error_outline),

@@ -1,0 +1,408 @@
+{
+    "@@locale": "ky",
+    "appTitle": "Манас колдонмосу",
+    "quizTitle": "Тест: {lessonTitle}",
+    "@quizTitle": {
+        "description": "Тест барагынын аталышы",
+        "placeholders": {
+            "lessonTitle": {
+                "type": "String"
+            }
+        }
+    },
+    "questionCounter": "Суроо {current}/{total}",
+    "@questionCounter": {
+        "description": "Учурдагы суроонун жана жалпы суроолордун саны",
+        "placeholders": {
+            "current": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            }
+        }
+    },
+    "quizCompleted": "Тест аяктады",
+    "@quizCompleted": {
+        "description": "Тест аяктоо диалогунун аталышы"
+    },
+    "quizResults": "Сиз {correct} / {total} туура жооп бердиңиз.\nСиз {xp} XP утуп алдыңыз!",
+    "@quizResults": {
+        "description": "Тесттин жыйынтыгын жана алынган XP көрсөтөт",
+        "placeholders": {
+            "correct": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            },
+            "xp": {
+                "type": "int"
+            }
+        }
+    },
+    "errorQuizResults": "Сиз {correct} / {total} туура жооп бердиңиз.\nСиз {xp} XP утуп алдыңыз! (ар бир туура жооп үчүн 5 XP)",
+    "@errorQuizResults": {
+        "description": "Ката тестинин жыйынтыгын жана алынган XP көрсөтөт",
+        "placeholders": {
+            "correct": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            },
+            "xp": {
+                "type": "int"
+            }
+        }
+    },
+    "done": "Бүттү",
+    "@done": {
+        "description": "Бүттү баскычынын тексти"
+    },
+    "settings": "Орнотуулар",
+    "@settings": {
+        "description": "Орнотуулар менюсунун аталышы"
+    },
+    "changeTheme": "Теманы өзгөртүү",
+    "@changeTheme": {
+        "description": "Теманы өзгөртүү тандоосу"
+    },
+    "changeLanguage": "Тилди өзгөртүү",
+    "@changeLanguage": {
+        "description": "Тилди өзгөртүү тандоосу"
+    },
+    "logout": "Чыгуу",
+    "@logout": {
+        "description": "Чыгуу тандоосу"
+    },
+    "profile": "Профиль",
+    "@profile": {
+        "description": "Профиль баракчасынын аталышы"
+    },
+    "viewAchievements": "Жетишкендиктерди көрүү",
+    "@viewAchievements": {
+        "description": "Жетишкендиктерди көрүү баскычы"
+    },
+    "achievementsGallery": "Жетишкендиктер галереясы",
+    "@achievementsGallery": {
+        "description": "Жетишкендиктер галереясынын аталышы"
+    },
+    "ok": "Макул",
+    "@ok": {
+        "description": "Макул баскычынын тексти"
+    },
+    "lessons": "Сабактар",
+    "@lessons": {
+        "description": "Сабактар баракчасынын аталышы"
+    },
+    "startQuiz": "Тестти баштоо",
+    "@startQuiz": {
+        "description": "Тестти баштоо баскычы"
+    },
+    "startErrorQuiz": "Ката тестин баштоо",
+    "@startErrorQuiz": {
+        "description": "Ката тестин баштоо баскычы"
+    },
+    "errorQuiz": "Ката тести",
+    "@errorQuiz": {
+        "description": "Ката тестинин аталышы"
+    },
+    "errorQuizCompleted": "Ката тести аяктады",
+    "@errorQuizCompleted": {
+        "description": "Ката тести аяктоо аталышы"
+    },
+    "open": "Ачуу",
+    "@open": {
+        "description": "Ачуу баскычынын тексти"
+    },
+    "characters": "Каармандар",
+    "@characters": {
+        "description": "Каармандар баракчасынын аталышы"
+    },
+    "error": "Ката: {message}",
+    "@error": {
+        "description": "Ката билдирүүсү",
+        "placeholders": {
+            "message": {
+                "type": "String"
+            }
+        }
+    },
+    "xpPoints": "XP: {points}",
+    "@xpPoints": {
+        "description": "XP упайларын көрсөтүү",
+        "placeholders": {
+            "points": {
+                "type": "String"
+            }
+        }
+    },
+    "eposChapters": "Манас эпосунун бөлүмдөрү",
+    "@eposChapters": {
+        "description": "Эпос бөлүмдөрүнүн аталышы"
+    },
+    "errorLoadingChapters": "Бөлүмдөрдү жүктөөдө ката кетти",
+    "@errorLoadingChapters": {
+        "description": "Бөлүмдөрдү жүктөөдө ката кеткенде чыгуучу билдирүү"
+    },
+    "pause": "Тыныгуу",
+    "@pause": {
+        "description": "Тыныгуу баскычынын тексти"
+    },
+    "listen": "Угуу",
+    "@listen": {
+        "description": "Угуу баскычынын тексти"
+    },
+    "lessonsCompleted": "Аяктаган сабактар: {completed}",
+    "@lessonsCompleted": {
+        "description": "Аяктаган сабактардын саны",
+        "placeholders": {
+            "completed": {
+                "type": "int"
+            }
+        }
+    },
+    "retakeQuiz": "Тестти кайра тапшыруу",
+    "@retakeQuiz": {
+        "description": "Тестти кайра тапшыруу баскычынын тексти"
+    },
+    "takeQuiz": "Тестти тапшыруу",
+    "@takeQuiz": {
+        "description": "Тестти биринчи жолу тапшыруу баскычынын тексти"
+    },
+    "correctAnswersCount": "{correct}/{total} туура",
+    "@correctAnswersCount": {
+        "description": "Туура жооптордун саны",
+        "placeholders": {
+            "correct": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            }
+        }
+    },
+    "charactersUnlocked": "Ачылган каармандар: {unlocked} / {total}",
+    "@charactersUnlocked": {
+        "description": "Ачылган каармандардын саны",
+        "placeholders": {
+            "unlocked": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            }
+        }
+    },
+    "weeklyXpProgress": "Апталык XP прогресси",
+    "@weeklyXpProgress": {
+        "description": "Текст аткарылууда диаграмма тилкеси"
+    },
+    "monday": "Дүй",
+    "@monday": {
+        "description": "Дүйшөмбү кыскартылышы"
+    },
+    "tuesday": "Шей",
+    "@tuesday": {
+        "description": "Шейшемби кыскартылышы"
+    },
+    "wednesday": "Шар",
+    "@wednesday": {
+        "description": "Шаршемби кыскартылышы"
+    },
+    "thursday": "Бей",
+    "@thursday": {
+        "description": "Бейшемби кыскартылышы"
+    },
+    "friday": "Жум",
+    "@friday": {
+        "description": "Жума кыскартылышы"
+    },
+    "saturday": "Ишм",
+    "@saturday": {
+        "description": "Ишемби кыскартылышы"
+    },
+    "sunday": "Жек",
+    "@sunday": {
+        "description": "Жекшемби кыскартылышы"
+    },
+    "achievementFirstQuiz": "Сиз биринчи тестти өттүңүз!",
+    "@achievementFirstQuiz": {
+        "description": "Биринчи тестти өткөндөгү жетишкендик билдирүүсү"
+    },
+    "achievementPerfectScore": "Мыкты жыйынтык - бардык жооптор туура!",
+    "@achievementPerfectScore": {
+        "description": "Тестти мыкты тапшыргандагы жетишкендик билдирүүсү"
+    },
+    "achievement100XP": "Сиз 100 XP топтодуңуз!",
+    "@achievement100XP": {
+        "description": "100 XP топтогондогу жетишкендик билдирүүсү"
+    },
+    "achievement5Lessons": "Сиз 5 сабакты аяктадыңыз!",
+    "@achievement5Lessons": {
+        "description": "5 сабакты аяктагандагы жетишкендик билдирүүсү"
+    },
+    "achievementNoMistakes": "Сиз бардык каталарды оңдодуңуз!",
+    "@achievementNoMistakes": {
+        "description": "Бардык каталарды оңдогондогу жетишкендик билдирүүсү"
+    },
+    "achievementUnlocked": "Жаңы жетишкендик!",
+    "@achievementUnlocked": {
+        "description": "Жалпы жетишкендик ачылды билдирүүсү"
+    },
+    "achievementTitle": "Жетишкендик",
+    "@achievementTitle": {
+        "description": "Жетишкендик диалогунун аталышы"
+    },
+    "achievementDescription": "Кантип ачса болот:",
+    "@achievementDescription": {
+        "description": "Жетишкендикти ачуу нускамасынын белгиси"
+    },
+    "achievementGalleryTitle": "Жетишкендиктер галереясы",
+    "@achievementGalleryTitle": {
+        "description": "Жетишкендиктер галереясынын аталышы"
+    },
+    "achievementFirstQuizDesc": "Сиз биринчи тестти өттүңүз. Азаматсыз!",
+    "@achievementFirstQuizDesc": {
+        "description": "Биринчи тест жетишкендигинин толук баяндамасы"
+    },
+    "achievementPerfectScoreDesc": "Сиз тестти бир да катасыз өттүңүз!",
+    "@achievementPerfectScoreDesc": {
+        "description": "Мыкты упай жетишкендигинин толук баяндамасы"
+    },
+    "achievement100XPDesc": "Сиз 100 тажрыйба упайын топтодуңуз!",
+    "@achievement100XPDesc": {
+        "description": "100 XP жетишкендигинин толук баяндамасы"
+    },
+    "achievement5LessonsDesc": "Сиз 5 сабакты аяктадыңыз. Алга!",
+    "@achievement5LessonsDesc": {
+        "description": "5 сабак жетишкендигинин толук баяндамасы"
+    },
+    "achievementNoMistakesDesc": "Сиз бардык каталарды оңдодуңуз. Чыныгы баатыр!",
+    "@achievementNoMistakesDesc": {
+        "description": "Каталарды оңдоо жетишкендигинин толук баяндамасы"
+    },
+    "achievementUnlockedDesc": "Жетишкендик ачылды!",
+    "@achievementUnlockedDesc": {
+        "description": "Жалпы жетишкендик ачылды баяндамасы"
+    },
+    "achievementFirstQuizHint": "Жок дегенде бир тестти өтүңүз.",
+    "@achievementFirstQuizHint": {
+        "description": "Биринчи тест жетишкендигин ачуу кеңеши"
+    },
+    "achievementPerfectScoreHint": "Бир тесттин бардык суроолоруна туура жооп бериңиз.",
+    "@achievementPerfectScoreHint": {
+        "description": "Мыкты упай жетишкендигин ачуу кеңеши"
+    },
+    "achievement100XPHint": "100 XP топтоңуз.",
+    "@achievement100XPHint": {
+        "description": "100 XP жетишкендигин ачуу кеңеши"
+    },
+    "achievement5LessonsHint": "5 ар башка сабакты аяктаңыз.",
+    "@achievement5LessonsHint": {
+        "description": "5 сабак жетишкендигин ачуу кеңеши"
+    },
+    "achievementNoMistakesHint": "Бардык каталарды кайра катасыз өтүңүз.",
+    "@achievementNoMistakesHint": {
+        "description": "Каталарды оңдоо жетишкендигин ачуу кеңеши"
+    },
+    "achievementGenericHint": "Ачуу үчүн талаптарды аткарыңыз.",
+    "@achievementGenericHint": {
+        "description": "Жалпы жетишкендик ачуу кеңеши"
+    },
+    "achievementHowToUnlock": "Кантип ачса болот?",
+
+    "achievementButtonText": "Жетишкендиктерди көрүү",
+    "@achievementButtonText":{
+        "description":"жетишкендик баскычындагы текст"
+    },
+    "errorQuizTitle": "Ката сынагы",
+    "@errorQuizTitle":{
+        "description":"123"
+    },
+     "errorQuizDesc":"Жакшыртуу үчүн каталарыңызды көнүгүңүз!",
+        "errorQuizStartButton":"Ката тестин баштоо",
+    "login": "КИРҮҮ",
+    "@login": {
+        "description": "Login page title"
+    },
+    "registration": "КАТТОО",
+    "@registration": {
+        "description": "Registration page title"
+    },
+    "email": "Электрондук почта",
+    "@email": {
+        "description": "Email field label"
+    },
+    "password": "Сырсөз",
+    "@password": {
+        "description": "Password field label"
+    },
+    "username": "Колдонуучунун аты",
+    "@username": {
+        "description": "Username field label"
+    },
+    "confirmPassword": "Сырсөздү ырастаңыз",
+    "@confirmPassword": {
+        "description": "Confirm password field label"
+    },
+    "enterEmail": "Электрондук почтаңызды киргизиңиз",
+    "@enterEmail": {
+        "description": "Email field hint"
+    },
+    "enterPassword": "Сырсөзүңүздү киргизиңиз",
+    "@enterPassword": {
+        "description": "Password field hint"
+    },
+    "enterUsername": "Колдонуучу атыңызды киргизиңиз",
+    "@enterUsername": {
+        "description": "Username field hint"
+    },
+    "reenterPassword": "Сырсөзүңүздү кайра киргизиңиз",
+    "@reenterPassword": {
+        "description": "Confirm password field hint"
+    },
+    "signIn": "Кирүү",
+    "@signIn": {
+        "description": "Sign in button text"
+    },
+    "signUp": "Катталуу",
+    "@signUp": {
+        "description": "Sign up button text"
+    },
+    "noAccount": "Аккаунтуңуз жокпу? Катталыңыз",
+    "@noAccount": {
+        "description": "Text for signup link"
+    },
+    "haveAccount": "Аккаунтуңуз барбы? Кириңиз",
+    "@haveAccount": {
+        "description": "Text for signin link"
+    },
+    "guessCharacterTitle": "Каарманды тап",
+    "@guessCharacterTitle": {
+        "description": "Title for the guess character page"
+    },
+    "guessCharacterInputLabel": "Бул ким?",
+    "@guessCharacterInputLabel": {
+        "description": "Label for the input field in guess character page"
+    },
+    "guessCharacterSubmitButton": "Жооп берүү",
+    "@guessCharacterSubmitButton": {
+        "description": "Text for the submit button in guess character page"
+    },
+    "guessCharacterCorrect": "✅ Туура! Бул {name}",
+    "@guessCharacterCorrect": {
+        "description": "Message shown when the guess is correct",
+        "placeholders": {
+            "name": {
+                "type": "String",
+                "example": "Манас"
+            }
+        }
+    },
+    "guessCharacterIncorrect": "❌ Туура эмес. Кайра аракет кылыңыз.",
+    "@guessCharacterIncorrect": {
+        "description": "Message shown when the guess is incorrect"
+    }
+} 

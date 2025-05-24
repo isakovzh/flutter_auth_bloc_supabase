@@ -5,9 +5,9 @@ class AppTheme {
   static ThemeData lightTheme = ThemeData(
     colorScheme: ColorScheme.fromSeed(
       seedColor: AppPalette.primary,
-      secondary: AppPalette.chartBar,
-      surface: AppPalette.chartBackground,
-      onSurface: Colors.brown.shade700,
+      secondary: AppPalette.chartBarLight,
+      surface: AppPalette.chartBackgroundLight,
+      onSurface: AppPalette.chartTextLight,
     ),
     textTheme: TextTheme(
       bodySmall: TextStyle(color: Colors.brown.shade700, fontSize: 12),
@@ -16,6 +16,33 @@ class AppTheme {
     ),
     useMaterial3: true,
     scaffoldBackgroundColor: AppPalette.background,
+    progressIndicatorTheme: const ProgressIndicatorThemeData(
+      color: AppPalette.progressIndicatorLight,
+      linearTrackColor: AppPalette.progressBackgroundLight,
+    ),
+    cardTheme: CardTheme(
+      color: AppPalette.lessonCardDefaultLight,
+      elevation: 3,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+    ),
+    extensions: const [
+      CustomColors(
+        lessonCardCompleted: AppPalette.lessonCardCompletedLight,
+        lessonCardText: AppPalette.lessonCardTextLight,
+        errorCard: AppPalette.errorCardLight,
+        errorText: AppPalette.errorTextLight,
+      ),
+      ChartColors(
+        background: AppPalette.chartBackgroundLight,
+        bar: AppPalette.chartBarLight,
+        border: AppPalette.chartBorderLight,
+        text: AppPalette.chartTextLight,
+        progressBackground: AppPalette.progressBackgroundLight,
+        progressBar: AppPalette.progressIndicatorLight,
+      ),
+    ],
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: AppPalette.inputFill,
@@ -67,6 +94,8 @@ class AppTheme {
       unselectedItemColor: Colors.grey,
       selectedIconTheme: IconThemeData(size: 28),
       unselectedIconTheme: IconThemeData(size: 24),
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
       selectedLabelStyle: TextStyle(
         fontWeight: FontWeight.w600,
         fontSize: 14,
@@ -96,9 +125,9 @@ class AppTheme {
     colorScheme: ColorScheme.fromSeed(
       seedColor: AppPalette.primary,
       brightness: Brightness.dark,
-      secondary: AppPalette.chartBar,
-      surface: Colors.grey.shade900,
-      onSurface: Colors.white70,
+      secondary: AppPalette.chartBarDark,
+      surface: AppPalette.chartBackgroundDark,
+      onSurface: AppPalette.chartTextDark,
     ),
     textTheme: const TextTheme(
       bodySmall: TextStyle(color: Colors.white70, fontSize: 12),
@@ -106,6 +135,33 @@ class AppTheme {
     ),
     useMaterial3: true,
     scaffoldBackgroundColor: const Color(0xFF121212),
+    progressIndicatorTheme: const ProgressIndicatorThemeData(
+      color: AppPalette.progressIndicatorDark,
+      linearTrackColor: AppPalette.progressBackgroundDark,
+    ),
+    cardTheme: CardTheme(
+      color: AppPalette.lessonCardDefaultDark,
+      elevation: 3,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+    ),
+    extensions: const [
+      CustomColors(
+        lessonCardCompleted: AppPalette.lessonCardCompletedDark,
+        lessonCardText: AppPalette.lessonCardTextDark,
+        errorCard: AppPalette.errorCardDark,
+        errorText: AppPalette.errorTextDark,
+      ),
+      ChartColors(
+        background: AppPalette.chartBackgroundDark,
+        bar: AppPalette.chartBarDark,
+        border: AppPalette.chartBorderDark,
+        text: AppPalette.chartTextDark,
+        progressBackground: AppPalette.progressBackgroundDark,
+        progressBar: AppPalette.progressIndicatorDark,
+      ),
+    ],
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: Colors.grey.shade800,
@@ -138,11 +194,14 @@ class AppTheme {
         fontSize: 20,
         fontWeight: FontWeight.w600,
       ),
+      centerTitle: true,
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: Color(0xFF121212),
       selectedItemColor: AppPalette.accent,
       unselectedItemColor: Colors.grey,
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -159,4 +218,102 @@ class AppTheme {
       ),
     ),
   );
+}
+
+@immutable
+class CustomColors extends ThemeExtension<CustomColors> {
+  const CustomColors({
+    required this.lessonCardCompleted,
+    required this.lessonCardText,
+    required this.errorCard,
+    required this.errorText,
+  });
+
+  final Color lessonCardCompleted;
+  final Color lessonCardText;
+  final Color errorCard;
+  final Color errorText;
+
+  @override
+  CustomColors copyWith({
+    Color? lessonCardCompleted,
+    Color? lessonCardText,
+    Color? errorCard,
+    Color? errorText,
+  }) {
+    return CustomColors(
+      lessonCardCompleted: lessonCardCompleted ?? this.lessonCardCompleted,
+      lessonCardText: lessonCardText ?? this.lessonCardText,
+      errorCard: errorCard ?? this.errorCard,
+      errorText: errorText ?? this.errorText,
+    );
+  }
+
+  @override
+  CustomColors lerp(CustomColors? other, double t) {
+    if (other is! CustomColors) {
+      return this;
+    }
+    return CustomColors(
+      lessonCardCompleted:
+          Color.lerp(lessonCardCompleted, other.lessonCardCompleted, t)!,
+      lessonCardText: Color.lerp(lessonCardText, other.lessonCardText, t)!,
+      errorCard: Color.lerp(errorCard, other.errorCard, t)!,
+      errorText: Color.lerp(errorText, other.errorText, t)!,
+    );
+  }
+}
+
+@immutable
+class ChartColors extends ThemeExtension<ChartColors> {
+  const ChartColors({
+    required this.background,
+    required this.bar,
+    required this.border,
+    required this.text,
+    required this.progressBackground,
+    required this.progressBar,
+  });
+
+  final Color background;
+  final Color bar;
+  final Color border;
+  final Color text;
+  final Color progressBackground;
+  final Color progressBar;
+
+  @override
+  ChartColors copyWith({
+    Color? background,
+    Color? bar,
+    Color? border,
+    Color? text,
+    Color? progressBackground,
+    Color? progressBar,
+  }) {
+    return ChartColors(
+      background: background ?? this.background,
+      bar: bar ?? this.bar,
+      border: border ?? this.border,
+      text: text ?? this.text,
+      progressBackground: progressBackground ?? this.progressBackground,
+      progressBar: progressBar ?? this.progressBar,
+    );
+  }
+
+  @override
+  ChartColors lerp(ChartColors? other, double t) {
+    if (other is! ChartColors) {
+      return this;
+    }
+    return ChartColors(
+      background: Color.lerp(background, other.background, t)!,
+      bar: Color.lerp(bar, other.bar, t)!,
+      border: Color.lerp(border, other.border, t)!,
+      text: Color.lerp(text, other.text, t)!,
+      progressBackground:
+          Color.lerp(progressBackground, other.progressBackground, t)!,
+      progressBar: Color.lerp(progressBar, other.progressBar, t)!,
+    );
+  }
 }

@@ -29,7 +29,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     required this.getProfileDetails,
     required this.updateProfileDetails,
     required this.clearProfileDetails,
-    required this.addQuizResult, // ✅ внедрили
+    required this.addQuizResult,
     required this.updateErrorProgress,
     required this.completeErrorQuiz,
     required this.profileRepository,

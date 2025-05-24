@@ -2,6 +2,8 @@ import 'package:app/feature/lesson/domain/entities/lesson.dart';
 import 'package:app/feature/profile/presentation/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:app/l10n/app_localizations.dart';
+
 
 class QuizPage extends StatefulWidget {
   final LessonEntity lesson;
@@ -61,14 +63,17 @@ class _QuizPageState extends State<QuizPage> {
       context: context,
       barrierDismissible: false,
       builder: (_) => AlertDialog(
-        title: const Text('Quiz Completed'),
+        title: Text(AppLocalizations.of(context).quizCompleted),
         content: Text(
-          'You answered $correctAnswers / $totalQuestions correctly.\nYou earned $earnedXP XP!',
+          AppLocalizations.of(context).quizResults(
+            correctAnswers,
+            totalQuestions,
+            earnedXP,
+          ),
         ),
         actions: [
           TextButton(
             onPressed: () async {
-              // Отправляем AddQuizResultEvent
               context.read<ProfileBloc>().add(AddQuizResultEvent(
                     lessonId: widget.lesson.id,
                     correctAnswers: correctAnswers,
@@ -76,10 +81,10 @@ class _QuizPageState extends State<QuizPage> {
                     context: context,
                   ));
 
-              Navigator.pop(context); // Закрыть диалог
-              Navigator.pop(context); // Закрыть QuizPage
+              Navigator.pop(context);
+              Navigator.pop(context);
             },
-            child: const Text('Done'),
+            child: Text(AppLocalizations.of(context).done),
           ),
         ],
       ),
@@ -93,7 +98,8 @@ class _QuizPageState extends State<QuizPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Quiz: ${widget.lesson.title}'),
+        title:
+            Text(AppLocalizations.of(context).quizTitle(widget.lesson.title)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -102,7 +108,10 @@ class _QuizPageState extends State<QuizPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Question ${currentQuestionIndex + 1}/${questions.length}',
+                AppLocalizations.of(context).questionCounter(
+                  currentQuestionIndex + 1,
+                  questions.length,
+                ),
                 style: const TextStyle(fontSize: 18),
               ),
               const SizedBox(height: 16),

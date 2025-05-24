@@ -9,59 +9,71 @@ import 'package:app/feature/profile/domain/usecases/update_error_progress_usecas
 import 'package:app/feature/profile/domain/usecases/update_proflie_details.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:app/feature/profile/data/datacources/profile_local_datasource.dart';
 import 'package:app/feature/profile/data/model/user_profile_details_model.dart';
-
 import 'package:app/feature/profile/presentation/bloc/profile_bloc.dart';
 
 final sl = GetIt.instance;
 
 Future<void> initProfileDependencies() async {
-  // Регистрируем Hive-адаптеры (только один раз)
-  if (!Hive.isAdapterRegistered(UserProfileDetailsModelAdapter().typeId)) {
-    Hive.registerAdapter(UserProfileDetailsModelAdapter());
-    Hive.registerAdapter(QuizResultEntryAdapter());
+  try {
+    // Register Hive adapters
+    if (!Hive.isAdapterRegistered(UserProfileDetailsModelAdapter().typeId)) {
+      Hive.registerAdapter(UserProfileDetailsModelAdapter());
+      Hive.registerAdapter(QuizResultEntryAdapter());
+    }
+
+    // Open Hive box
+    final box = await Hive.openBox<UserProfileDetailsModel>('profileBox');
+
+    // Always register the basic profile dependencies
+    if (!sl.isRegistered<ProfileLocalDataSource>()) {
+      // Data Source
+      sl.registerLazySingleton<ProfileLocalDataSource>(
+        () => ProfileLocalDataSourceImpl(box),
+      );
+
+      // Repository (with empty implementation if not logged in)
+      sl.registerLazySingleton<ProfileRepository>(
+        () => ProfileRepositoryImpl(
+          sl<ProfileLocalDataSource>(),
+          sl<SupabaseClient>(),
+        ),
+      );
+    }
+
+    // Check if user is logged in before registering full profile features
+    final supabaseClient = sl<SupabaseClient>();
+    if (supabaseClient.auth.currentUser != null) {
+      // Register full profile features
+      if (!sl.isRegistered<GetProfileDetails>()) {
+        // Use Cases
+        sl.registerLazySingleton(() => GetProfileDetails(sl()));
+        sl.registerLazySingleton(() => UpdateProfileDetails(sl()));
+        sl.registerLazySingleton(() => ClearProfileDetails(sl()));
+        sl.registerLazySingleton(() => AddQuizResultUseCase(sl()));
+        sl.registerLazySingleton(() => UpdateErrorProgressUseCase(sl()));
+        sl.registerLazySingleton(() => CompleteErrorQuizUseCase(sl()));
+
+        // Bloc
+        sl.registerFactory(() => ProfileBloc(
+              getProfileDetails: sl(),
+              updateProfileDetails: sl(),
+              clearProfileDetails: sl(),
+              addQuizResult: sl(),
+              updateErrorProgress: sl(),
+              completeErrorQuiz: sl(),
+              profileRepository: sl(),
+            ));
+      }
+    } else {
+      print('Skipping full profile initialization - user not logged in');
+    }
+  } catch (e, stackTrace) {
+    print('Error initializing profile dependencies: $e');
+    print('Stack trace: $stackTrace');
+    // Don't rethrow - allow the app to continue even if profile init fails
   }
-
-  final box = await Hive.openBox<UserProfileDetailsModel>('profileBox');
-
-  // if (await Hive.boxExists('profileBox')) {
-  //   var box = await Hive.openBox<UserProfileDetailsModel>('profileBox');
-  //   await box.clear();
-  //   await box.close();
-  // }
-
-  // Data Source
-  sl.registerLazySingleton<ProfileLocalDataSource>(
-    () => ProfileLocalDataSourceImpl(box),
-  );
-
-  // Repository
-  sl.registerLazySingleton<ProfileRepository>(
-    () => ProfileRepositoryImpl(
-      sl(), // localDataSource
-      sl(), // supabase
-    ),
-  );
-
-  // Use Cases
-  sl.registerLazySingleton(() => GetProfileDetails(sl()));
-  sl.registerLazySingleton(() => UpdateProfileDetails(sl()));
-  sl.registerLazySingleton(() => ClearProfileDetails(sl()));
-  sl.registerLazySingleton(() => AddQuizResultUseCase(sl()));
-  sl.registerLazySingleton(() => UpdateErrorProgressUseCase(sl()));
-  sl.registerLazySingleton(() => CompleteErrorQuizUseCase(sl()));
-
-  // Bloc
-  sl.registerFactory(() => ProfileBloc(
-        getProfileDetails: sl(),
-        updateProfileDetails: sl(),
-        clearProfileDetails: sl(),
-        addQuizResult: sl(),
-        updateErrorProgress: sl(),
-        completeErrorQuiz: sl(),
-        profileRepository: sl(),
-        
-      ));
 }

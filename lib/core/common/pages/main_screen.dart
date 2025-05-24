@@ -13,9 +13,9 @@ class MainScreen extends StatefulWidget {
   State<MainScreen> createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreenState extends State<MainScreen>
+    with AutomaticKeepAliveClientMixin {
   int _currentIndex = 0;
-
   final List<Widget> _pages = const [
     HomePage(),
     CharactersPage(),
@@ -23,16 +23,48 @@ class _MainScreenState extends State<MainScreen> {
     ProfilePage(),
   ];
 
+  // PageView controller for smooth transitions
+  final PageController _pageController = PageController(
+    initialPage: 0,
+    keepPage: true,
+  );
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   void _onTap(int index) {
+    // Animate to the selected page
+    _pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void _onPageChanged(int index) {
     setState(() {
       _currentIndex = index;
     });
   }
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return Scaffold(
-      body: _pages[_currentIndex],
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: _onPageChanged,
+        physics:
+            const NeverScrollableScrollPhysics(), // Disable swipe to prevent accidental navigation
+        children: _pages,
+      ),
       bottomNavigationBar: BottomNavBarWidget(
         currentIndex: _currentIndex,
         onTap: _onTap,

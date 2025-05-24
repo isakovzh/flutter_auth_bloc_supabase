@@ -6,46 +6,49 @@ import 'package:app/feature/characters/domain/usecase/character_usecases.dart';
 import 'package:app/feature/characters/presentation/bloc/character_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 final sl = GetIt.instance;
 
 Future<void> initCharacterDependencies() async {
-  // 🧠 Адаптер Hive
-  if (!Hive.isAdapterRegistered(CharacterModelAdapter().typeId)) {
-    Hive.registerAdapter(CharacterModelAdapter());
+  try {
+    // 🧠 Register Hive Adapter
+    if (!Hive.isAdapterRegistered(CharacterModelAdapter().typeId)) {
+      Hive.registerAdapter(CharacterModelAdapter());
+    }
+
+    // 📥 DataSource
+    if (!sl.isRegistered<CharacterLocalDataSource>()) {
+      sl.registerLazySingleton<CharacterLocalDataSource>(
+        () => CharacterLocalDataSourceImpl(),
+      );
+    }
+
+    // 🧠 Repository
+    if (!sl.isRegistered<CharacterRepository>()) {
+      sl.registerLazySingleton<CharacterRepository>(
+        () => CharacterRepositoryImpl(
+          sl<CharacterLocalDataSource>(),
+          sl(),
+        ),
+      );
+    }
+
+    // ✅ Use Cases
+    if (!sl.isRegistered<GetAllCharactersUseCase>()) {
+      sl.registerLazySingleton(() => GetAllCharactersUseCase(sl()));
+      sl.registerLazySingleton(() => UnlockCharacterUseCase(sl()));
+      sl.registerLazySingleton(() => InitCharactersUseCase(sl()));
+    }
+
+    // 🎯 Bloc
+    sl.registerFactory(() => CharacterBloc(
+          getAllCharacters: sl(),
+          unlockCharacter: sl(),
+          initCharacters: sl(),
+        ));
+  } catch (e, stackTrace) {
+    print('Error initializing character dependencies: $e');
+    print('Stack trace: $stackTrace');
+    // Don't rethrow - allow the app to continue even if character init fails
   }
-
-  // 📦 Hive Box
-  // final box = await Hive.openBox<CharacterModel>('charactersBox');
-
-  // 🧩 Supabase client
-  final supabaseClient = Supabase.instance.client;
-  final userId = supabaseClient.auth.currentUser?.id;
-
-  if (userId == null) {
-    throw Exception('User is not logged in');
-  }
-
-  // 📥 DataSource
-  final characterLocalDataSource = CharacterLocalDataSourceImpl();
-  sl.registerLazySingleton<CharacterLocalDataSource>(
-      () => characterLocalDataSource);
-
-  // 🧠 Repository
-  sl.registerLazySingleton<CharacterRepository>(
-    () => CharacterRepositoryImpl(sl(), sl()),
-  );
-
-  // ✅ Use Cases
-  sl.registerLazySingleton(() => GetAllCharactersUseCase(sl()));
-  sl.registerLazySingleton(() => UnlockCharacterUseCase(sl()));
-  sl.registerLazySingleton(() => InitCharactersUseCase(sl()));
-
-  // 🎯 Bloc
-  sl.registerFactory(() => CharacterBloc(
-        getAllCharacters: sl(),
-        unlockCharacter: sl(),
-        initCharacters: sl(),
-      ));
 }

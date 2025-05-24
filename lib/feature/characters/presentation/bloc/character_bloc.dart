@@ -26,7 +26,7 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
   ) async {
     emit(CharacterLoading());
     try {
-      await initCharacters();
+      await initCharacters(event.languageCode);
       final characters = await getAllCharacters();
       emit(CharacterLoaded(characters));
     } catch (e) {
